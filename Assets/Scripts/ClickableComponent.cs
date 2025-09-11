@@ -5,33 +5,21 @@ using UnityEngine;
 public class ClickableComponent : MonoBehaviour
 {
     [SerializeField]
-    private Camera cam;
-    [SerializeField]
     private LayerMask raycastMask = ~0;
-    [SerializeField] float snapRadius = 0.8f;
+    [SerializeField] private GameObject prefab;
 
-    private Transform[] sockets;
-    private readonly Dictionary<Transform, Transform> occupied = new();
+    private List<Clickable> slots = new List<Clickable>();
 
-    IClickable hovered;
     IClickable pressed;
-
-    IDraggable dragging;
-    Transform draggingTransform;
 
     private void Awake()
     {
-        if(cam == null)
+        var slotGos = GameObject.FindGameObjectsWithTag("Slot");
+        foreach(var slot in slotGos)
         {
-            cam = Camera.main;
+            slots.Add(slot.GetComponent<Clickable>());
         }
-
-        var socketGo = GameObject.FindGameObjectsWithTag("Slot");
-        sockets = new Transform[socketGo.Length];
-        for(int i = 0; i < sockets.Length; i++)
-        {
-            sockets[i] = socketGo[i].transform;
-        }
+        slots.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
     }
 
     private void Update()
@@ -42,34 +30,23 @@ public class ClickableComponent : MonoBehaviour
         }
 
         IClickable hitClickable = null;
-        IDraggable hitDraggable = null;
-        if(Input.touchCount == 1)
+        if (Input.touchCount == 1)
         {
-            var ray = cam.ScreenPointToRay(pos);
+            var ray = Camera.main.ScreenPointToRay(pos);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
                 hitClickable = hit.collider.GetComponent<IClickable>();
             }
         }
 
-        if(hovered != hitClickable)
+        if(hitClickable == null)
         {
-            if(hovered != null)
-            {
-                hovered.OnHover(false);
-            }
-
-            hovered = hitClickable;
-
-            if (hovered != null)
-            {
-                hovered.OnHover(true);
-            }
+            return;
         }
 
-        if(down && hovered != null)
+        if(down)
         {
-            pressed = hovered;
+            pressed = hitClickable;
             pressed.OnPress(true);
         }
         if (up)
@@ -77,9 +54,6 @@ public class ClickableComponent : MonoBehaviour
             if(pressed != null)
             {
                 pressed.OnPress(false);
-            }
-            if(pressed != null && pressed == hovered)
-            {
                 pressed.OnClick();
             }
 
@@ -106,6 +80,19 @@ public class ClickableComponent : MonoBehaviour
             down = Input.GetMouseButtonDown(0);
             up = Input.GetMouseButtonUp(0);
             return true;
+        }
+    }
+
+    public void PlaceInSocket()
+    {
+        foreach(var slot in slots)
+        {
+            if(slot.SocketInCount < 3)
+            {
+                slot.SetSocket(prefab);
+                Debug.Log($"{slot.name} / {prefab.name}");
+                break;
+            }
         }
     }
 }
