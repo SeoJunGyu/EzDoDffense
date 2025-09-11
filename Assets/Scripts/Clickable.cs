@@ -247,17 +247,19 @@ public class Clickable : MonoBehaviour, IClickable
         if(fromOcc.Count > pairCount)
         {
             int idx = pairCount;
-            foreach(var toSock in to.sockets.Keys)
-            {
-                if (idx >= fromOcc.Count)
-                {
-                    break;
-                }
-                if (to.sockets[toSock] != null)
-                {
-                    continue;
-                }
 
+            var toEmpty = new List<Transform>();
+            foreach(var kv in to.sockets)
+            {
+                if(kv.Value == null)
+                {
+                    toEmpty.Add(kv.Key);
+                }
+            }
+
+            int e = 0;
+            while (idx < fromOcc.Count && e < toEmpty.Count)
+            {
                 var fSock = fromOcc[idx].Key;
                 var fUnit = fromOcc[idx].Value;
 
@@ -265,6 +267,8 @@ public class Clickable : MonoBehaviour, IClickable
                 {
                     from.sockets[fSock] = null;
                 }
+
+                var toSock = toEmpty[e++];
 
                 //이동
                 SendUnitTo(fUnit, toSock.position);
@@ -278,17 +282,19 @@ public class Clickable : MonoBehaviour, IClickable
         if (toOcc.Count > pairCount)
         {
             int idx = pairCount;
-            foreach (var fSock in from.sockets.Keys)
-            {
-                if (idx >= fromOcc.Count)
-                {
-                    break;
-                }
-                if (from.sockets[fSock] != null)
-                {
-                    continue;
-                }
 
+            var fromEmpty = new List<Transform>();
+            foreach (var kv in from.sockets)
+            {
+                if (kv.Value == null)
+                {
+                    fromEmpty.Add(kv.Key);
+                }
+            }
+
+            int e = 0;
+            while (idx < toOcc.Count && e < fromEmpty.Count)
+            {
                 var tSock = toOcc[idx].Key;
                 var tUnit = toOcc[idx].Value;
 
@@ -296,6 +302,8 @@ public class Clickable : MonoBehaviour, IClickable
                 {
                     to.sockets[tSock] = null;
                 }
+
+                var fSock = fromEmpty[e++];
 
                 //이동
                 SendUnitTo(tUnit, fSock.position);

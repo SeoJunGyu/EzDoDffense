@@ -23,7 +23,9 @@ public class EnemySpawner : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CreateEnemy();
+            //CreateEnemy();
+            var data = DataTableManager.EnemyTable.Get(60050050001);
+            Debug.Log(data);
         }
     }
     
