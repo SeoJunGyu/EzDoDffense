@@ -24,8 +24,8 @@ public class EnemySpawner : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //CreateEnemy();
-            //var data = DataTableManager.EnemyTable.Get(10050050001);
-            //Debug.Log(data.Unit_Name);
+            var data = DataTableManager.EnemyTable.Get(10050050001);
+            Debug.Log(data);
         }
     }
     

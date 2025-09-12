@@ -18,14 +18,14 @@ public class EnemyData
     public int Unit_DEF { get; set; }
     public int Unit_HP { get; set; }
     public int Stage { get; set; }
-    //public int Move_Speed { get; set; }
-    //public string Icon { get; set; }
-    //public string Model { get; set; }
+    public int Move_Speed { get; set; }
+    public string Icon { get; set; }
+    public string Model { get; set; }
 
     public override string ToString()
     {
-        //return $"{Unit_ID} / {Unit_Name} / {Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage} / {Move_Speed} / {Icon} / {Model}";
-        return $"{Unit_ID} / {Unit_Name} /{Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage}";
+        return $"{Unit_ID} / {Unit_Name} / {Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage} / {Move_Speed} / {Icon} / {Model}";
+        //return $"{Unit_ID} / {Unit_Name} /{Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage}";
     }
 
     //public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");

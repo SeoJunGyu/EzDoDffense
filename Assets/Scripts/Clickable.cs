@@ -7,7 +7,7 @@ public class Clickable : MonoBehaviour, IClickable
     [SerializeField] Color normal = Color.white;
     [SerializeField] Color press = new Color(0.8f, 0.85f, 1f);
     [SerializeField] Color selectedColor = new Color(0.9f, 0.95f, 1f);
-
+    
     private Renderer targetRenderer;
 
     private bool isPress;
