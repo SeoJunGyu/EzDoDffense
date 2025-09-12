@@ -6,6 +6,7 @@ public class AllyUnit : MonoBehaviour
     private NavMeshAgent agent;
 
     private Vector3 target;
+    private Vector3 center;
 
     private void Awake()
     {
@@ -34,10 +35,18 @@ public class AllyUnit : MonoBehaviour
         }
     }
 
-    public void SetTarget(Vector3 targetSocket)
+    public void SetTarget(Vector3 targetSocket, Vector3 targetCenter)
     {
         target = targetSocket;
+        center = targetCenter;
+
         agent.SetDestination(target);
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(center, 1f);
     }
 
 }

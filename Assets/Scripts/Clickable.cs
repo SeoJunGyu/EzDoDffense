@@ -52,15 +52,6 @@ public class Clickable : MonoBehaviour, IClickable
     public void OnClick()
     {
         Debug.Log($"{name} Click / SocketInCount : {SocketInCount}");
-        if(SocketInCount == 0)
-        {
-            if(selectedSlot == this)
-            {
-                DeselectThis();
-            }
-
-            return;
-        }
 
         if(selectedSlot == null)
         {
@@ -78,14 +69,7 @@ public class Clickable : MonoBehaviour, IClickable
         var from = selectedSlot;
         var to = this;
 
-        if(to.SocketInCount > 0)
-        {
-            SwapUnits(from, to);
-        }
-        else
-        {
-            MoveAllUnits(from, to);
-        }
+        SwapUnits(from, to);
 
         from.DeselectThis();
     }
@@ -175,29 +159,29 @@ public class Clickable : MonoBehaviour, IClickable
             return;
         }
 
-        int moved = 0;
-        foreach(var toSock in to.sockets.Keys)
+        var toEmptySockets = new List<Transform>();
+        foreach(var kv in to.sockets)
         {
-            if(moved >= fromPairs.Count)
+            if(kv.Value == null)
             {
-                break;
+                toEmptySockets.Add(kv.Key);
             }
-            if (to.sockets[toSock] != null)
-            {
-                continue;
-            }
+        }
 
-            var srcSock = fromPairs[moved].Key;
-            var unit = fromPairs[moved].Value;
+        int moved = Mathf.Min(fromPairs.Count, toEmptySockets.Count);
+        for(int i = 0; i < moved; i++)
+        {
+            var srcSock = fromPairs[i].Key;
+            var unit = fromPairs[i].Value;
+            var dstSock = toEmptySockets[i];
 
             from.sockets[srcSock] = null;
 
-            //이동
-            SendUnitTo(unit, toSock.position);
-            to.sockets[toSock] = unit;
+            SendUnitTo(unit, dstSock.position, dstSock.parent.position);
 
-            moved++;
+            to.sockets[dstSock] = unit;
         }
+        
     }
 
     public void SwapUnits(Clickable from, Clickable to)
@@ -232,11 +216,11 @@ public class Clickable : MonoBehaviour, IClickable
 
             if(tUnit != null)
             {
-                SendUnitTo(tUnit, fSock.position);
+                SendUnitTo(tUnit, fSock.position, fSock.parent.position);
             }
             if(fUnit != null)
             {
-                SendUnitTo(fUnit, tSock.position);
+                SendUnitTo(fUnit, tSock.position, tSock.parent.position);
             }
 
             from.sockets[fSock] = tUnit;
@@ -271,7 +255,7 @@ public class Clickable : MonoBehaviour, IClickable
                 var toSock = toEmpty[e++];
 
                 //이동
-                SendUnitTo(fUnit, toSock.position);
+                SendUnitTo(fUnit, toSock.position, toSock.parent.position);
                 to.sockets[toSock] = fUnit;
 
                 idx++;
@@ -306,7 +290,7 @@ public class Clickable : MonoBehaviour, IClickable
                 var fSock = fromEmpty[e++];
 
                 //이동
-                SendUnitTo(tUnit, fSock.position);
+                SendUnitTo(tUnit, fSock.position, fSock.parent.position);
                 from.sockets[fSock] = tUnit;
 
                 idx++;
@@ -314,12 +298,12 @@ public class Clickable : MonoBehaviour, IClickable
         }
     }
 
-    public void SendUnitTo(GameObject unit, Vector3 dest)
+    public void SendUnitTo(GameObject unit, Vector3 dest, Vector3 slotCenter)
     {
         var ally = unit.GetComponent<AllyUnit>();
         if(ally != null)
         {
-            ally.SetTarget(dest);
+            ally.SetTarget(dest, slotCenter);
         }
     }
 }
