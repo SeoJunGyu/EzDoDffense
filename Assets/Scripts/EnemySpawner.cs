@@ -10,6 +10,9 @@ public class EnemySpawner : MonoBehaviour
 
     private List<EnemyUnit> enemies = new List<EnemyUnit>();
 
+    [SerializeField] private float spawnInterval = 1.5f;
+    [SerializeField] private float spawnTime = 0f;
+
     private void Awake()
     {
         way = new Vector3[wayPoint.Count];
@@ -24,16 +27,21 @@ public class EnemySpawner : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             //CreateEnemy();
-            var data = DataTableManager.EnemyTable.Get(10050050001);
-            Debug.Log(data);
+            //var data = DataTableManager.EnemyTable.Get(10050050001);
+            //Debug.Log(data);
+        }
+
+        spawnTime += Time.deltaTime;
+        if(spawnTime > spawnInterval)
+        {
+            CreateEnemy();
+            spawnTime = 0f;
         }
     }
     
     public void CreateEnemy()
     {
-        Debug.Log($"{transform.position} / {way[0]}");
         var enemy = Instantiate(prefab, transform.position, transform.rotation);
-        Debug.Log($"{enemy.transform.position}");
         enemy.SetTarget(way);
 
         enemies.Add(enemy);

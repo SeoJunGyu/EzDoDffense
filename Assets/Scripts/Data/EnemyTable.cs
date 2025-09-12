@@ -27,9 +27,9 @@ public class EnemyData
         return $"{Unit_ID} / {Unit_Name} / {Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage} / {Move_Speed} / {Icon} / {Model}";
         //return $"{Unit_ID} / {Unit_Name} /{Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage}";
     }
-
-    //public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");
-    //public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.EnemyModelFolder}/{Model}");
+    
+    public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");
+    public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.EnemyModelFolder}/{Model}");
 }
 
 public class EnemyTable : DataTable
