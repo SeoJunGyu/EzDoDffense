@@ -34,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
         spawnTime += Time.deltaTime;
         if(spawnTime > spawnInterval)
         {
+
             CreateEnemy();
             spawnTime = 0f;
         }
