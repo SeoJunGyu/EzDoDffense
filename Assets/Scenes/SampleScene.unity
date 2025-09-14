@@ -755,6 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useUnScaledTime: 0
+  timeScale: 1
 --- !u!4 &207916318
 Transform:
   m_ObjectHideFlags: 0

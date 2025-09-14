@@ -7,9 +7,11 @@ using UnityEngine.AI;
 public class EnemyUnit : MonoBehaviour, IDamagable
 {
     [SerializeField] private float arriveTolerance = 0.1f;
-    [SerializeField] private float maxHealth = 100f;
 
+    [SerializeField] private float maxHealth = 100f;
     private NavMeshAgent agent;
+    private int deffense = 1;
+    private EnemyTypes defType;
 
     private Vector3 target;
     private Vector3[] wayPoints;
@@ -76,14 +78,30 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         agent.SetDestination(target);
     }
 
-    public void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal)
+    public void OnDamage(float damage)
     {
+        if(Health < 0)
+        {
+            return;
+        }
+
         Health -= damage;
+        Debug.Log($"{gameObject.name} / {Health}");
         if(Health <= 0 && !IsDead)
         {
+            Debug.Log($"{gameObject.name} Die");
             //Die
-            OnDeath?.Invoke();
             IsDead = true;
+            OnDeath?.Invoke();
         }
+    }
+
+    public void Setup(EnemyData data)
+    {
+        maxHealth = data.Unit_HP;
+        deffense = data.Unit_DEF;
+        defType = (EnemyTypes)data.Unit_DEF_TYPE;
+        agent.speed = data.Move_Speed;
+        CurrentWayIndex = 0;
     }
 }

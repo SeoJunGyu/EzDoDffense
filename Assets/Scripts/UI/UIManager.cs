@@ -24,9 +24,15 @@ public class UIManager : MonoBehaviour
     private void UpdateTime()
     {
         surviveTime = GameManager.Instance.Timer.Elapsed;
+        var prevMinute = minute;
         minute = Mathf.FloorToInt(surviveTime / 60f);
         second = Mathf.FloorToInt(surviveTime) % 60;
         TimeText.text = $"{minute:00} : {second:00}";
+
+        if(prevMinute != minute)
+        {
+            Variables.Stage++;
+        }
 
     }
 }

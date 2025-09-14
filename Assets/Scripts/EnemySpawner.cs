@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -16,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 1.5f;
     [SerializeField] private float spawnTime = 0f;
 
+    public EnemyUnit testTarget;
+
     private void Awake()
     {
         way = new Vector3[wayPoint.Count];
@@ -25,6 +28,13 @@ public class EnemySpawner : MonoBehaviour
         }
 
         GetCurrentEnemyData();
+
+        for(int i = 0; i < 10; i++)
+        {
+            var enemy = Instantiate(prefab, transform.position, transform.rotation);
+            enemies.Add(enemy);
+            enemy.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -34,6 +44,8 @@ public class EnemySpawner : MonoBehaviour
             //CreateEnemy();
             //var data = DataTableManager.EnemyTable.Get(10050050001);
             //Debug.Log(data);
+
+            testTarget.OnDamage(10f);
         }
 
         spawnTime += Time.deltaTime;
@@ -41,7 +53,6 @@ public class EnemySpawner : MonoBehaviour
         {
             if(enemyCount >= 40)
             {
-                EnemyUpgrade();
                 GetCurrentEnemyData();
 
                 enemyCount = 0;
@@ -53,8 +64,26 @@ public class EnemySpawner : MonoBehaviour
     
     public void CreateEnemy()
     {
-        var enemy = Instantiate(prefab, transform.position, transform.rotation);
-        Instantiate(currentEnemyData.VisualModel, enemy.transform); //橇府崎 葛胆 积己
+        EnemyUnit enemy = null;
+        foreach(var enem in enemies)
+        {
+            if (!enem.gameObject.activeSelf)
+            {
+                enemy = enem;
+                enemy.transform.position = transform.position;
+                enemy.transform.rotation = transform.rotation;
+                break;
+            }
+        }
+
+        if(enemy == null)
+        {
+            enemy = Instantiate(prefab, transform.position, transform.rotation);
+        }
+
+        enemy.Setup(currentEnemyData);
+        enemy.gameObject.SetActive(true);
+        var visualModel = Instantiate(currentEnemyData.VisualModel, enemy.transform); //橇府崎 葛胆 积己
 
         enemy.SetTarget(way);
 
@@ -62,9 +91,10 @@ public class EnemySpawner : MonoBehaviour
 
         enemyCount++;
         Variables.EnemyTotalCount++;
+
+        enemy.OnDeath += () => Destroy(visualModel);
+        enemy.OnDeath += () => enemy.gameObject.SetActive(false);
     }
 
     public void GetCurrentEnemyData() => currentEnemyData = DataTableManager.EnemyTable.GetStageEnemy(Variables.Stage);
-
-    public void EnemyUpgrade() => Variables.Stage++;
 }
