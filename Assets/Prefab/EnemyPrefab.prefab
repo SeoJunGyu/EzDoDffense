@@ -278,9 +278,9 @@ GameObject:
   - component: {fileID: 1534735301767904865}
   - component: {fileID: 2886650641115945180}
   - component: {fileID: 8802539066145899536}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyPrefab
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,6 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arriveTolerance: 0.1
   maxHealth: 100
+  healthSlider: {fileID: 152977506264285074}
 --- !u!1 &4774082138202680457
 GameObject:
   m_ObjectHideFlags: 0

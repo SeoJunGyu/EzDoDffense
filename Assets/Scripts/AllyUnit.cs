@@ -10,6 +10,10 @@ public class AllyUnit : MonoBehaviour
 
     [SerializeField] private float attackInterval = 1f;
     private float attackTimer = 0f;
+    private float damage = 10f;
+    [SerializeField] private float range = 2f;
+    [SerializeField] private LayerMask enemyMask;
+    private EnemyUnit target;
 
     private void Awake()
     {
@@ -19,6 +23,7 @@ public class AllyUnit : MonoBehaviour
     private void Update()
     {
         UpdateMove();
+        UpdateAttack();
     }
 
     public void UpdateMove()
@@ -38,6 +43,41 @@ public class AllyUnit : MonoBehaviour
         }
     }
 
+    public void UpdateAttack()
+    {
+        attackTimer += Time.deltaTime;
+        if(target != null)
+        {
+            if(!target.gameObject.activeSelf || 
+                target.IsDead || 
+                Vector3.Distance(target.transform.position, Center) > range)
+            {
+                target = null;
+                return;
+            }
+
+            if (attackTimer > attackInterval)
+            {
+                target.OnDamage(damage);
+                attackTimer = 0f;
+            }
+
+            return;
+        }
+
+        //타겟 발견 못했을 경우
+        var hits = Physics.OverlapSphere(Center, range, enemyMask, QueryTriggerInteraction.Ignore);
+        foreach(var enemyCollider in hits)
+        {
+            var enemy = enemyCollider.GetComponent<EnemyUnit>();
+            if(enemy != null && enemy.gameObject.activeSelf && !enemy.IsDead)
+            {
+                target = enemy;
+                break;
+            }
+        }
+    }
+
     public void SetTarget(Vector3 targetSocket)
     {
         socket = targetSocket;
@@ -48,7 +88,7 @@ public class AllyUnit : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(Center, 1f);
+        Gizmos.DrawWireSphere(Center, range);
     }
 
 }

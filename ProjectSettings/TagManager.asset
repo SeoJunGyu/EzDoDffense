@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Slot
   - Socket
+  - Enemy
   layers:
   - Default
   - TransparentFX

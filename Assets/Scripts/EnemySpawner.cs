@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
             //var data = DataTableManager.EnemyTable.Get(10050050001);
             //Debug.Log(data);
 
-            testTarget.OnDamage(10f);
+            //testTarget.OnDamage(10f);
         }
 
         spawnTime += Time.deltaTime;

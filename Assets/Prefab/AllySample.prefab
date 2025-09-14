@@ -1620,6 +1620,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackInterval: 1
+  range: 6
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &6847271188175226413
 GameObject:
   m_ObjectHideFlags: 0

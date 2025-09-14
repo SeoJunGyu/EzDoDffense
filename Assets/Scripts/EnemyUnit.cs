@@ -1,8 +1,10 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyUnit : MonoBehaviour, IDamagable
 {
@@ -17,6 +19,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     private Vector3[] wayPoints;
     private int CurrentWayIndex = 0;
 
+    public Slider healthSlider;
+
     public float Health { get; private set; }
     public bool IsDead { get; private set; }
 
@@ -26,6 +30,9 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     {
         IsDead = false;
         Health = maxHealth;
+
+        healthSlider.gameObject.SetActive(true);
+        UpdateHealthBar();
     }
 
     private void Awake()
@@ -33,6 +40,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         agent = GetComponent<NavMeshAgent>();
         target = transform.position;
     }
+
+    
 
     private void Update()
     {
@@ -86,15 +95,21 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         }
 
         Health -= damage;
-        Debug.Log($"{gameObject.name} / {Health}");
+        UpdateHealthBar();
+
         if(Health <= 0 && !IsDead)
         {
             Debug.Log($"{gameObject.name} Die");
             //Die
             IsDead = true;
+
+            healthSlider.gameObject.SetActive(false);
+
             OnDeath?.Invoke();
         }
     }
+
+    public void UpdateHealthBar() => healthSlider.value = Health / maxHealth;
 
     public void Setup(EnemyData data)
     {
