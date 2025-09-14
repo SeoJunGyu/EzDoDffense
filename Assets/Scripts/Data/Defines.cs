@@ -12,3 +12,10 @@ public static class DataTableIds
 {
     public static readonly string Enemy = "EnemyTable";
 }
+
+public static class Variables
+{
+    public static int Stage { get; set; } = 1;
+    public static int EnemyTotalCount { get; set; } = 0;
+    public static int AllyTotalCount { get; set; } = 20;
+}

@@ -1,4 +1,8 @@
+using CsvHelper.Configuration.Attributes;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -29,6 +33,7 @@ public class EnemyData
     }
     
     public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");
+    [Ignore]
     public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.EnemyModelFolder}/{Model}");
 }
 
@@ -55,14 +60,6 @@ public class EnemyTable : DataTable
                 Debug.LogError($"키 중복: {enemy.Unit_ID}");
             }
         }
-
-        foreach(var enemy in dictionary)
-        {
-            Debug.Log(enemy.Value);
-
-            var data = enemy.Value;
-            //Debug.Log(data.Unit_Name);
-        }
     }
 
     public EnemyData Get(long id)
@@ -75,5 +72,8 @@ public class EnemyTable : DataTable
         return dictionary[id];
     }
 
-    //TODO: Enemy 랜덤 로직 구현해야함
+    public EnemyData GetStageEnemy(int stage)
+    {
+        return dictionary.Values.FirstOrDefault(e => e.Stage == stage);
+    }
 }

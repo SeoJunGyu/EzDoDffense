@@ -9,6 +9,9 @@ public class EnemySpawner : MonoBehaviour
     private Vector3[] way;
 
     private List<EnemyUnit> enemies = new List<EnemyUnit>();
+    private int enemyCount = 0;
+
+    private EnemyData currentEnemyData;
 
     [SerializeField] private float spawnInterval = 1.5f;
     [SerializeField] private float spawnTime = 0f;
@@ -20,6 +23,8 @@ public class EnemySpawner : MonoBehaviour
         {
             way[i] = wayPoint[i].position;
         }
+
+        GetCurrentEnemyData();
     }
 
     private void Update()
@@ -34,7 +39,13 @@ public class EnemySpawner : MonoBehaviour
         spawnTime += Time.deltaTime;
         if(spawnTime > spawnInterval)
         {
+            if(enemyCount >= 40)
+            {
+                EnemyUpgrade();
+                GetCurrentEnemyData();
 
+                enemyCount = 0;
+            }
             CreateEnemy();
             spawnTime = 0f;
         }
@@ -43,8 +54,17 @@ public class EnemySpawner : MonoBehaviour
     public void CreateEnemy()
     {
         var enemy = Instantiate(prefab, transform.position, transform.rotation);
+        Instantiate(currentEnemyData.VisualModel, enemy.transform); //ÇÁ¸®Æé ¸ðµ¨ »ý¼º
+
         enemy.SetTarget(way);
 
         enemies.Add(enemy);
+
+        enemyCount++;
+        Variables.EnemyTotalCount++;
     }
+
+    public void GetCurrentEnemyData() => currentEnemyData = DataTableManager.EnemyTable.GetStageEnemy(Variables.Stage);
+
+    public void EnemyUpgrade() => Variables.Stage++;
 }

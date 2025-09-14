@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arriveTolerance: 0.1
+  maxHealth: 100
 --- !u!136 &6907391388359394448
 CapsuleCollider:
   m_ObjectHideFlags: 0

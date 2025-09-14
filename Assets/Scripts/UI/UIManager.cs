@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public TextMeshProUGUI StageText;
     public TextMeshProUGUI TimeText;
 
     private float surviveTime = 0f; //살아있는 시간
@@ -11,7 +12,13 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        UpdateStage();
         UpdateTime();
+    }
+
+    private void UpdateStage()
+    {
+        StageText.text = $"Stage {Variables.Stage}";
     }
 
     private void UpdateTime()
