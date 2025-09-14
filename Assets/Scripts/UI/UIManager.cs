@@ -24,10 +24,9 @@ public class UIManager : MonoBehaviour
     private void UpdateTime()
     {
         surviveTime = GameManager.Instance.Timer.Elapsed;
-        second = surviveTime;
-        int m = Mathf.FloorToInt(second / 60f);
-        int s = Mathf.FloorToInt(second) % 60;               // ¶Ç´Â: int s = Mathf.FloorToInt(t - m * 60f);
-        TimeText.text = $"{m:00} : {s:00}";
+        minute = Mathf.FloorToInt(surviveTime / 60f);
+        second = Mathf.FloorToInt(surviveTime) % 60;
+        TimeText.text = $"{minute:00} : {second:00}";
 
     }
 }

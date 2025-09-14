@@ -112,6 +112,10 @@ public class Clickable : MonoBehaviour, IClickable
             {
                 var go = Instantiate(prefab, socket.Key.position, socket.Key.rotation);
                 sockets[socket.Key] = go;
+
+                var ally = go.GetComponent<AllyUnit>();
+                ally.Center = transform.position;
+
                 return true;
             }
         }
@@ -177,7 +181,7 @@ public class Clickable : MonoBehaviour, IClickable
 
             from.sockets[srcSock] = null;
 
-            SendUnitTo(unit, dstSock.position, dstSock.parent.position);
+            SendUnitTo(unit, dstSock.position);
 
             to.sockets[dstSock] = unit;
         }
@@ -216,11 +220,11 @@ public class Clickable : MonoBehaviour, IClickable
 
             if(tUnit != null)
             {
-                SendUnitTo(tUnit, fSock.position, fSock.parent.position);
+                SendUnitTo(tUnit, fSock.position);
             }
             if(fUnit != null)
             {
-                SendUnitTo(fUnit, tSock.position, tSock.parent.position);
+                SendUnitTo(fUnit, tSock.position);
             }
 
             from.sockets[fSock] = tUnit;
@@ -255,7 +259,7 @@ public class Clickable : MonoBehaviour, IClickable
                 var toSock = toEmpty[e++];
 
                 //이동
-                SendUnitTo(fUnit, toSock.position, toSock.parent.position);
+                SendUnitTo(fUnit, toSock.position);
                 to.sockets[toSock] = fUnit;
 
                 idx++;
@@ -290,7 +294,7 @@ public class Clickable : MonoBehaviour, IClickable
                 var fSock = fromEmpty[e++];
 
                 //이동
-                SendUnitTo(tUnit, fSock.position, fSock.parent.position);
+                SendUnitTo(tUnit, fSock.position);
                 from.sockets[fSock] = tUnit;
 
                 idx++;
@@ -298,12 +302,12 @@ public class Clickable : MonoBehaviour, IClickable
         }
     }
 
-    public void SendUnitTo(GameObject unit, Vector3 dest, Vector3 slotCenter)
+    public void SendUnitTo(GameObject unit, Vector3 dest)
     {
         var ally = unit.GetComponent<AllyUnit>();
         if(ally != null)
         {
-            ally.SetTarget(dest, slotCenter);
+            ally.SetTarget(dest);
         }
     }
 }

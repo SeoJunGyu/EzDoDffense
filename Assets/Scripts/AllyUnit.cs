@@ -5,8 +5,11 @@ public class AllyUnit : MonoBehaviour
 {
     private NavMeshAgent agent;
 
-    private Vector3 target;
-    private Vector3 center;
+    private Vector3 socket; //¿Ø¥÷¿Ã πËƒ°µ» º“ƒœ
+    public Vector3 Center { get; set; } //¿Ø¥÷¿Ã ¿÷¥¬ ΩΩ∑‘ ¡ﬂæ”
+
+    [SerializeField] private float attackInterval = 1f;
+    private float attackTimer = 0f;
 
     private void Awake()
     {
@@ -29,24 +32,23 @@ public class AllyUnit : MonoBehaviour
             return;
         }
 
-        if(transform.position == target)
+        if(transform.position == socket)
         {
             agent.isStopped = true;
         }
     }
 
-    public void SetTarget(Vector3 targetSocket, Vector3 targetCenter)
+    public void SetTarget(Vector3 targetSocket)
     {
-        target = targetSocket;
-        center = targetCenter;
+        socket = targetSocket;
 
-        agent.SetDestination(target);
+        agent.SetDestination(socket);
     }
 
     private void OnDrawGizmos()
     {
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(center, 1f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(Center, 1f);
     }
 
 }
