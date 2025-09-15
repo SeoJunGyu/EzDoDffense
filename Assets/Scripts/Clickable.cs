@@ -202,6 +202,7 @@ public class Clickable : MonoBehaviour, IClickable
 
             from.sockets[srcSock] = null;
 
+            unit.Center = to.transform.position;
             SendUnitTo(unit, dstSock.position);
 
             to.sockets[dstSock] = unit;
@@ -241,10 +242,12 @@ public class Clickable : MonoBehaviour, IClickable
 
             if(tUnit != null)
             {
+                tUnit.Center = from.transform.position;
                 SendUnitTo(tUnit, fSock.position);
             }
             if(fUnit != null)
             {
+                fUnit.Center = to.transform.position;
                 SendUnitTo(fUnit, tSock.position);
             }
 
@@ -280,6 +283,7 @@ public class Clickable : MonoBehaviour, IClickable
                 var toSock = toEmpty[e++];
 
                 //이동
+                fUnit.Center = to.transform.position;
                 SendUnitTo(fUnit, toSock.position);
                 to.sockets[toSock] = fUnit;
 
@@ -315,6 +319,7 @@ public class Clickable : MonoBehaviour, IClickable
                 var fSock = fromEmpty[e++];
 
                 //이동
+                tUnit.Center = from.transform.position;
                 SendUnitTo(tUnit, fSock.position);
                 from.sockets[fSock] = tUnit;
 

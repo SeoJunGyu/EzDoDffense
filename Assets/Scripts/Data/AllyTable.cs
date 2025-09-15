@@ -83,4 +83,19 @@ public class AllyTable : DataTable
     {
         return dictionary[DataTableManager.AllRandomTable.GetRandomId()];
     }
+
+    public AllyData GetNormalRandom()
+    {
+        return dictionary[DataTableManager.NormalRandomTable.GetRandomId()];
+    }
+
+    public AllyData GetPiercingRandom()
+    {
+        return dictionary[DataTableManager.PiercingRandomTable.GetRandomId()];
+    }
+
+    public AllyData GetMagicalRandom()
+    {
+        return dictionary[DataTableManager.MagicalRandomTable.GetRandomId()];
+    }
 }

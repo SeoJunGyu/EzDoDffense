@@ -28,13 +28,73 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public void PlaceAlly()
+    public void PlaceAllyAllRandom()
     {
         var data = DataTableManager.AllyTable.GetAllRandom();
         foreach (var slot in slots)
         {
             var IsPlace = false;
             if(slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
+            {
+                IsPlace = true;
+            }
+
+            if (IsPlace)
+            {
+                slot.SetSocket(prefab, data);
+                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+                break;
+            }
+        }
+    }
+
+    public void PlaceAllyNormalRandom()
+    {
+        var data = DataTableManager.AllyTable.GetNormalRandom();
+        foreach (var slot in slots)
+        {
+            var IsPlace = false;
+            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
+            {
+                IsPlace = true;
+            }
+
+            if (IsPlace)
+            {
+                slot.SetSocket(prefab, data);
+                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+                break;
+            }
+        }
+    }
+
+    public void PlaceAllyPiercingRandom()
+    {
+        var data = DataTableManager.AllyTable.GetPiercingRandom();
+        foreach (var slot in slots)
+        {
+            var IsPlace = false;
+            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
+            {
+                IsPlace = true;
+            }
+
+            if (IsPlace)
+            {
+                slot.SetSocket(prefab, data);
+                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+                break;
+            }
+        }
+    }
+
+    public void PlaceAllyMagicalRandom()
+    {
+        var data = DataTableManager.AllyTable.GetMagicalRandom();
+        foreach (var slot in slots)
+        {
+            var IsPlace = false;
+            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
             {
                 IsPlace = true;
             }
