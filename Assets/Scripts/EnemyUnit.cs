@@ -100,6 +100,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         if(Health <= 0 && !IsDead)
         {
             //Die
+            Variables.Gold += 10;
+
             IsDead = true;
 
             healthSlider.gameObject.SetActive(false);

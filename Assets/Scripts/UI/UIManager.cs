@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI StageText;
     public TextMeshProUGUI TimeText;
+    public TextMeshProUGUI GoldText;
 
     private float surviveTime = 0f; //살아있는 시간
     private float second = 0f; //초 시간
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateStage();
         UpdateTime();
+        UpdateGold();
     }
 
     private void UpdateStage()
@@ -34,5 +36,10 @@ public class UIManager : MonoBehaviour
             Variables.Stage++;
         }
 
+    }
+
+    private void UpdateGold()
+    {
+        GoldText.text = $"Gold : {Variables.Gold}";
     }
 }

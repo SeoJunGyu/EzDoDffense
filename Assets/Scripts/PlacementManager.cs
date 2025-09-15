@@ -28,83 +28,88 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public void PlaceAllyAllRandom()
+    public bool FindSameUnit(AllyData data)
     {
-        var data = DataTableManager.AllyTable.GetAllRandom();
         foreach (var slot in slots)
         {
             var IsPlace = false;
-            if(slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
+            if (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId)
             {
                 IsPlace = true;
             }
 
-            if (IsPlace)
+            if (IsPlace && Variables.Gold >= 50)
             {
+                Variables.Gold -= 50;
+
+                slot.SetSocket(prefab, data);
+                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void PlaceInSocket(AllyData data)
+    {
+        foreach (var slot in slots)
+        {
+            var IsPlace = false;
+            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
+            {
+                IsPlace = true;
+            }
+
+            if (IsPlace && Variables.Gold >= 50)
+            {
+                Variables.Gold -= 50;
+
                 slot.SetSocket(prefab, data);
                 Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
                 break;
             }
+        }
+    }
+
+    public void PlaceAllyAllRandom()
+    {
+        var data = DataTableManager.AllyTable.GetAllRandom();
+
+        if (!FindSameUnit(data))
+        {
+            PlaceInSocket(data);
         }
     }
 
     public void PlaceAllyNormalRandom()
     {
         var data = DataTableManager.AllyTable.GetNormalRandom();
-        foreach (var slot in slots)
-        {
-            var IsPlace = false;
-            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
-            {
-                IsPlace = true;
-            }
 
-            if (IsPlace)
-            {
-                slot.SetSocket(prefab, data);
-                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
-                break;
-            }
+        if (!FindSameUnit(data))
+        {
+            PlaceInSocket(data);
         }
     }
 
     public void PlaceAllyPiercingRandom()
     {
         var data = DataTableManager.AllyTable.GetPiercingRandom();
-        foreach (var slot in slots)
-        {
-            var IsPlace = false;
-            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
-            {
-                IsPlace = true;
-            }
 
-            if (IsPlace)
-            {
-                slot.SetSocket(prefab, data);
-                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
-                break;
-            }
+        if (!FindSameUnit(data))
+        {
+            PlaceInSocket(data);
         }
     }
 
     public void PlaceAllyMagicalRandom()
     {
         var data = DataTableManager.AllyTable.GetMagicalRandom();
-        foreach (var slot in slots)
-        {
-            var IsPlace = false;
-            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
-            {
-                IsPlace = true;
-            }
 
-            if (IsPlace)
-            {
-                slot.SetSocket(prefab, data);
-                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
-                break;
-            }
+        if (!FindSameUnit(data))
+        {
+            PlaceInSocket(data);
         }
     }
 }
