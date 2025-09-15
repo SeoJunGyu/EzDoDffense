@@ -32,6 +32,7 @@ public class Clickable : MonoBehaviour, IClickable
     }
 
     public long UnitId { get; set; } = 0;
+    public AllyData CurrentData { get; set; }
 
     private void Awake()
     {
@@ -113,6 +114,7 @@ public class Clickable : MonoBehaviour, IClickable
                 if(UnitId == 0)
                 {
                     UnitId = data.Unit_ID;
+                    CurrentData = data;
                     Variables.SlotCount--;
                 }
 
@@ -335,6 +337,10 @@ public class Clickable : MonoBehaviour, IClickable
         //UnitId 서로 교환
         from.UnitId = toUnitId;
         to.UnitId = fromUnitId;
+
+        var prevFromData = from.CurrentData;
+        from.CurrentData = to.CurrentData;
+        to.CurrentData = prevFromData;
     }
 
     public void SendUnitTo(AllyUnit unit, Vector3 dest)
@@ -344,5 +350,11 @@ public class Clickable : MonoBehaviour, IClickable
         {
             ally.SetTarget(dest);
         }
+    }
+
+    public void SlotReset()
+    {
+        Variables.SlotCount++;
+        UnitId = 0;
     }
 }

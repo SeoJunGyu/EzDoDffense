@@ -11,6 +11,8 @@ public class ClickableComponent : MonoBehaviour
 
     private Camera cam;
 
+    public UIManager uiManager;
+
     private void Awake()
     {
         cam = Camera.main;
@@ -61,6 +63,15 @@ public class ClickableComponent : MonoBehaviour
             }
 
             pressed = null;
+        }
+
+        if (Variables.SelectedSlot)
+        {
+            uiManager.ActiveInfoPanel();
+        }
+        else
+        {
+            uiManager.UnActiveInfoPanel();
         }
     }
 

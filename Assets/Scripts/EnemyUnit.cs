@@ -20,6 +20,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     private int CurrentWayIndex = 0;
 
     public Slider healthSlider;
+    public Canvas canvas;
 
     public float Health { get; private set; }
     public bool IsDead { get; private set; }
@@ -33,6 +34,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
         healthSlider.gameObject.SetActive(true);
         UpdateHealthBar();
+
+        canvas.gameObject.SetActive(false);
     }
 
     private void Awake()
@@ -94,6 +97,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
             return;
         }
 
+        canvas.gameObject.SetActive(true);
+
         Health -= damage;
         UpdateHealthBar();
 
@@ -101,6 +106,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         {
             //Die
             Variables.Gold += 10;
+            canvas.gameObject.SetActive(false);
 
             IsDead = true;
 

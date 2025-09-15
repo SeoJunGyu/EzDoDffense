@@ -112,4 +112,9 @@ public class PlacementManager : MonoBehaviour
             PlaceInSocket(data);
         }
     }
+
+    public void UpgradeUnit()
+    {
+
+    }
 }

@@ -1,11 +1,15 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI StageText;
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI GoldText;
+
+    public GameObject InfoPanel;
+    public Button UpgradeButton;
 
     private float surviveTime = 0f; //살아있는 시간
     private float second = 0f; //초 시간
@@ -41,5 +45,20 @@ public class UIManager : MonoBehaviour
     private void UpdateGold()
     {
         GoldText.text = $"Gold : {Variables.Gold}";
+    }
+
+    public void ActiveInfoPanel()
+    {
+        InfoPanel.SetActive(true);
+
+        if(Variables.SelectedSlot.SocketInCount >= 3)
+        {
+            UpgradeButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void UnActiveInfoPanel()
+    {
+        InfoPanel.SetActive(false);
     }
 }
