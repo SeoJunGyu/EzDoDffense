@@ -206,6 +206,8 @@ public class Clickable : MonoBehaviour, IClickable
             SendUnitTo(unit, dstSock.position);
 
             to.sockets[dstSock] = unit;
+
+            from.UnitId = 0; //저장된 유닛 ID 초기화
         }
         
     }
@@ -214,6 +216,9 @@ public class Clickable : MonoBehaviour, IClickable
     {
         var fromOcc = new List<KeyValuePair<Transform, AllyUnit>>();
         var toOcc = new List<KeyValuePair<Transform, AllyUnit>>();
+
+        var fromUnitId = from.UnitId;
+        var toUnitId = to.UnitId;
 
         foreach (var kv in from.sockets)
         {
@@ -326,6 +331,10 @@ public class Clickable : MonoBehaviour, IClickable
                 idx++;
             }
         }
+
+        //UnitId 서로 교환
+        from.UnitId = toUnitId;
+        to.UnitId = fromUnitId;
     }
 
     public void SendUnitTo(AllyUnit unit, Vector3 dest)

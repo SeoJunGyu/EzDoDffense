@@ -21,6 +21,8 @@ public class AllyUnit : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     private EnemyUnit target;
 
+    private bool IsMove { get; set; }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -43,14 +45,22 @@ public class AllyUnit : MonoBehaviour
             return;
         }
 
-        if(transform.position == socket)
+        if (agent.remainingDistance <= Mathf.Max(agent.stoppingDistance, 0f))
         {
             agent.isStopped = true;
+            agent.ResetPath();
+            IsMove = false;
         }
     }
 
     public void UpdateAttack()
     {
+        if (IsMove)
+        {
+            attackTimer = 0f;
+            return;
+        }
+
         attackTimer += Time.deltaTime;
         if(target != null)
         {
@@ -87,6 +97,8 @@ public class AllyUnit : MonoBehaviour
     public void SetTarget(Vector3 targetSocket)
     {
         socket = targetSocket;
+
+        IsMove = true;
 
         agent.SetDestination(socket);
     }
