@@ -9,6 +9,13 @@ public class ClickableComponent : MonoBehaviour
 
     IClickable pressed;
 
+    private Camera cam;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
+
     private void Update()
     {
         if (!TryGetPointer(out Vector2 pos, out bool down, out bool up))
@@ -17,21 +24,30 @@ public class ClickableComponent : MonoBehaviour
         }
 
         IClickable hitClickable = null;
-        if (Input.touchCount == 1)
+
+        if(Input.touchCount == 1)
         {
-            var ray = Camera.main.ScreenPointToRay(pos);
+            var ray = cam.ScreenPointToRay(pos);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
                 hitClickable = hit.collider.GetComponent<IClickable>();
             }
         }
 
-        if(hitClickable == null)
+        if (down && hitClickable == null)
         {
+            if(Variables.SelectedSlot != null)
+            {
+                Variables.SelectedSlot.OnPress(false);
+                Variables.SelectedSlot.DeselectThis();
+                Variables.SelectedSlot = null;
+            }
+
+            pressed = null;
             return;
         }
 
-        if(down)
+        if(down && hitClickable != null)
         {
             pressed = hitClickable;
             pressed.OnPress(true);

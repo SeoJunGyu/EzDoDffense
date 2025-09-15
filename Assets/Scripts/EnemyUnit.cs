@@ -99,7 +99,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
         if(Health <= 0 && !IsDead)
         {
-            Debug.Log($"{gameObject.name} Die");
             //Die
             IsDead = true;
 

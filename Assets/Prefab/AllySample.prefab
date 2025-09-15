@@ -1620,7 +1620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackInterval: 1
-  range: 6
+  range: 15
   enemyMask:
     serializedVersion: 2
     m_Bits: 64

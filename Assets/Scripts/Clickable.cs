@@ -11,11 +11,9 @@ public class Clickable : MonoBehaviour, IClickable
     private Renderer targetRenderer;
 
     private bool isPress;
-    private bool isSelected;
+    public bool IsSelected { get; set; }
 
-    private static Clickable selectedSlot;
-
-    private Dictionary<Transform, GameObject> sockets = new Dictionary<Transform, GameObject>();
+    private Dictionary<Transform, AllyUnit> sockets = new Dictionary<Transform, AllyUnit>();
     private int count = 0;
     public int SocketInCount
     {
@@ -32,6 +30,8 @@ public class Clickable : MonoBehaviour, IClickable
             return count;
         }
     }
+
+    public long UnitId { get; set; } = 0;
 
     private void Awake()
     {
@@ -53,20 +53,20 @@ public class Clickable : MonoBehaviour, IClickable
     {
         Debug.Log($"{name} Click / SocketInCount : {SocketInCount}");
 
-        if(selectedSlot == null)
+        if(Variables.SelectedSlot == null)
         {
             SelectThis();
             return;
         }
 
-        if(selectedSlot == this)
+        if(Variables.SelectedSlot == this)
         {
             DeselectThis();
             return;
         }
 
         //다른 슬롯이 선택되어있는 경우
-        var from = selectedSlot;
+        var from = Variables.SelectedSlot;
         var to = this;
 
         SwapUnits(from, to);
@@ -82,7 +82,7 @@ public class Clickable : MonoBehaviour, IClickable
 
     public void Refresh()
     {
-        if (isSelected)
+        if (IsSelected)
         {
             ApplyColor(selectedColor);
         }
@@ -104,17 +104,38 @@ public class Clickable : MonoBehaviour, IClickable
         }
     }
 
-    public bool SetSocket(GameObject prefab)
+    public bool SetSocket(AllyUnit prefab, AllyData data)
     {
         foreach(var socket in sockets)
         {
             if(socket.Value == null)
             {
+                if(UnitId == 0)
+                {
+                    UnitId = data.Unit_ID;
+                    Variables.SlotCount--;
+                }
+
                 var go = Instantiate(prefab, socket.Key.position, socket.Key.rotation);
                 sockets[socket.Key] = go;
 
-                var ally = go.GetComponent<AllyUnit>();
-                ally.Center = transform.position;
+                go.Center = transform.position;
+
+                try
+                {
+                    if(data.VisualModel == null)
+                    {
+                        throw new System.NullReferenceException("VisualModel null 뜸");
+                    }
+                }
+                catch(System.Exception ex)
+                {
+                    Debug.LogError(
+                        $"[Instantiate Error] Unit_Name = {data.Unit_Name}");
+                }
+
+                Instantiate(data.VisualModel, go.transform);
+                go.Setup(data);
 
                 return true;
             }
@@ -125,31 +146,31 @@ public class Clickable : MonoBehaviour, IClickable
 
     public void SelectThis()
     {
-        if(selectedSlot != null && selectedSlot != this)
+        if(Variables.SelectedSlot != null && Variables.SelectedSlot != this)
         {
-            selectedSlot.DeselectThis();
+            Variables.SelectedSlot.DeselectThis();
         }
 
-        selectedSlot = this;
-        isSelected = true;
+        Variables.SelectedSlot = this;
+        IsSelected = true;
         Refresh();
     }
 
     public void DeselectThis()
     {
-        if(selectedSlot == this)
+        if(Variables.SelectedSlot == this)
         {
-            selectedSlot = null;
+            Variables.SelectedSlot = null;
         }
 
-        isSelected = false;
+        IsSelected = false;
         Refresh();
     }
 
     //유닛 이동 배치
     public void MoveAllUnits(Clickable from, Clickable to)
     {
-        var fromPairs = new List<KeyValuePair<Transform, GameObject>>();
+        var fromPairs = new List<KeyValuePair<Transform, AllyUnit>>();
         foreach(var kv in from.sockets)
         {
             if(kv.Value != null)
@@ -190,8 +211,8 @@ public class Clickable : MonoBehaviour, IClickable
 
     public void SwapUnits(Clickable from, Clickable to)
     {
-        var fromOcc = new List<KeyValuePair<Transform, GameObject>>();
-        var toOcc = new List<KeyValuePair<Transform, GameObject>>();
+        var fromOcc = new List<KeyValuePair<Transform, AllyUnit>>();
+        var toOcc = new List<KeyValuePair<Transform, AllyUnit>>();
 
         foreach (var kv in from.sockets)
         {
@@ -302,7 +323,7 @@ public class Clickable : MonoBehaviour, IClickable
         }
     }
 
-    public void SendUnitTo(GameObject unit, Vector3 dest)
+    public void SendUnitTo(AllyUnit unit, Vector3 dest)
     {
         var ally = unit.GetComponent<AllyUnit>();
         if(ally != null)

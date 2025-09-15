@@ -11,6 +11,11 @@ public static class DefineNames
 public static class DataTableIds
 {
     public static readonly string Enemy = "EnemyTable";
+    public static readonly string Ally = "AllyTable";
+    public static readonly string AllRandom = "AllRandomTable";
+    public static readonly string NormalRandom = "NormalRandomTable";
+    public static readonly string PiercingRandom = "PiercingRandomTable";
+    public static readonly string MagicalRandom = "MagicalRandomTable";
 }
 
 public static class Variables
@@ -18,4 +23,7 @@ public static class Variables
     public static int Stage { get; set; } = 1;
     public static int EnemyTotalCount { get; set; } = 0;
     public static int AllyTotalCount { get; set; } = 20;
+    public static int SlotCount { get; set; } = 21;
+
+    public static Clickable SelectedSlot { get; set; }
 }

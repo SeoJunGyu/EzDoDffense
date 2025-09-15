@@ -7,6 +7,7 @@ using UnityEngine;
 
 public enum AttackTypes
 {
+    None,
     Normal,
     Piercing,
     Magic,
@@ -23,7 +24,7 @@ public class AllyData
     public int Unit_ATK_RNG { get; set; }
     public int Unit_Move_Speed { get; set; }
     public long Unit_Skill_1 { get; set; }
-    public int Unit_Skill_2 { get; set; }
+    public long Unit_Skill_2 { get; set; }
     public string Icon { get; set; }
     public string Model { get; set; }
 
@@ -35,7 +36,7 @@ public class AllyData
 
     public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");
     [Ignore]
-    public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.EnemyModelFolder}/{Model}");
+    public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.AllysModelFolder}/{Model}");
 }
 
 public class AllyTable : DataTable
@@ -61,6 +62,11 @@ public class AllyTable : DataTable
                 Debug.LogError($"Å° Áßº¹: {enemy.Unit_ID}");
             }
         }
+
+        foreach (var ally in dictionary)
+        {
+            Debug.Log(ally.Value);
+        }
     }
 
     public AllyData Get(long id)
@@ -73,5 +79,8 @@ public class AllyTable : DataTable
         return dictionary[id];
     }
 
-    
+    public AllyData GetAllRandom()
+    {
+        return dictionary[DataTableManager.AllRandomTable.GetRandomId()];
+    }
 }

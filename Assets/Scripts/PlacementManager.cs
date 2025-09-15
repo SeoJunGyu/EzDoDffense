@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class PlacementManager : MonoBehaviour
 {
-    [SerializeField] private GameObject prefab;
+    [SerializeField] private AllyUnit prefab;
     private List<Clickable> slots = new List<Clickable>();
+
+    private List<AllyUnit> allyUnits = new List<AllyUnit>();
 
     private void Awake()
     {
@@ -18,14 +20,29 @@ public class PlacementManager : MonoBehaviour
         slots.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //Debug.Log(DataTableManager.AllyTable.Get(1101011001));
+        }
+    }
+
     public void PlaceAlly()
     {
+        var data = DataTableManager.AllyTable.GetAllRandom();
         foreach (var slot in slots)
         {
-            if (slot.SocketInCount < 3)
+            var IsPlace = false;
+            if(slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
             {
-                slot.SetSocket(prefab);
-                Debug.Log($"{slot.name} / {prefab.name}");
+                IsPlace = true;
+            }
+
+            if (IsPlace)
+            {
+                slot.SetSocket(prefab, data);
+                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
                 break;
             }
         }
