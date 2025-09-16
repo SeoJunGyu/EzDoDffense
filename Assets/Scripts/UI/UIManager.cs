@@ -8,7 +8,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI GoldText;
 
-    public GameObject InfoPanel;
+    public UIUnitInfo AllyInfoPanel;
+    public UIUnitInfo EnemyInfoPanel;
     public Button UpgradeButton;
 
     private float surviveTime = 0f; //살아있는 시간
@@ -47,14 +48,17 @@ public class UIManager : MonoBehaviour
         GoldText.text = $"Gold : {Variables.Gold}";
     }
 
-    public void ActiveInfoPanel()
+    public void ActiveInfoPanel(AllyData data)
     {
         if(Variables.SelectedSlot.SocketInCount <= 0)
         {
             return;
         }
 
-        InfoPanel.SetActive(true);
+        AllyInfoPanel.SetAllyInfo(data);
+        AllyInfoPanel.gameObject.SetActive(true);
+
+        EnemyInfoPanel.gameObject.SetActive(false);
 
         if(Variables.SelectedSlot.SocketInCount >= 3)
         {
@@ -62,14 +66,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ActiveInfoPanel(EnemyData data)
+    public void ActiveInfoPanel(EnemyUnit enemy)
     {
-        InfoPanel.SetActive(true);
+        EnemyInfoPanel.SetEnemyInfo(enemy);
+        EnemyInfoPanel.gameObject.SetActive(true);
+
+        AllyInfoPanel.gameObject.SetActive(false);
+
         UpgradeButton.gameObject.SetActive(false);
     }
 
     public void UnActiveInfoPanel()
     {
-        InfoPanel.SetActive(false);
+        EnemyInfoPanel.gameObject.SetActive(false);
+        AllyInfoPanel.gameObject.SetActive(false);
     }
 }
