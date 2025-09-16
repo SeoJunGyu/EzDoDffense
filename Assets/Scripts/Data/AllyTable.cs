@@ -98,4 +98,18 @@ public class AllyTable : DataTable
     {
         return dictionary[DataTableManager.MagicalRandomTable.GetRandomId()];
     }
+
+    public AllyData GetUpgradeRandomId(int grade, int type)
+    {
+        var upgradeList = new List<KeyValuePair<long, AllyData>>();
+        foreach(var kv in dictionary)
+        {
+            if(kv.Value.Unit_Grade == grade + 1 && kv.Value.Unit_Type == type)
+            {
+                upgradeList.Add(kv);
+            }
+        }
+
+        return upgradeList[Random.Range(0, upgradeList.Count)].Value;
+    }
 }

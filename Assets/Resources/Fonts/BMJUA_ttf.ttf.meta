@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f185f50963ec0c24eab4090d73ba1990
+guid: 35c102ffec5561d4c81f6ae87735cb89
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Noto Sans KR
+  - BM JUA_TTF
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

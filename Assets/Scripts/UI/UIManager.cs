@@ -64,6 +64,10 @@ public class UIManager : MonoBehaviour
         {
             UpgradeButton.gameObject.SetActive(true);
         }
+        else
+        {
+            UpgradeButton.gameObject.SetActive(false);
+        }
     }
 
     public void ActiveInfoPanel(EnemyUnit enemy)
@@ -80,6 +84,5 @@ public class UIManager : MonoBehaviour
     {
         EnemyInfoPanel.gameObject.SetActive(false);
         AllyInfoPanel.gameObject.SetActive(false);
-        UpgradeButton.gameObject.SetActive(false);
     }
 }

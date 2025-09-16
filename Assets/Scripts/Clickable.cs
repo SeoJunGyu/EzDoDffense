@@ -35,8 +35,6 @@ public class Clickable : MonoBehaviour, IClickable
     public long UnitId { get; set; } = 0;
     public AllyData CurrentData { get; set; }
 
-    public event Action OnSynthesis;
-
     private void Awake()
     {
         targetRenderer = GetComponent<Renderer>();
@@ -343,6 +341,16 @@ public class Clickable : MonoBehaviour, IClickable
 
     public void SlotReset()
     {
+        var keys = sockets.Keys.ToList();
+
+        foreach (var key in keys)
+        {
+            if (sockets[key] != null)
+            {
+                sockets[key] = null;
+            }
+        }
+
         Variables.SlotCount++;
         UnitId = 0;
     }

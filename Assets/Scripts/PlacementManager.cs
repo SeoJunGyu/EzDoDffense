@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class PlacementManager : MonoBehaviour
     private List<Clickable> slots = new List<Clickable>();
 
     private List<AllyUnit> allyUnits = new List<AllyUnit>();
+
+    public event Action OnSynthesis;
 
     private void Awake()
     {
@@ -23,6 +26,17 @@ public class PlacementManager : MonoBehaviour
         {
             allyUnits.Add(CreateUnit());
         }
+
+        //test
+        var data = DataTableManager.AllyTable.Get(1202013002);
+        for(int i = 0; i < 3; i++)
+        {
+            if (!FindSameUnit(data, 0))
+            {
+                PlaceInSocket(data, 0);
+            }
+        }
+        
     }
 
     private void Update()
@@ -61,6 +75,34 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
+    public bool FindSameUnit(AllyData data, int cost)
+    {
+        foreach (var slot in slots)
+        {
+            bool IsPlace = slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId;
+
+            if (IsPlace)
+            {
+                return TryPlaceOnSlot(slot, data, cost);
+            }
+        }
+
+        return false;
+    }
+
+    public void PlaceInSocket(AllyData data, int cost)
+    {
+        foreach (var slot in slots)
+        {
+            bool IsPlace = slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId);
+
+            if (IsPlace && TryPlaceOnSlot(slot, data, cost))
+            {
+                return;
+            }
+        }
+    }
+
     public bool TryPlaceOnSlot(Clickable slot, AllyData data, int cost)
     {
         if (!TryPay(cost))
@@ -95,8 +137,8 @@ public class PlacementManager : MonoBehaviour
             unit.Setup(data);
             unit.gameObject.SetActive(true);
 
-            //slot.OnSynthesis += () => Destroy(visualModel);
-            //slot.OnSynthesis += () => unit.gameObject.SetActive(false);
+            OnSynthesis += () => Destroy(visualModel);
+            OnSynthesis += () => unit.gameObject.SetActive(false);
 
             Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
             return true;
@@ -161,5 +203,29 @@ public class PlacementManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    //유닛 합성
+    public void UnitSynthesis()
+    {
+        if(!Variables.SelectedSlot || Variables.SelectedSlot.SocketInCount < 3)
+        {
+            return;
+        }
+
+        if(Variables.SelectedSlot.CurrentData.Unit_Grade >= 5)
+        {
+            return;
+        }
+
+        OnSynthesis.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
+        Variables.SelectedSlot.SlotReset(); //소켓 딕셔너리, 슬롯 카운트, 슬롯 할당 유닛 id 리셋
+
+        //상위등급, 같은 타입 데이터 가져오기 및 배치
+        var data = DataTableManager.AllyTable.GetUpgradeRandomId(Variables.SelectedSlot.CurrentData.Unit_Grade, Variables.SelectedSlot.CurrentData.Unit_Type);
+        if (!FindSameUnit(data, 0))
+        {
+            PlaceInSocket(data, 0);
+        }
     }
 }
