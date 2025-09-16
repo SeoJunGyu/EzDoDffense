@@ -26,6 +26,7 @@ public class ClickableComponent : MonoBehaviour
         }
 
         IClickable hitClickable = null;
+        GameObject enemy = null;
 
         if(Input.touchCount == 1)
         {
@@ -33,6 +34,11 @@ public class ClickableComponent : MonoBehaviour
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
                 hitClickable = hit.collider.GetComponent<IClickable>();
+
+                if(hit.collider.gameObject.tag.Equals("Enemy"))
+                {
+                    enemy = hit.collider.gameObject;
+                }
             }
         }
 
@@ -68,6 +74,10 @@ public class ClickableComponent : MonoBehaviour
         if (Variables.SelectedSlot)
         {
             uiManager.ActiveInfoPanel();
+        }
+        else if(enemy != null)
+        {
+
         }
         else
         {

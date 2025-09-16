@@ -49,12 +49,23 @@ public class UIManager : MonoBehaviour
 
     public void ActiveInfoPanel()
     {
+        if(Variables.SelectedSlot.SocketInCount <= 0)
+        {
+            return;
+        }
+
         InfoPanel.SetActive(true);
 
         if(Variables.SelectedSlot.SocketInCount >= 3)
         {
             UpgradeButton.gameObject.SetActive(true);
         }
+    }
+
+    public void ActiveInfoPanel(EnemyData data)
+    {
+        InfoPanel.SetActive(true);
+        UpgradeButton.gameObject.SetActive(false);
     }
 
     public void UnActiveInfoPanel()

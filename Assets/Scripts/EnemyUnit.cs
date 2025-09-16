@@ -14,6 +14,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     private NavMeshAgent agent;
     private int deffense = 1;
     private EnemyTypes defType;
+    public EnemyData Data { get; private set; }
 
     private Vector3 target;
     private Vector3[] wayPoints;
@@ -125,5 +126,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         defType = (EnemyTypes)data.Unit_DEF_TYPE;
         agent.speed = data.Move_Speed;
         CurrentWayIndex = 0;
+        Data = data;
     }
 }
