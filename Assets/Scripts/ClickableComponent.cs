@@ -42,6 +42,22 @@ public class ClickableComponent : MonoBehaviour
             }
         }
 
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = cam.ScreenPointToRay(pos);
+            if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
+            {
+                hitClickable = hit.collider.GetComponent<IClickable>();
+
+                if (hit.collider.gameObject.tag.Equals("Enemy"))
+                {
+                    enemy = hit.collider.gameObject.GetComponent<EnemyUnit>();
+                }
+            }
+        }
+#endif
+
         if (down && hitClickable == null)
         {
             if(Variables.SelectedSlot != null)

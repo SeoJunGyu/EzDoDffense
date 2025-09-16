@@ -80,5 +80,6 @@ public class UIManager : MonoBehaviour
     {
         EnemyInfoPanel.gameObject.SetActive(false);
         AllyInfoPanel.gameObject.SetActive(false);
+        UpgradeButton.gameObject.SetActive(false);
     }
 }
