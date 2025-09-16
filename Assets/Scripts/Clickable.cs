@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,6 +34,8 @@ public class Clickable : MonoBehaviour, IClickable
 
     public long UnitId { get; set; } = 0;
     public AllyData CurrentData { get; set; }
+
+    public event Action OnSynthesis;
 
     private void Awake()
     {
@@ -105,7 +108,7 @@ public class Clickable : MonoBehaviour, IClickable
         }
     }
 
-    public bool SetSocket(AllyUnit prefab, AllyData data)
+    public bool SetSocket(AllyUnit unit, AllyData data)
     {
         foreach(var socket in sockets)
         {
@@ -118,26 +121,12 @@ public class Clickable : MonoBehaviour, IClickable
                     Variables.SlotCount--;
                 }
 
-                var go = Instantiate(prefab, socket.Key.position, socket.Key.rotation);
-                sockets[socket.Key] = go;
+                //var go = Instantiate(prefab, socket.Key.position, socket.Key.rotation);
 
-                go.Center = transform.position;
+                unit.transform.SetPositionAndRotation(socket.Key.position, socket.Key.rotation);
+                unit.Center = transform.position;
 
-                try
-                {
-                    if(data.VisualModel == null)
-                    {
-                        throw new System.NullReferenceException("VisualModel null ¶ä");
-                    }
-                }
-                catch(System.Exception ex)
-                {
-                    Debug.LogError(
-                        $"[Instantiate Error] Unit_Name = {data.Unit_Name}");
-                }
-
-                Instantiate(data.VisualModel, go.transform);
-                go.Setup(data);
+                sockets[socket.Key] = unit;
 
                 return true;
             }

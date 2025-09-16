@@ -18,6 +18,11 @@ public class PlacementManager : MonoBehaviour
             slots.Add(slot.GetComponent<Clickable>());
         }
         slots.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+
+        for(int i = 0; i < 10; i++)
+        {
+            allyUnits.Add(CreateUnit());
+        }
     }
 
     private void Update()
@@ -32,20 +37,11 @@ public class PlacementManager : MonoBehaviour
     {
         foreach (var slot in slots)
         {
-            var IsPlace = false;
-            if (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId)
+            bool IsPlace = slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId;
+
+            if (IsPlace)
             {
-                IsPlace = true;
-            }
-
-            if (IsPlace && Variables.Gold >= 50)
-            {
-                Variables.Gold -= 50;
-
-                slot.SetSocket(prefab, data);
-                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
-
-                return true;
+                return TryPlaceOnSlot(slot, data, 50);
             }
         }
 
@@ -56,21 +52,57 @@ public class PlacementManager : MonoBehaviour
     {
         foreach (var slot in slots)
         {
-            var IsPlace = false;
-            if (slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId))
+            bool IsPlace = slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId);
+
+            if (IsPlace && TryPlaceOnSlot(slot, data, 50))
             {
-                IsPlace = true;
+                return ;
             }
+        }
+    }
 
-            if (IsPlace && Variables.Gold >= 50)
+    public bool TryPlaceOnSlot(Clickable slot, AllyData data, int cost)
+    {
+        if (!TryPay(cost))
+        {
+            return false;
+        }
+
+        if(Variables.SlotCount <= 0)
+        {
+            return false;
+        }
+
+        AllyUnit unit = null;
+        foreach(var ally in allyUnits)
+        {
+            if (!ally.gameObject.activeSelf)
             {
-                Variables.Gold -= 50;
-
-                slot.SetSocket(prefab, data);
-                Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+                unit = ally;
                 break;
             }
         }
+
+        if(unit == null)
+        {
+            unit = Instantiate(prefab);
+            allyUnits.Add(unit);
+        }
+
+        if (slot.SetSocket(unit, data))
+        {
+            var visualModel = Instantiate(data.VisualModel, unit.transform);
+            unit.Setup(data);
+            unit.gameObject.SetActive(true);
+
+            //slot.OnSynthesis += () => Destroy(visualModel);
+            //slot.OnSynthesis += () => unit.gameObject.SetActive(false);
+
+            Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+            return true;
+        }
+
+        return false;
     }
 
     public void PlaceAllyAllRandom()
@@ -113,8 +145,21 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public void UpgradeUnit()
+    private AllyUnit CreateUnit()
     {
+        var unit = Instantiate(prefab);
+        unit.gameObject.SetActive(false);
+        return unit;
+    }
 
+    private bool TryPay(int cost)
+    {
+        if(Variables.Gold >= cost)
+        {
+            Variables.Gold -= cost;
+            return true;
+        }
+
+        return false;
     }
 }

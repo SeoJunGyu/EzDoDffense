@@ -79,6 +79,7 @@ public class EnemySpawner : MonoBehaviour
         if(enemy == null)
         {
             enemy = Instantiate(prefab, transform.position, transform.rotation);
+            enemies.Add(enemy);
         }
 
         enemy.Setup(currentEnemyData);
@@ -86,8 +87,6 @@ public class EnemySpawner : MonoBehaviour
         var visualModel = Instantiate(currentEnemyData.VisualModel, enemy.transform); //ÇÁ¸®Æé ¸ðµ¨ »ý¼º
 
         enemy.SetTarget(way);
-
-        enemies.Add(enemy);
 
         enemyCount++;
         Variables.EnemyTotalCount++;
