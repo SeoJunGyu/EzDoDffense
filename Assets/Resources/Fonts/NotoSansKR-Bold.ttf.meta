@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 01496e44cd3a6314aa03e55301e9b29d
+guid: f185f50963ec0c24eab4090d73ba1990
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - HabboPseudoMono
+  - Noto Sans KR
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
