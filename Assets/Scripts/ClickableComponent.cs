@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ClickableComponent : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class ClickableComponent : MonoBehaviour
             return;
         }
 
+        bool hitAny = false;
         IClickable hitClickable = null;
         EnemyUnit enemy = null;
 
@@ -33,6 +35,8 @@ public class ClickableComponent : MonoBehaviour
             var ray = cam.ScreenPointToRay(pos);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
+                hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
+
                 hitClickable = hit.collider.GetComponent<IClickable>();
 
                 if(hit.collider.gameObject.tag.Equals("Enemy"))
@@ -48,6 +52,8 @@ public class ClickableComponent : MonoBehaviour
             var ray = cam.ScreenPointToRay(pos);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
+                hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
+
                 hitClickable = hit.collider.GetComponent<IClickable>();
 
                 if (hit.collider.gameObject.tag.Equals("Enemy"))
@@ -58,7 +64,7 @@ public class ClickableComponent : MonoBehaviour
         }
 #endif
 
-        if (down && hitClickable == null)
+        if (down && !hitAny && hitClickable == null)
         {
             if(Variables.SelectedSlot != null)
             {
@@ -133,5 +139,33 @@ public class ClickableComponent : MonoBehaviour
             up = Input.GetMouseButtonUp(0);
             return true;
         }
+    }
+
+    private bool TryRaycastUI(Vector2 screenPos, out GameObject uiHit, List<RaycastResult> hitsBuffer = null)
+    {
+        uiHit = null;
+
+        if(EventSystem.current == null)
+        {
+            return false;
+        }
+
+        var data = new PointerEventData(EventSystem.current)
+        {
+            position = screenPos
+        };
+
+        var results = hitsBuffer ?? new List<RaycastResult>();
+        results.Clear();
+
+        EventSystem.current.RaycastAll(data, results);
+
+        if(results.Count > 0)
+        {
+            uiHit = results[0].gameObject;
+            return true;
+        }
+
+        return false;
     }
 }
