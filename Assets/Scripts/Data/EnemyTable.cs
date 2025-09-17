@@ -60,6 +60,56 @@ public class EnemyData
     public Sprite SpriteMoveSpeedIcon => Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/EnemyMoveSpeedIcon");
     [Ignore]
     public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.EnemyModelFolder}/{Model}");
+
+    public AttackTypes Advangage
+    {
+        get
+        {
+            AttackTypes type = AttackTypes.None;
+            switch (Unit_DEF_TYPE)
+            {
+                case 1:
+                    type = AttackTypes.Normal;
+                    break;
+                case 2:
+                    type = AttackTypes.Magic;
+                    break;
+                case 3:
+                    type = AttackTypes.Piercing;
+                    break;
+                case 4:
+                    type = AttackTypes.None;
+                    break;
+            }
+
+            return type;
+        }
+    }
+
+    public AttackTypes Disadvangage
+    {
+        get
+        {
+            AttackTypes type = AttackTypes.None;
+            switch (Unit_DEF_TYPE)
+            {
+                case 1:
+                    type = AttackTypes.Piercing;
+                    break;
+                case 2:
+                    type = AttackTypes.Normal;
+                    break;
+                case 3:
+                    type = AttackTypes.Magic;
+                    break;
+                case 4:
+                    type = AttackTypes.None;
+                    break;
+            }
+
+            return type;
+        }
+    }
 }
 
 public class EnemyTable : DataTable

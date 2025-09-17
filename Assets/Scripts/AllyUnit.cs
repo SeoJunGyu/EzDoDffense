@@ -77,7 +77,7 @@ public class AllyUnit : MonoBehaviour
 
             if (attackTimer > attackInterval)
             {
-                target.OnDamage(damage);
+                target.OnDamage(damage, unitType);
                 attackTimer = 0f;
             }
 

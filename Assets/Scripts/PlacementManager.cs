@@ -26,6 +26,7 @@ public class PlacementManager : MonoBehaviour
         }
 
         //test
+        /*
         var data = DataTableManager.AllyTable.Get(1202013002);
         for(int i = 0; i < 3; i++)
         {
@@ -34,7 +35,7 @@ public class PlacementManager : MonoBehaviour
                 PlaceInSocket(data, 0);
             }
         }
-        
+        */
     }
 
     private void Update()

@@ -28,6 +28,9 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
     public event Action OnDeath;
 
+    [SerializeField] private float adventageDamageRate = 1.2f;
+    [SerializeField] private float disAdventageDamageRate = 0.8f;
+
     private void OnEnable()
     {
         IsDead = false;
@@ -91,7 +94,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         agent.SetDestination(target);
     }
 
-    public void OnDamage(float damage)
+    public void OnDamage(float damage, AttackTypes attackType)
     {
         if(Health < 0)
         {
@@ -100,12 +103,33 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
         canvas.gameObject.SetActive(true);
 
-        Health -= damage;
-        UpdateHealthBar();
+        if(Data.Advangage == AttackTypes.None) //영웅 장갑
+        {
+            Health -= damage * disAdventageDamageRate;
+            UpdateHealthBar();
+        }
+        else if(attackType == Data.Advangage)
+        {
+            Health -= damage * adventageDamageRate;
+            Debug.Log($"유리 상성 -> {damage} -> {damage * adventageDamageRate}");
+            UpdateHealthBar();
+        }
+        else if(attackType == Data.Disadvangage)
+        {
+            Health -= damage * disAdventageDamageRate;
+            Debug.Log($"불리 상성 -> {damage} -> {damage * disAdventageDamageRate}");
+            UpdateHealthBar();
+        }
+        else
+        {
+            Health -= damage;
+            UpdateHealthBar();
+        }
 
-        if(Health <= 0 && !IsDead)
+        if (Health <= 0 && !IsDead)
         {
             //Die
+            Health = 0;
             Variables.Gold += 10;
             canvas.gameObject.SetActive(false);
 
