@@ -33,16 +33,6 @@ public class AllyUnit : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void OnEnable()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
-
-    private void OnDisable()
-    {
-        animator = null;
-    }
-
     private void Update()
     {
         UpdateMove();
@@ -138,10 +128,14 @@ public class AllyUnit : MonoBehaviour
         skill1 = data.Unit_Skill_1;
         skill2 = data.Unit_Skill_2;
 
+        animator = GetComponentInChildren<Animator>();
+
     }
 
     public void SynthesisAfter()
     {
+        animator = null;
+
         OnSynthesis?.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
     }
 

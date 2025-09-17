@@ -28,10 +28,7 @@ public class PlacementManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Debug.Log(DataTableManager.AllyTable.Get(1101011001));
-        }
+#if UNITY_EDITOR
         if (Input.touchCount == 2)
         {
             var data = DataTableManager.AllyTable.Get(1101011001);
@@ -43,6 +40,19 @@ public class PlacementManager : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            var data = DataTableManager.AllyTable.Get(1101011001);
+            for (int i = 0; i < 3; i++)
+            {
+                if (!FindSameUnit(data, 0))
+                {
+                    PlaceInSocket(data, 0);
+                }
+            }
+        }
+#endif
+
     }
 
     public bool FindSameUnit(AllyData data)
