@@ -362,6 +362,8 @@ MonoBehaviour:
   maxHealth: 100
   healthSlider: {fileID: 152977506264285074}
   canvas: {fileID: 4963648978802821473}
+  adventageDamageRate: 1.2
+  disAdventageDamageRate: 0.8
 --- !u!1 &4774082138202680457
 GameObject:
   m_ObjectHideFlags: 0

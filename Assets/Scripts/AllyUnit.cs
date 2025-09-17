@@ -26,15 +26,32 @@ public class AllyUnit : MonoBehaviour
 
     public event Action OnSynthesis;
 
+    private Animator animator;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void OnEnable()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    private void OnDisable()
+    {
+        animator = null;
     }
 
     private void Update()
     {
         UpdateMove();
         UpdateAttack();
+
+        if (target)
+        {
+            transform.LookAt(target.transform);
+        }
     }
 
     public void UpdateMove()
@@ -72,8 +89,12 @@ public class AllyUnit : MonoBehaviour
                 Vector3.Distance(target.transform.position, Center) > range)
             {
                 target = null;
+                animator.SetBool("IsTarget", false);
+
                 return;
             }
+
+            animator.SetBool("IsTarget", true);
 
             if (attackTimer > attackInterval)
             {

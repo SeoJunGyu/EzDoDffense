@@ -35,6 +35,8 @@ public class Clickable : MonoBehaviour, IClickable
     public long UnitId { get; set; } = 0;
     public AllyData CurrentData { get; set; }
 
+    public GameObject Range;
+
     private void Awake()
     {
         targetRenderer = GetComponent<Renderer>();
@@ -143,6 +145,13 @@ public class Clickable : MonoBehaviour, IClickable
         Variables.SelectedSlot = this;
         IsSelected = true;
         Refresh();
+
+        if(count > 0)
+        {
+            float diameter = (CurrentData.Unit_ATK_RNG +4f ) * 0.2f;
+            Range.transform.localScale = new Vector3(diameter, diameter, 1f);
+            Range.SetActive(true);
+        }
     }
 
     public void DeselectThis()
@@ -154,6 +163,8 @@ public class Clickable : MonoBehaviour, IClickable
 
         IsSelected = false;
         Refresh();
+
+        Range.SetActive(false);
     }
 
     //유닛 이동 배치

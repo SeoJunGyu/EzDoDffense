@@ -24,11 +24,6 @@ public class PlacementManager : MonoBehaviour
         {
             allyUnits.Add(CreateUnit());
         }
-
-        //test
-        /*
-        
-        */
     }
 
     private void Update()
