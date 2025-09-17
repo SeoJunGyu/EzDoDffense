@@ -40,7 +40,9 @@ public class AllyUnit : MonoBehaviour
 
         if (target)
         {
-            transform.LookAt(target.transform);
+            Vector3 dir = target.transform.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, 180f * Time.deltaTime);
         }
     }
 
