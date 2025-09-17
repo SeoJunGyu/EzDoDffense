@@ -369,7 +369,7 @@ public class Clickable : MonoBehaviour, IClickable
         }
 
         Variables.SlotCount++;
-        UnitId = data.Unit_ID;
-        CurrentData = data;
+        UnitId = 0;
+        CurrentData = null;
     }
 }
