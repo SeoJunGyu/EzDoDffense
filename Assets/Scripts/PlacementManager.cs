@@ -11,8 +11,6 @@ public class PlacementManager : MonoBehaviour
 
     private List<AllyUnit> allyUnits = new List<AllyUnit>();
 
-    public event Action OnSynthesis;
-
     private void Awake()
     {
         var slotGos = GameObject.FindGameObjectsWithTag("Slot");
@@ -137,8 +135,8 @@ public class PlacementManager : MonoBehaviour
             unit.Setup(data);
             unit.gameObject.SetActive(true);
 
-            OnSynthesis += () => Destroy(visualModel);
-            OnSynthesis += () => unit.gameObject.SetActive(false);
+            unit.OnSynthesis += () => Destroy(visualModel);
+            unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
             Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
             return true;
@@ -217,8 +215,6 @@ public class PlacementManager : MonoBehaviour
         {
             return;
         }
-
-        OnSynthesis.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
 
         //상위등급, 같은 타입 데이터 가져오기 및 배치
         var data = DataTableManager.AllyTable.GetUpgradeRandomId(Variables.SelectedSlot.CurrentData.Unit_Grade, Variables.SelectedSlot.CurrentData.Unit_Type);

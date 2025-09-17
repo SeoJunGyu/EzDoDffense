@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,6 +23,8 @@ public class AllyUnit : MonoBehaviour
     private EnemyUnit target;
 
     private bool IsMove { get; set; }
+
+    public event Action OnSynthesis;
 
     private void Awake()
     {
@@ -114,6 +117,11 @@ public class AllyUnit : MonoBehaviour
         skill1 = data.Unit_Skill_1;
         skill2 = data.Unit_Skill_2;
 
+    }
+
+    public void SynthesisAfter()
+    {
+        OnSynthesis?.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
     }
 
     private void OnDrawGizmosSelected()

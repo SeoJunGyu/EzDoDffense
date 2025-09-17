@@ -14,7 +14,7 @@ public class Clickable : MonoBehaviour, IClickable
     private bool isPress;
     public bool IsSelected { get; set; }
 
-    private Dictionary<Transform, AllyUnit> sockets = new Dictionary<Transform, AllyUnit>();
+    public Dictionary<Transform, AllyUnit> sockets = new Dictionary<Transform, AllyUnit>();
     private int count = 0;
     public int SocketInCount
     {
@@ -363,6 +363,7 @@ public class Clickable : MonoBehaviour, IClickable
         {
             if (sockets[key] != null)
             {
+                sockets[key].SynthesisAfter();
                 sockets[key] = null;
             }
         }
