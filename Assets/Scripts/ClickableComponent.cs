@@ -33,10 +33,11 @@ public class ClickableComponent : MonoBehaviour
         if(Input.touchCount == 1)
         {
             var ray = cam.ScreenPointToRay(pos);
+
+            hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
+
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
-                hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
-
                 hitClickable = hit.collider.GetComponent<IClickable>();
 
                 if(hit.collider.gameObject.tag.Equals("Enemy"))
@@ -50,10 +51,11 @@ public class ClickableComponent : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             var ray = cam.ScreenPointToRay(pos);
+
+            hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
+
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {
-                hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
-
                 hitClickable = hit.collider.GetComponent<IClickable>();
 
                 if (hit.collider.gameObject.tag.Equals("Enemy"))
@@ -163,6 +165,7 @@ public class ClickableComponent : MonoBehaviour
         if(results.Count > 0)
         {
             uiHit = results[0].gameObject;
+            Debug.Log(uiHit.name);
             return true;
         }
 

@@ -219,13 +219,15 @@ public class PlacementManager : MonoBehaviour
         }
 
         OnSynthesis.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
-        Variables.SelectedSlot.SlotReset(); //소켓 딕셔너리, 슬롯 카운트, 슬롯 할당 유닛 id 리셋
 
         //상위등급, 같은 타입 데이터 가져오기 및 배치
         var data = DataTableManager.AllyTable.GetUpgradeRandomId(Variables.SelectedSlot.CurrentData.Unit_Grade, Variables.SelectedSlot.CurrentData.Unit_Type);
+        Variables.SelectedSlot.SlotReset(data); //소켓 딕셔너리, 슬롯 카운트, 슬롯 할당 유닛 id -> 바뀐 id로 변경
         if (!FindSameUnit(data, 0))
         {
             PlaceInSocket(data, 0);
         }
+
+        Variables.SelectedSlot.DeselectThis();
     }
 }

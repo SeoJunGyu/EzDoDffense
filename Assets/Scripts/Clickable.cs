@@ -352,6 +352,23 @@ public class Clickable : MonoBehaviour, IClickable
         }
 
         Variables.SlotCount++;
+        CurrentData = null;
         UnitId = 0;
+    }
+    public void SlotReset(AllyData data)
+    {
+        var keys = sockets.Keys.ToList();
+
+        foreach (var key in keys)
+        {
+            if (sockets[key] != null)
+            {
+                sockets[key] = null;
+            }
+        }
+
+        Variables.SlotCount++;
+        UnitId = data.Unit_ID;
+        CurrentData = data;
     }
 }
