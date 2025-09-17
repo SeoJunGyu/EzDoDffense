@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIUnitInfo : MonoBehaviour
 {
@@ -10,10 +11,16 @@ public class UIUnitInfo : MonoBehaviour
     public TextMeshProUGUI Unit_Name;
     public TextMeshProUGUI Damage;
     public TextMeshProUGUI AttackSpeed;
+    public Image UnitImage;
+    public Image DamageImage;
+    public Image SpeedImage;
+    public Image Skill1;
+    public Image Skill2;
 
     public TextMeshProUGUI Deffense;
     public TextMeshProUGUI HP;
     public TextMeshProUGUI MoveSpeed;
+
 
     public void SetAllyInfo(AllyData data)
     {
@@ -21,6 +28,10 @@ public class UIUnitInfo : MonoBehaviour
         Unit_Name.text = data.Unit_Name;
         Damage.text = data.Unit_ATK.ToString();
         AttackSpeed.text = data.Unit_ATK_SPD.ToString();
+
+        UnitImage.sprite = data.SpriteUnitIcon;
+        DamageImage.sprite = data.SpriteDamageIcon;
+        SpeedImage.sprite = data.SpriteATKSpeedIcon;
     }
 
     public void SetEnemyInfo(EnemyUnit enemy)
@@ -29,5 +40,9 @@ public class UIUnitInfo : MonoBehaviour
         Deffense.text = enemy.Data.Unit_DEF.ToString();
         MoveSpeed.text = enemy.Data.Move_Speed.ToString();
         HP.text = $"HP : {enemy.Health}";
+
+        UnitImage.sprite = enemy.Data.SpriteUnitIcon;
+        DamageImage.sprite = enemy.Data.SpriteDEFTypeIcon;
+        SpeedImage.sprite = enemy.Data.SpriteMoveSpeedIcon;
     }
 }

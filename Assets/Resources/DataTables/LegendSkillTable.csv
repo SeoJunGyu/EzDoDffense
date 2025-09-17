@@ -1,0 +1,6 @@
+Skill_ID,Skill_Name,Skill_Grade,Skill_Type,Skill_Random,Skill_Target,Skill_Area,Skill_Effect_1,Skill_Effect_Value_1,Skill_Duration_1,Skill_Effect_2,Skill_Effect_Value_2,Skill_Duration_2,Skill_Effect,Skill_Sound,icon
+42235400,흑마빙정,4,2,30,2,3,5,400,0,6,0,2,Air_attack,Apple_bombs,61_Ice_III
+42325350,지폭토성,4,2,30,3,2,5,350,0,4,10,5,Wood_shield,SFX_Vefects_Explosion_Artillery,467_Earth_Pierce
+42325300,파괴광선,4,2,30,3,2,5,300,0,4,15,5,Toon_expoision,Fire_meteors,127_Nightvision
+52235550,황천의단절,5,2,30,2,3,5,550,0,6,0,3.5,Magic_aura,Energy_buff,155_Omnipotent
+52325500,블랙홀,5,2,30,3,2,5,500,0,6,0,2.5,BlackHole,Energy_shockwave,73_Darkness_Grimoire

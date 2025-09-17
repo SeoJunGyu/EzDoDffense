@@ -1,0 +1,27 @@
+[아군 유닛]
+
+일반형 아이콘 : Iron_Weapon5
+관통형 아이콘 : Iron_Weapon25
+마법형 아이콘 : 01_Fire_Grimoire
+
+[적 유닛]
+
+경장갑형 아이콘 : Iron_Chestplate2
+중장갑형 아이콘 : Iron_Chestplate7
+마법장갑형 아이콘 : MagicArmor_286
+영웅장갑형 아이콘 : Steel_Chestplate17
+
+
+[설정 화면]
+설정 들어가는 아이콘 : settings
+사운드가 0일 때 : volume-mute
+사운드가 1~5일 때 : volume-full
+
+[게임 화면]
+로비로 돌아가기 : home
+골드 : coin
+보석 : diamond
+강화 : arrow-round-up
+조합 : bars
+유닛 판매 : trash-bin
+미션 : banner

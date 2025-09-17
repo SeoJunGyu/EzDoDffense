@@ -1,0 +1,21 @@
+Skill_ID,Skill_Name,Skill_Grade,Skill_Type,Skill_Effect,Skill_Effect_Value,Skill_Target,Skill_Area,Skill_Duration,Skill_Random,Skill_Effect,Skill_Sound,icon
+111005411,더 세게!,1,1,1,5,4,1,1,100,Misses,SFX_Vefects_Loot_Common_Loop,556_Breakout
+112005411,더 빨리!,1,1,2,5,4,1,1,100,Level_up,SFX_Vefects_Loot_Uncommon_Loop,128_Copy
+211010411,오우거의 근력,2,1,1,10,4,1,1,100,Magic_shield_pink,SFX_Vefects_Loot_Rare_Loop,558_Hand
+212010411,그레이트 헤이스트,2,1,2,10,4,1,1,100,Magic_shield_yellow,SFX_Vefects_Loot_Unique_Loop,565_Raven
+311025411,힘의 갈망,3,1,1,25,4,1,1,100,Freeze_circle,SFX_Vefects_Item_Epic_Loop,114_Booster_Steel
+312025411,에인션트 헤이스트,3,1,2,25,4,1,1,100,Healing_circle,SFX_Vefects_Level_Up_034,588_Flash
+411050411,절대적인 힘,4,1,1,50,4,1,1,100,Magic_circle_2,SFX_Vefects_Loot_Legendary_Loop,78_Darkness_Armor
+412050411,무하한,4,1,2,50,4,1,1,100,Magic_circle,SFX_Vefects_Loot_Epic_Loop,77_Darkness_III
+113003511,약화,1,1,3,3,5,1,1,100,Wet_1,SFX_Vefects_Vignettes_Drunk_End,75_Darkness_I
+114003511,슬로우,1,1,4,3,5,1,1,100,Wet,SFX_Vefects_Vignettes_Drunk_Cast,43_Nature_I
+213010511,어둠의 저주,2,1,3,10,5,1,1,100,Aura_slowdown,SFX_Vefects_Stylized_Magic_Attack_Dark_Cast,495_Darkness_Blasphemy
+313020511,약자 멸시,3,1,3,20,5,1,1,100,Aura_slowdown_1,SFX_Vefects_Stylized_Magic_Attack_Dark_Projectile,74_Darkness_Element
+314020511,극한의 한파,3,1,4,20,5,1,1,100,FX_SnowBlue,SFX_Vefects_Smoke_Bombs_Snow_Storm,62_Ice_Armor
+413040511,군주의 경멸,4,1,3,40,5,1,1,100,Debuff_03,SFX_Vefects_Anime_Stylized_Debuff_Loop,493_Darkness_DemonicSummon
+115300230,벼락 베기,1,1,5,300,2,3,0,30,Electro_slash,SFX_Vefects_Stylized_Slash_Electric,15_Lightning_Sword
+115200320,불꽃 폭주,1,1,5,200,3,2,0,30,Red_energy_explosion,SFX_Vefects_Stylized_Magic_Attack_Fire_Cast,459_Fire_MeteorShower
+215350230,마암의 일격,2,1,5,350,2,3,0,30,Stone_slash,SFX_Vefects_Stylized_Slash_Earth,39_Earth_Sword
+215250320,아이스 시클,2,1,5,250,3,2,0,30,Ice_attack,Ice_wall,487_Ice_Blizzard
+315450230,어둠의 분노,3,1,5,450,2,3,0,30,Hit_cuts,SFX_Vefects_Anime_Stylized_Debuff_Cast,07_Fire_Sword
+415600230,마검강림,4,1,5,600,2,3,0,30,Sword_crater,Sword_air_attack,79_Darkness_Sword

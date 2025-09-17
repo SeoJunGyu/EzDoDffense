@@ -3,7 +3,10 @@ using UnityEngine;
 
 public static class DefineNames
 {
-    public static readonly string IconsFolder = "Icon";
+    public static readonly string AllyIconsFolder = "Icons/Allys";
+    public static readonly string EnemyIconsFolder = "Icons/Enemies";
+    public static readonly string SkillIconsFolder = "Icons/SkillAndUI";
+    public static readonly string UIIconsFolder = "Icons/SkillAndUI";
     public static readonly string AllysModelFolder = "Prefabs/Allys";
     public static readonly string EnemyModelFolder = "Prefabs/Enemies";
 }

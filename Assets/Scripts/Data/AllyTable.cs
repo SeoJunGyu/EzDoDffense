@@ -34,7 +34,31 @@ public class AllyData
         //return $"{Unit_ID} / {Unit_Name} /{Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage}";
     }
 
-    public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");
+    public Sprite SpriteUnitIcon => Resources.Load<Sprite>($"{DefineNames.AllyIconsFolder}/{Icon}");
+    public Sprite SpriteDamageIcon
+    {
+        get
+        {
+            Sprite spIcon = null;
+            switch (Unit_Type)
+            {
+                case 1:
+                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Weapon5");
+                    break;
+                case 2:
+                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Weapon25");
+                    break;
+                case 3:
+                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/01_Fire_Grimoire");
+                    break;
+            }
+
+            return spIcon;
+        }
+        
+    }
+    public Sprite SpriteATKSpeedIcon => Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/AllyATKSpeedIcon");
+
     [Ignore]
     public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.AllysModelFolder}/{Model}");
 }

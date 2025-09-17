@@ -32,7 +32,32 @@ public class EnemyData
         //return $"{Unit_ID} / {Unit_Name} /{Unit_DEF_TYPE} / {Unit_DEF} / {Unit_HP} / {Stage}";
     }
     
-    public Sprite SpriteIcon => Resources.Load<Sprite>($"{DefineNames.IconsFolder}/{Icon}");
+    public Sprite SpriteUnitIcon => Resources.Load<Sprite>($"{DefineNames.EnemyIconsFolder}/{Icon}");
+    public Sprite SpriteDEFTypeIcon
+    {
+        get
+        {
+            Sprite icon = null;
+            switch (Unit_DEF_TYPE)
+            {
+                case 1:
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Chestplate2");
+                    break;
+                case 2:
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Chestplate7");
+                    break;
+                case 3:
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/MagicArmor_286");
+                    break;
+                case 4:
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/MagicArmor_286");
+                    break;
+            }
+
+            return icon;
+        }
+    }
+    public Sprite SpriteMoveSpeedIcon => Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/EnemyMoveSpeedIcon");
     [Ignore]
     public GameObject VisualModel => Resources.Load<GameObject>($"{DefineNames.EnemyModelFolder}/{Model}");
 }
