@@ -40,16 +40,16 @@ public class EnemyData
             switch (Unit_DEF_TYPE)
             {
                 case 1:
-                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Chestplate2");
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Skin");
                     break;
                 case 2:
-                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Chestplate7");
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Armor");
                     break;
                 case 3:
-                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/MagicArmor_286");
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Hat");
                     break;
                 case 4:
-                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/MagicArmor_286");
+                    icon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Crown");
                     break;
             }
 

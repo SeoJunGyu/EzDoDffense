@@ -41,13 +41,13 @@ public class AllyData
             switch (Unit_Type)
             {
                 case 1:
-                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Weapon5");
+                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Attack");
                     break;
                 case 2:
-                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/Iron_Weapon25");
+                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Bow");
                     break;
                 case 3:
-                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/01_Fire_Grimoire");
+                    spIcon = Resources.Load<Sprite>($"{DefineNames.UIIconsFolder}/PictoIcon_Book");
                     break;
             }
 

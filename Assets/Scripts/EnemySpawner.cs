@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     private EnemyData currentEnemyData;
 
-    [SerializeField] private float spawnInterval = 0.75f;
+    [SerializeField] private float spawnInterval = 1.5f;
     [SerializeField] private float spawnTime = 0f;
 
     public EnemyUnit testTarget;
@@ -34,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
             var enemy = Instantiate(prefab, transform.position, transform.rotation);
             enemies.Add(enemy);
             enemy.gameObject.SetActive(false);
+
+            Variables.EnemyTotalCount++;
         }
     }
 
@@ -91,9 +93,14 @@ public class EnemySpawner : MonoBehaviour
         enemyCount++;
         Variables.EnemyTotalCount++;
 
-        enemy.OnDeath += () => Destroy(visualModel);
-        enemy.OnDeath += () => enemy.gameObject.SetActive(false);
+        SetOnDeathEvent(enemy, visualModel);
     }
 
     public void GetCurrentEnemyData() => currentEnemyData = DataTableManager.EnemyTable.GetStageEnemy(Variables.Stage);
+
+    private void SetOnDeathEvent(EnemyUnit enemy, GameObject visualModel)
+    {
+        enemy.OnDeath += () => Destroy(visualModel);
+        enemy.OnDeath += () => enemy.gameObject.SetActive(false);
+    }
 }
