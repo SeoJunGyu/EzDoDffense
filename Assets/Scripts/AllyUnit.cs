@@ -81,12 +81,12 @@ public class AllyUnit : MonoBehaviour
                 Vector3.Distance(target.transform.position, Center) > range)
             {
                 target = null;
-                animator.SetBool("IsTarget", false);
+                SafeSetBoolAnimator("IsTarget", false);
 
                 return;
             }
 
-            animator.SetBool("IsTarget", true);
+            SafeSetBoolAnimator("IsTarget", true);
 
             if (attackTimer > attackInterval)
             {
@@ -139,6 +139,24 @@ public class AllyUnit : MonoBehaviour
         animator = null;
 
         OnSynthesis?.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
+    }
+
+    private void SafeSetBoolAnimator(string name, bool value)
+    {
+        if(animator == null)
+        {
+            return;
+        }
+        if (!animator)
+        {
+            return;
+        }
+        if (!animator.isActiveAndEnabled)
+        {
+            return;
+        }
+
+        animator.SetBool(name, value);
     }
 
     private void OnDrawGizmosSelected()

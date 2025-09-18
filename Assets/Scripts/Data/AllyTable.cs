@@ -1,8 +1,6 @@
 using CsvHelper.Configuration.Attributes;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public enum AttackTypes

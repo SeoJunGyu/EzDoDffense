@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useUnScaledTime: 0
-  timeScale: 1
+  timeScale: 2
 --- !u!4 &207916318
 Transform:
   m_ObjectHideFlags: 0
@@ -6842,7 +6842,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBE48\uACF5\uAC04"
+  m_text: "[\uC77C\uBC18\uD615] \uBC15\uC950"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7be5f1472979416489021c98d59b346c, type: 2}
   m_sharedMaterial: {fileID: -4236193874447128172, guid: 7be5f1472979416489021c98d59b346c, type: 2}
@@ -7334,7 +7334,7 @@ MonoBehaviour:
   - {fileID: 186664586}
   - {fileID: 691855500}
   - {fileID: 792704516}
-  spawnInterval: 1.5
+  spawnInterval: 0.75
   spawnTime: 0
   testTarget: {fileID: 0}
 --- !u!4 &2097193187

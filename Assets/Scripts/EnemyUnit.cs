@@ -30,6 +30,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
     [SerializeField] private float adventageDamageRate = 1.2f;
     [SerializeField] private float disAdventageDamageRate = 0.8f;
+    [SerializeField] private int addGold = 8;
 
     private void OnEnable()
     {
@@ -130,7 +131,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         {
             //Die
             Health = 0;
-            Variables.Gold += 10;
+            Variables.Gold += addGold;
             canvas.gameObject.SetActive(false);
 
             IsDead = true;

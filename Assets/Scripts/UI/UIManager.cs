@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     private float second = 0f; //초 시간
     private float minute = 0f; //분 시간
 
+    private float nextStageTime = 30f;
+
     private void Update()
     {
         UpdateStage();
@@ -36,9 +38,10 @@ public class UIManager : MonoBehaviour
         second = Mathf.FloorToInt(surviveTime) % 60;
         TimeText.text = $"{minute:00} : {second:00}";
 
-        if(prevMinute != minute)
+        if(surviveTime >= nextStageTime)
         {
             Variables.Stage++;
+            nextStageTime += 30f;
         }
 
     }

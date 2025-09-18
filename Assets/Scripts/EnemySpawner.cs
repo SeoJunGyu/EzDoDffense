@@ -14,7 +14,7 @@ public class EnemySpawner : MonoBehaviour
 
     private EnemyData currentEnemyData;
 
-    [SerializeField] private float spawnInterval = 1.5f;
+    [SerializeField] private float spawnInterval = 0.75f;
     [SerializeField] private float spawnTime = 0f;
 
     public EnemyUnit testTarget;
