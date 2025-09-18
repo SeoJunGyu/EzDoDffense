@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 1.5f;
     [SerializeField] private float spawnTime = 0f;
 
-    public EnemyUnit testTarget;
+    private float currentStage = 1;
 
     private void Awake()
     {
@@ -39,20 +39,29 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Variables.Boss)
         {
-            //CreateEnemy();
-            //var data = DataTableManager.EnemyTable.Get(10050050001);
-            //Debug.Log(data);
+            if (Variables.Boss.IsDead)
+            {
+                Variables.Boss = null;
+            }
+            else
+            {
+                return;
+            }
+        }
 
-            //testTarget.OnDamage(10f);
+        if(Variables.Stage > 100)
+        {
+            return;
         }
 
         spawnTime += Time.deltaTime;
         if(spawnTime > spawnInterval)
         {
-            if(enemyCount >= 40)
+            if(currentStage != Variables.Stage)
             {
+                currentStage = Variables.Stage;
                 GetCurrentEnemyData();
 
                 enemyCount = 0;
@@ -92,6 +101,11 @@ public class EnemySpawner : MonoBehaviour
         Variables.EnemyTotalCount++;
 
         SetOnDeathEvent(enemy, visualModel);
+
+        if(Variables.Stage % 10 == 0)
+        {
+            Variables.Boss = enemy;
+        }
     }
 
     public void GetCurrentEnemyData() => currentEnemyData = DataTableManager.EnemyTable.GetStageEnemy(Variables.Stage);

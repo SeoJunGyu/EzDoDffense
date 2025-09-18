@@ -48,4 +48,25 @@ public class UICheat : MonoBehaviour
     {
         Time.timeScale = 2f;
     }
+
+    public void TimeScaleFifth()
+    {
+        Time.timeScale = 5f;
+    }
+
+    public void StagePlusOne()
+    {
+        Variables.Stage += 1;
+    }
+
+    public void StagePlusTen()
+    {
+
+        Variables.Stage = (Variables.Stage % 10) * 10;
+    }
+
+    public void StageHundred()
+    {
+        Variables.Stage = 100;
+    }
 }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
     public UICheat cheat;
 
     public GameObject GameOverUI;
+    public GameObject VictoryUI;
 
     private void Awake()
     {
@@ -44,6 +46,15 @@ public class UIManager : MonoBehaviour
 
     private void UpdateTime()
     {
+        if(Variables.EnemyTotalCount >= 100 || Variables.Boss)
+        {
+            TimeText.color = Color.red;
+        }
+        else
+        {
+            TimeText.color = Color.black;
+        }
+
         surviveTime = GameManager.Instance.Timer.Elapsed;
         var prevMinute = minute;
         minute = Mathf.FloorToInt(surviveTime / 60f);
@@ -52,6 +63,15 @@ public class UIManager : MonoBehaviour
 
         if(surviveTime >= nextStageTime)
         {
+            if (Variables.Stage >= 100)
+            {
+                Variables.Stage = 100;
+            }
+            else if (Variables.Boss)
+            {
+                nextStageTime = surviveTime + 30f;
+                return;
+            }
             Variables.Stage++;
             nextStageTime += 30f;
         }
@@ -119,8 +139,33 @@ public class UIManager : MonoBehaviour
         Variables.IsCheat = true;
     }
 
-    public void SetActiveGameOverUi(bool IsGameOver)
+    public void SetActiveGameOverUi()
     {
+        GameOverUI.SetActive(true);
 
+        GameManager.Instance.PauseGame();
+    }
+
+    public void SetActiveVictoryUi()
+    {
+        VictoryUI.SetActive(true);
+
+        GameManager.Instance.PauseGame();
+    }
+
+    public void ResetGame()
+    {
+        Variables.Reset();
+
+        SceneManager.LoadScene(1);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

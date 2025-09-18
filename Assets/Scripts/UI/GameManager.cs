@@ -31,12 +31,27 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Variables.IsPaused = !Variables.IsPaused;
+            if (Timer.IsRunning)
+            {
+                PauseGame();
+            }
+            else
+            {
+                ResumGame();
+            }
         }
 
-        if (Variables.IsPaused)
+        //승리 확인
+        CheckVictory();
+
+        //패배 확인
+        if (CheckEnemyOverCount())
         {
-            Time.timeScale = 0f;
+            uiManager.SetActiveGameOverUi();
+        }
+        else if (CheckBossStageTimeout())
+        {
+            uiManager.SetActiveGameOverUi();
         }
 
         Timer.Tick(Time.deltaTime);
@@ -70,8 +85,81 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        Variables.IsPaused = true;
-        uiManager.SetActiveGameOverUi(IsGameOver);
+        if (IsGameOver)
+        {
+            return;
+        }
+        IsGameOver = true;
+
+        PauseGame();
+        uiManager.SetActiveGameOverUi();
         enemySpawner.enabled = false;
+    }
+
+    public void VictoryGame()
+    {
+        if (IsGameOver)
+        {
+            return;
+        }
+        IsGameOver = true;
+
+        PauseGame();
+        uiManager.SetActiveVictoryUi();
+        enemySpawner.enabled = false;
+    }
+
+    public void CheckVictory()
+    {
+        if(Variables.Stage == 100 && Variables.EnemyTotalCount <= 0)
+        {
+            uiManager.SetActiveVictoryUi();
+        }
+    }
+
+    private float enemyOverCountTimer = 0f;
+    public bool CheckEnemyOverCount()
+    {
+        if(Variables.EnemyTotalCount >= 100)
+        {
+            enemyOverCountTimer += Time.deltaTime;
+            if(enemyOverCountTimer >= 30f)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            enemyOverCountTimer = 0f;
+        }
+
+        return false;
+    }
+
+    private float bossStageTimer = 0f;
+    private bool CheckBossStageTimeout()
+    {
+        if(Variables.Stage > 0 && Variables.Boss)
+        {
+            if (!Variables.IsBoss)
+            {
+                Variables.IsBoss = true;
+                bossStageTimer = 0f;
+            }
+
+            bossStageTimer += Time.deltaTime;
+
+            if(bossStageTimer >= 60f)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            Variables.IsBoss = false;
+            bossStageTimer = 0f;
+        }
+
+        return false;
     }
 }

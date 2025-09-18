@@ -26,7 +26,8 @@ public static class Variables
     //ġƮ
     public static bool IsCheat { get; set; } = false;
 
-    public static bool IsPaused { get; set; } = false;
+    public static bool IsBoss { get; set; } = false;
+    public static EnemyUnit Boss { get; set; }
 
     public static int Stage { get; set; } = 1;
     public static int EnemyTotalCount { get; set; } = 0;
@@ -37,4 +38,29 @@ public static class Variables
     public static EnemyUnit SelectedEnemy { get; set; }
 
     public static int Gold { get; set; } = 150;
+
+    public static void Reset()
+    {
+        IsCheat = false;
+        IsBoss = false;
+        Stage = 1;
+        EnemyTotalCount = 0;
+        SlotCount = 21;
+        SelectedSlot = null;
+        SelectedEnemy = null;
+        Gold = 150;
+        Boss = null;
+    }
+}
+
+public static class WinCondition
+{
+    public static event Action OnWin;
+    public static void Trigger() => OnWin?.Invoke();
+}
+
+public static class LoseCondition
+{
+    public static event Action OnLose;
+    public static void Trigger() => OnLose?.Invoke();
 }
