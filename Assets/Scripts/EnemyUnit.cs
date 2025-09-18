@@ -147,6 +147,12 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
             healthSlider.gameObject.SetActive(false);
 
+            if(Variables.Boss == this)
+            {
+                Variables.Stage++;
+                Variables.Boss = null;
+            }
+
             OnDeath?.Invoke();
         }
     }

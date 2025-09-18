@@ -62,7 +62,7 @@ public class UICheat : MonoBehaviour
     public void StagePlusTen()
     {
 
-        Variables.Stage = (Variables.Stage % 10) * 10;
+        Variables.Stage = ((Variables.Stage / 10) + 1) * 10;
     }
 
     public void StageHundred()

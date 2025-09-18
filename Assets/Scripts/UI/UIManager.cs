@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
                 return;
             }
             Variables.Stage++;
-            nextStageTime += 30f;
+            nextStageTime = surviveTime + 30f;
         }
 
     }
