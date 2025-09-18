@@ -9,8 +9,6 @@ public class GameTimer
     public void Resume() => IsRunning = true;
     public void Reset() => Elapsed = 0f;
 
-    //
-
     public void TimerStart()
     {
         Elapsed = 0f;

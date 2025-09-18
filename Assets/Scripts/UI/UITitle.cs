@@ -7,13 +7,14 @@ public class UITitle : MonoBehaviour
 
     private void Awake()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        Screen.orientation = ScreenOrientation.Portrait;
 
         Option.SetActive(false);
     }
 
     public void StartGame()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         SceneManager.LoadScene(1);
     }
 
@@ -34,22 +35,5 @@ public class UITitle : MonoBehaviour
     public void UnActiveOption()
     {
         Option.SetActive(false);
-    }
-
-    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.buildIndex == 0)
-        {
-            Screen.orientation = ScreenOrientation.Portrait;
-        }
-        else if(scene.buildIndex == 1)
-        {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

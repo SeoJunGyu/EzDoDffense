@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI StageText;
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI GoldText;
+    public TextMeshProUGUI EnemyCountText;
 
     public UIUnitInfo AllyInfoPanel;
     public UIUnitInfo EnemyInfoPanel;
@@ -31,6 +32,7 @@ public class UIManager : MonoBehaviour
         UpdateStage();
         UpdateTime();
         UpdateGold();
+        UpdateEnemyCount();
     }
 
     private void UpdateStage()
@@ -57,6 +59,11 @@ public class UIManager : MonoBehaviour
     private void UpdateGold()
     {
         GoldText.text = $"Gold : {Variables.Gold}";
+    }
+
+    private void UpdateEnemyCount()
+    {
+        EnemyCountText.text = $"{Variables.EnemyTotalCount} / 100";
     }
 
     public void ActiveInfoPanel(AllyData data)

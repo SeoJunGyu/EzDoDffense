@@ -34,8 +34,6 @@ public class EnemySpawner : MonoBehaviour
             var enemy = Instantiate(prefab, transform.position, transform.rotation);
             enemies.Add(enemy);
             enemy.gameObject.SetActive(false);
-
-            Variables.EnemyTotalCount++;
         }
     }
 
