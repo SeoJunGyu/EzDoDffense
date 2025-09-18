@@ -137,6 +137,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         if (Health <= 0 && !IsDead)
         {
             //Die
+            Variables.EnemyTotalCount--;
+
             Health = 0;
             Variables.Gold += addGold;
             canvas.gameObject.SetActive(false);

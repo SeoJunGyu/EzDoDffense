@@ -16,6 +16,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Color color = Color.red;
     public TextMeshProUGUI FPSText;
 
+    public UIManager uiManager;
+    public EnemySpawner enemySpawner;
+    public bool IsGameOver { get; private set; }
+
     private void Awake()
     {
         Instance = this;
@@ -25,6 +29,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Variables.IsPaused = !Variables.IsPaused;
+        }
+
+        if (Variables.IsPaused)
+        {
+            Time.timeScale = 0f;
+        }
+
         Timer.Tick(Time.deltaTime);
 
         //FPS
@@ -52,5 +66,12 @@ public class GameManager : MonoBehaviour
     public void ResetTimer()
     {
         Timer.Reset();
+    }
+
+    public void EndGame()
+    {
+        Variables.IsPaused = true;
+        uiManager.SetActiveGameOverUi(IsGameOver);
+        enemySpawner.enabled = false;
     }
 }

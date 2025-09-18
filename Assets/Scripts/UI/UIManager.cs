@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     //치트 패널
     public UICheat cheat;
 
+    public GameObject GameOverUI;
+
     private void Awake()
     {
         cheat.gameObject.SetActive(false);
@@ -115,5 +117,10 @@ public class UIManager : MonoBehaviour
 
         cheat.gameObject.SetActive(true);
         Variables.IsCheat = true;
+    }
+
+    public void SetActiveGameOverUi(bool IsGameOver)
+    {
+
     }
 }
