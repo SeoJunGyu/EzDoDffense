@@ -18,6 +18,14 @@ public class UIManager : MonoBehaviour
 
     private float nextStageTime = 30f;
 
+    //치트 패널
+    public UICheat cheat;
+
+    private void Awake()
+    {
+        cheat.gameObject.SetActive(false);
+    }
+
     private void Update()
     {
         UpdateStage();
@@ -87,5 +95,18 @@ public class UIManager : MonoBehaviour
     {
         EnemyInfoPanel.gameObject.SetActive(false);
         AllyInfoPanel.gameObject.SetActive(false);
+    }
+
+    public void ActiveCheat()
+    {
+        if (Variables.IsCheat)
+        {
+            cheat.gameObject.SetActive(false);
+            Variables.IsCheat = false;
+            return;
+        }
+
+        cheat.gameObject.SetActive(true);
+        Variables.IsCheat = true;
     }
 }

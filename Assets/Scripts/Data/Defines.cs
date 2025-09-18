@@ -23,6 +23,9 @@ public static class DataTableIds
 
 public static class Variables
 {
+    //ġƮ
+    public static bool IsCheat { get; set; } = false;
+
     public static int Stage { get; set; } = 1;
     public static int EnemyTotalCount { get; set; } = 0;
     public static int AllyTotalCount { get; set; } = 20;
