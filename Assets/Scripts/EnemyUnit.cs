@@ -61,6 +61,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         UpdateTrace();
     }
 
+    private void LateUpdate()
+    {
+        healthSlider.transform.rotation = Quaternion.LookRotation(healthSlider.transform.position - Camera.main.transform.position);
+    }
+
     public void UpdateTrace()
     {
         if(wayPoints == null || wayPoints.Length == 0)
@@ -151,6 +156,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable
             {
                 Variables.Stage++;
                 Variables.Boss = null;
+            }
+
+            if(Variables.SelectedEnemy == this)
+            {
+                Variables.SelectedEnemy = null;
             }
 
             OnDeath?.Invoke();

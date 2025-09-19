@@ -39,7 +39,7 @@ public class UIUnitInfo : MonoBehaviour
         Unit_Name.text = enemy.Data.Unit_Name;
         Deffense.text = enemy.Data.Unit_DEF.ToString();
         MoveSpeed.text = enemy.Data.Move_Speed.ToString();
-        HP.text = $"{enemy.Health}";
+        HP.text = enemy.Data.Unit_HP.ToString();
 
         UnitImage.sprite = enemy.Data.SpriteUnitIcon;
         DamageImage.sprite = enemy.Data.SpriteDEFTypeIcon;

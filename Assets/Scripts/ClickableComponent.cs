@@ -73,6 +73,8 @@ public class ClickableComponent : MonoBehaviour
                 Variables.SelectedSlot.OnPress(false);
                 Variables.SelectedSlot.DeselectThis();
                 Variables.SelectedSlot = null;
+
+                Variables.SelectedEnemy = null;
             }
 
             pressed = null;
