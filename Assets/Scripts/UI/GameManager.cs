@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private enum WarningType
+    {
+        None,
+        EnemyOver100,
+        BossTimer,
+    }
+    private WarningType currentWarning = WarningType.None;
+
     public static GameManager Instance { get; private set; }
 
     public GameTimer Timer { get; private set; } = new GameTimer();
@@ -20,11 +28,19 @@ public class GameManager : MonoBehaviour
     public EnemySpawner enemySpawner;
     public bool IsGameOver { get; private set; }
 
+    public TextMeshProUGUI WarningTimer;
+    private float enemyCountTimer = 30f;
+    private float bossTimer = 60f;
+    public TextMeshProUGUI WarningText;
+
     private void Awake()
     {
         Instance = this;
         Time.timeScale = timeScale;
         Timer.TimerStart();
+
+        WarningTimer.gameObject.SetActive(false);
+        WarningText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -42,11 +58,9 @@ public class GameManager : MonoBehaviour
         CheckVictory();
 
         //패배 확인
-        if (CheckEnemyOverCount())
-        {
-            uiManager.SetActiveGameOverUi();
-        }
-        else if (CheckBossStageTimeout())
+        UpdateWarningUI();
+
+        if (CheckEnemyOverCount() || CheckBossStageTimeout())
         {
             uiManager.SetActiveGameOverUi();
         }
@@ -114,49 +128,78 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private float enemyOverCountTimer = 0f;
-    public bool CheckEnemyOverCount()
+    private void UpdateWarningUI()
     {
-        if(Variables.EnemyTotalCount >= 100)
-        {
-            enemyOverCountTimer += Time.deltaTime;
-            if(enemyOverCountTimer >= 30f)
-            {
-                return true;
-            }
-        }
-        else
-        {
-            enemyOverCountTimer = 0f;
-        }
+        bool enemyActive = Variables.EnemyTotalCount >= 100;
+        bool bossActive = (Variables.Stage > 0 && Variables.Boss);
 
-        return false;
+        var next = bossActive ? WarningType.BossTimer : (enemyActive ? WarningType.EnemyOver100 : WarningType.None);
+
+        currentWarning = next;
+
+        switch (currentWarning)
+        {
+            case WarningType.BossTimer:
+                if (!Variables.IsBoss)
+                {
+                    Variables.IsBoss = true;
+                    bossTimer = 60f;
+                }
+
+                if (bossTimer >= 55f)
+                {
+                    WarningText.gameObject.SetActive(true);
+                    WarningText.text = "1분안에 모험가를 잡으세요";
+                }
+                else
+                {
+                    WarningText.gameObject.SetActive(false);
+                }
+
+                WarningTimer.gameObject.SetActive(true);
+                uiManager.TimeText.gameObject.SetActive(false);
+
+                bossTimer -= Time.deltaTime;
+                WarningTimer.text = $"{Mathf.CeilToInt(Mathf.Max(0f, bossTimer))}";
+                break;
+
+            case WarningType.EnemyOver100:
+                if (enemyCountTimer >= 25f)
+                {
+                    WarningText.gameObject.SetActive(true);
+                    WarningText.text = "30초안에 100명 이하로 줄이세요";
+                }
+                else
+                {
+                    WarningText.gameObject.SetActive(false);
+                }
+
+                WarningTimer.gameObject.SetActive(true);
+                uiManager.TimeText.gameObject.SetActive(false);
+
+                enemyCountTimer -= Time.deltaTime;
+                WarningTimer.text = $"{Mathf.CeilToInt(Mathf.Max(0f, enemyCountTimer))}";
+                break;
+
+            case WarningType.None:
+                Variables.IsBoss = false;
+                bossTimer = 60f;
+                enemyCountTimer = 30f;
+
+                WarningTimer.gameObject.SetActive(false);
+                WarningText.gameObject.SetActive(false);
+                uiManager.TimeText.gameObject.SetActive(true);
+                break;
+        }
     }
 
-    private float bossStageTimer = 0f;
+    private bool CheckEnemyOverCount()
+    {
+        return (currentWarning == WarningType.EnemyOver100) && enemyCountTimer <= 0f;
+    }
+
     private bool CheckBossStageTimeout()
     {
-        if(Variables.Stage > 0 && Variables.Boss)
-        {
-            if (!Variables.IsBoss)
-            {
-                Variables.IsBoss = true;
-                bossStageTimer = 0f;
-            }
-
-            bossStageTimer += Time.deltaTime;
-
-            if(bossStageTimer >= 60f)
-            {
-                return true;
-            }
-        }
-        else
-        {
-            Variables.IsBoss = false;
-            bossStageTimer = 0f;
-        }
-
-        return false;
+        return (currentWarning == WarningType.BossTimer) && bossTimer <= 0f;
     }
 }

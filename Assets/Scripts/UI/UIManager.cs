@@ -47,15 +47,6 @@ public class UIManager : MonoBehaviour
 
     private void UpdateTime()
     {
-        if(Variables.EnemyTotalCount >= 100 || Variables.Boss)
-        {
-            TimeText.color = Color.red;
-        }
-        else
-        {
-            TimeText.color = Color.black;
-        }
-
         surviveTime = GameManager.Instance.Timer.Elapsed;
         var prevMinute = minute;
         minute = Mathf.FloorToInt(surviveTime / 60f);
