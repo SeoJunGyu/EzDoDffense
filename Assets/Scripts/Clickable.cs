@@ -406,6 +406,7 @@ public class Clickable : MonoBehaviour, IClickable
             CurrentData = null;
 
             Variables.SelectedSlot.Range.SetActive(false);
+            Variables.SelectedSlot.DeselectThis();
             Variables.SelectedSlot = null;
         }
     }
