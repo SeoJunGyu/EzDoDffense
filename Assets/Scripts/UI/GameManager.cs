@@ -31,14 +31,11 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (Timer.IsRunning)
-            {
-                PauseGame();
-            }
-            else
-            {
-                ResumGame();
-            }
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
         }
 
         //½Â¸® È®ÀÎ

@@ -236,4 +236,11 @@ public class PlacementManager : MonoBehaviour
 
         Variables.SelectedSlot.DeselectThis();
     }
+
+    public void UnitSale()
+    {
+        Variables.SelectedSlot.UnitDelete();
+
+        Variables.Gold += 50;
+    }
 }

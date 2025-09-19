@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using UnityEngine;
 
 public class Clickable : MonoBehaviour, IClickable
@@ -382,5 +383,30 @@ public class Clickable : MonoBehaviour, IClickable
         Variables.SlotCount++;
         UnitId = 0;
         CurrentData = null;
+    }
+
+    public void UnitDelete()
+    {
+        var keys = sockets.Keys.ToList();
+
+        foreach(var key in keys)
+        {
+            if (sockets[key] != null)
+            {
+                sockets[key].SynthesisAfter();
+                sockets[key] = null;
+                break;
+            }
+        }
+
+        if(SocketInCount == 0)
+        {
+            Variables.SlotCount++;
+            UnitId = 0;
+            CurrentData = null;
+
+            Variables.SelectedSlot.Range.SetActive(false);
+            Variables.SelectedSlot = null;
+        }
     }
 }

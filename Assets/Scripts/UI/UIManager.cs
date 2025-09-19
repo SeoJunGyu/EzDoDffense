@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public UIUnitInfo AllyInfoPanel;
     public UIUnitInfo EnemyInfoPanel;
     public Button UpgradeButton;
+    public Button DeleteButton;
 
     private float surviveTime = 0f; //살아있는 시간
     private float second = 0f; //초 시간
@@ -107,6 +108,15 @@ public class UIManager : MonoBehaviour
         else
         {
             UpgradeButton.gameObject.SetActive(false);
+        }
+
+        if(Variables.SelectedSlot && Variables.SelectedSlot.SocketInCount != 0)
+        {
+            DeleteButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            DeleteButton.gameObject.SetActive(false);
         }
     }
 
