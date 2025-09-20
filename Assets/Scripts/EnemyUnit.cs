@@ -32,6 +32,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     [SerializeField] private float disAdventageDamageRate = 0.8f;
     [SerializeField] private int addGold = 5;
 
+    private Quaternion initialRotation;
+
     private void OnEnable()
     {
         IsDead = false;
@@ -41,6 +43,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         UpdateHealthBar();
 
         canvas.gameObject.SetActive(false);
+
+        initialRotation = healthSlider.transform.rotation;
     }
 
     private void OnDisable()
@@ -63,7 +67,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable
 
     private void LateUpdate()
     {
-        healthSlider.transform.rotation = Quaternion.LookRotation(healthSlider.transform.position - Camera.main.transform.position);
+        healthSlider.transform.rotation = initialRotation;
     }
 
     public void UpdateTrace()

@@ -1,0 +1,6 @@
+Skill_ID,Skill_Name,Skill_Grade,Skill_Type,Skill_Random,Skill_Target,Skill_Area,Skill_Effect_1,Skill_Effect_Value_1,Skill_Duration_1,Skill_Effect_2,Skill_Effect_Value_2,Skill_Duration_2,Skill_Effect,Skill_Sound,icon,Text
+42235400,흑마빙정,3,2,30,2,3,5,400,0,6,0,2,Air_attack,Apple_bombs,61_Ice_III,"[레전드] 흑마빙정 : 일반 공격 시 30%의 확률로 단일 적군에게 공격력의 400%의 데미지를 입히고, 2초 동안 기절시킵니다."
+42325350,지폭토성,3,2,30,3,2,5,350,0,4,10,5,Wood_shield,SFX_Vefects_Explosion_Artillery,467_Earth_Pierce,"[레전드] 지폭토성 : 일반 공격 시 30%의 확률로 공격 사거리 내에 있는 적군들에게 공격력의 350%의 데미지를 입히고, 5초 동안 이동 속도의 10%를 감소시킵니다."
+42325300,파괴광선,3,2,30,3,2,5,300,0,4,15,5,Toon_expoision,Fire_meteors,127_Nightvision,"[레전드] 파괴광선 : 일반 공격 시 30%의 확률로 공격 사거리 내에 있는 적군들에게 공격력의 300%의 데미지를 입히고, 5초 동안 이동 속도의 15%를 감소시킵니다."
+52235550,황천의단절,4,2,30,2,3,5,550,0,6,0,3.5,Magic_aura,Energy_buff,155_Omnipotent,"[에픽] 황천의 단절 : 일반 공격 시 30%의 확률로 단일 적군에게 공격력의 550%의 데미지를 입히고, 3.5초 동안 기절시킵니다."
+52325500,블랙홀,4,2,30,3,2,5,500,0,6,0,2.5,BlackHole,Energy_shockwave,73_Darkness_Grimoire,"[에픽] 블랙홀 : 공격 사거리 내에 있는 적군들에게 공격력의 500%의 데미지를 입히고, 2.5초 동안 기절시킵니다."

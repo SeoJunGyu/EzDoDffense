@@ -62,6 +62,8 @@ public class AllyUnit : MonoBehaviour
             agent.isStopped = true;
             agent.ResetPath();
             IsMove = false;
+
+            SafeSetBoolAnimator("IsMoved", false);
         }
     }
 
@@ -70,6 +72,8 @@ public class AllyUnit : MonoBehaviour
         if (IsMove)
         {
             attackTimer = 0f;
+
+            SafeSetBoolAnimator("IsMoved", true);
             return;
         }
 
