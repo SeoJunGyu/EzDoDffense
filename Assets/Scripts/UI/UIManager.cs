@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateStage()
     {
-        StageText.text = $"Stage {Variables.Stage}";
+        StageText.text = $"STAGE {Variables.Stage}";
     }
 
     private void UpdateTime()
