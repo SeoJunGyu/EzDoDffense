@@ -8,6 +8,14 @@ public class SkillManager : MonoBehaviour
 
     private List<SkillAgent> particles = new List<SkillAgent>();
 
+    private void Awake()
+    {
+        for(int i = 0; i < 10; i++)
+        {
+            particles.Add(CreateSkillBase());
+        }
+    }
+
     public SkillAgent CreateSkillBase(long singleSkillId, long multiSkillId)
     {
         SkillAgent Base = null;
@@ -34,8 +42,17 @@ public class SkillManager : MonoBehaviour
             Base.MultiSkill = DataTableManager.MultiSkillTable.Get(multiSkillId);
         }
 
-        Base.SetSkillEffect();
+        Base.gameObject.SetActive(true);
+
+        Base.OnDestroyParticle += () => gameObject.SetActive(false);
 
         return Base;
+    }
+
+    private SkillAgent CreateSkillBase()
+    {
+        var skill = Instantiate(skillBase);
+        skill.gameObject.SetActive(false);
+        return skill;
     }
 }

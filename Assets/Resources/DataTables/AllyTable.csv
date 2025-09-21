@@ -11,7 +11,7 @@ Unit_ID,Unit_Name,Unit_Type,Unit_Grade,Unit_ATK,Unit_ATK_SPD,Unit_ATK_RNG,Unit_M
 1101013001,[일반형]병정벌,1,1,10,1.0,3,3,0,0,BattleBee(1)_icon,BattleBeePADefault(1)
 1202012001,[일반형]용,1,2,20,1.1,2,3,111005411,0,Dragon(1)_icon,DragonPADefault(1)
 1202012002,[일반형]리자드전사,1,2,20,1.1,2,3,115300230,0,LizardWarrior(1)_icon,LizardWarriorPADefault(1)
-1202012003,[일반형]싸이클롭스,1,2,20,1.1,2,3,115200320,0,Cyclops(1)_icon,CyclopsPADefault(1)
+1202012003,[일반형]싸이클롭스,1,2,20,1.1,2,3,313020511,0,Cyclops(1)_icon,CyclopsPADefault(1)
 1202013001,[일반형]미믹,1,2,20,1.1,3,3,112005411,0,ChestMonster(1)_icon,ChestMonsterPADefault(1)
 1202013002,[일반형]멀록,1,2,20,1.1,3,3,113003511,0,Fishman(1)_icon,FishmanPADefault(1)
 1202511001,[일반형]식인식물,1,2,25,1.1,1,3,114003511,0,MonsterPlant(1)_icon,MonsterPlantPADefault(1)
