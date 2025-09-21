@@ -14801,7 +14801,6 @@ GameObject:
   - component: {fileID: 4525139121608058}
   - component: {fileID: 198156624554684162}
   - component: {fileID: 199461988463861576}
-  - component: {fileID: 114549496172178210}
   - component: {fileID: 82123467837494320}
   m_Layer: 0
   m_Name: Wood_shield
@@ -19730,24 +19729,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &114549496172178210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151130045229942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79ba5bb0b3780b4a98ce45e779b6441, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Repeating: 1
-  RepeatTime: 4
-  StartTime: 0
-  RandomVolume: 0
-  minVolume: 0.4
-  maxVolume: 1
 --- !u!82 &82123467837494320
 AudioSource:
   m_ObjectHideFlags: 0

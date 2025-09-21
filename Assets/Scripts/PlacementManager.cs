@@ -11,6 +11,8 @@ public class PlacementManager : MonoBehaviour
 
     private List<AllyUnit> allyUnits = new List<AllyUnit>();
 
+    public SkillManager skillManager;
+
     private void Awake()
     {
         var slotGos = GameObject.FindGameObjectsWithTag("Slot");
@@ -148,7 +150,8 @@ public class PlacementManager : MonoBehaviour
             unit.OnSynthesis += () => Destroy(visualModel);
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
-            Debug.Log($"{slot.name} / {prefab.name} / {data.Unit_Name}");
+            unit.skillAgent = skillManager.CreateSkillBase(data.Unit_Skill_1, data.Unit_Skill_2);
+            
             return true;
         }
 

@@ -28,6 +28,13 @@ public class AllyUnit : MonoBehaviour
 
     private Animator animator;
 
+    public SkillAgent skillAgent { get; set; }
+
+    private void OnDisable()
+    {
+        OnSynthesis = null;
+    }
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();

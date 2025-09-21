@@ -56,7 +56,7 @@ public class MultiSkillData
 
     public Sprite SpriteSkillIcon => Resources.Load<Sprite>($"{DefineNames.SkillIconsFolder}/{icon}");
     [Ignore]
-    public GameObject SkillParticle => Resources.Load<GameObject>($"{DefineNames.SkillEffectFolder}/{Skill_Effect_Name}");
+    public ParticleSystem SkillParticle => Resources.Load<ParticleSystem>($"{DefineNames.SkillEffectFolder}/{Skill_Effect_Name}");
 }
 
 public class SingleSkillTable : DataTable
@@ -81,11 +81,6 @@ public class SingleSkillTable : DataTable
             {
                 Debug.LogError($"키 중복: {skill.Skill_ID}");
             }
-        }
-
-        foreach (var skill in dictionary)
-        {
-            Debug.Log(skill.Value);
         }
     }
 
@@ -122,11 +117,6 @@ public class MultiSkillTable : DataTable
             {
                 Debug.LogError($"키 중복: {skill.Skill_ID}");
             }
-        }
-
-        foreach (var skill in dictionary)
-        {
-            Debug.Log(skill.Value);
         }
     }
 

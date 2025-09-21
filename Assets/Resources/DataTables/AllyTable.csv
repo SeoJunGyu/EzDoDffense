@@ -22,7 +22,7 @@ Unit_ID,Unit_Name,Unit_Type,Unit_Grade,Unit_ATK,Unit_ATK_SPD,Unit_ATK_RNG,Unit_M
 1310011001,[일반형]나가마법사,1,3,100,1.4,1,3,215250320,0,NagaWizard(1)_icon,NagaWizardPADefault(1)
 1310012001,[일반형]비홀더,1,3,100,1.3,2,3,213010511,0,Beholder(1)_icon,BeholderPADefault(1)
 1310012002,[일반형]쥐암살자,1,3,100,1.3,2,3,215350230,0,RatAssassin(1)_icon,RatAssassinPADefault(1)
-1425013001,[일반형]악마왕,1,4,250,1.7,3,3,313020511,315450230,DemonKing(1)_icon,DemonKingPADefault(1)
+1425013001,[일반형]악마왕,1,4,250,1.7,3,3,313020511,42235400,DemonKing(1)_icon,DemonKingPADefault(1)
 1425012001,[일반형]비숍기사,1,4,250,1.7,2,3,312025411,42235400,BishopKnight(1)_icon,BishopKnightPADefault(1)
 1425012002,[일반형]골렘,1,4,250,1.7,2,3,311025411,42325350,Golem(1)_icon,GolemPADefault(1)
 1430011001,[일반형]데스웜,1,4,300,1.7,1,3,314020511,42325300,WormMonste(1)_icon,WormMonstePADefault(1)
