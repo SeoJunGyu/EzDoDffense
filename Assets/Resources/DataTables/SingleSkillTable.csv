@@ -1,4 +1,4 @@
-Skill_ID,Skill_Name,Skill_Grade,Skill_Type,Skill_Effect,Skill_Effect_Value,Skill_Target,Skill_Area,Skill_Duration,Skill_Random,Skill_Effect,Skill_Sound,icon,Text
+Skill_ID,Skill_Name,Skill_Grade,Skill_Type,Skill_Effect,Skill_Effect_Value,Skill_Target,Skill_Area,Skill_Duration,Skill_Random,Skill_Effect_Name,Skill_Sound,icon,Text
 111005411,더 세게!,1,1,1,5,4,1,1,100,Misses,SFX_Vefects_Loot_Common_Loop,556_Breakout,[레어] 더 세게! : 아군의 공격력을 5% 올려줍니다.
 112005411,더 빨리!,1,1,2,5,4,1,1,100,Level_up,SFX_Vefects_Loot_Uncommon_Loop,128_Copy,[레어] 더 빨리 ! : 아군의 공격 속도를 5% 올려줍니다.
 211010411,오우거의 근력,2,1,1,10,4,1,1,100,Magic_shield_pink,SFX_Vefects_Loot_Rare_Loop,558_Hand,[유니크] 오우거의 근력 : 아군의 공격력을 10% 올려줍니다.

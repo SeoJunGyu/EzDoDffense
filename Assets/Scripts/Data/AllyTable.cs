@@ -84,11 +84,6 @@ public class AllyTable : DataTable
                 Debug.LogError($"Å° Áßº¹: {enemy.Unit_ID}");
             }
         }
-
-        foreach (var ally in dictionary)
-        {
-            Debug.Log(ally.Value);
-        }
     }
 
     public AllyData Get(long id)

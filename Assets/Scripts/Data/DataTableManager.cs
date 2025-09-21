@@ -36,6 +36,14 @@ public static class DataTableManager
         var allyTable = new AllyTable();
         allyTable.Load(DataTableIds.Ally);
         tables.Add(DataTableIds.Ally, allyTable);
+
+        var singleSkillTable = new SingleSkillTable();
+        singleSkillTable.Load(DataTableIds.SingleSkill);
+        tables.Add(DataTableIds.SingleSkill, singleSkillTable);
+
+        var multiSkillTable = new MultiSkillTable();
+        multiSkillTable.Load(DataTableIds.MultiSkill);
+        tables.Add(DataTableIds.MultiSkill, multiSkillTable);
     }
 
     public static EnemyTable EnemyTable
@@ -83,6 +91,22 @@ public static class DataTableManager
         get
         {
             return Get<RandomPickupTable>(DataTableIds.MagicalRandom);
+        }
+    }
+
+    public static SingleSkillTable SingleSkillTable
+    {
+        get
+        {
+            return Get<SingleSkillTable>(DataTableIds.SingleSkill);
+        }
+    }
+
+    public static MultiSkillTable MultiSkillTable
+    {
+        get
+        {
+            return Get<MultiSkillTable>(DataTableIds.MultiSkill);
         }
     }
 

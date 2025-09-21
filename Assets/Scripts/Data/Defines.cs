@@ -9,6 +9,7 @@ public static class DefineNames
     public static readonly string UIIconsFolder = "Icons/SkillAndUI";
     public static readonly string AllysModelFolder = "Prefabs/Allys";
     public static readonly string EnemyModelFolder = "Prefabs/Enemies";
+    public static readonly string SkillEffectFolder = "Prefabs/SkillEffects";
 }
 
 public static class DataTableIds
@@ -19,6 +20,8 @@ public static class DataTableIds
     public static readonly string NormalRandom = "NormalRandomTable";
     public static readonly string PiercingRandom = "PiercingRandomTable";
     public static readonly string MagicalRandom = "MagicalRandomTable";
+    public static readonly string SingleSkill = "SingleSkillTable";
+    public static readonly string MultiSkill = "MultiSkillTable";
 }
 
 public static class Variables
