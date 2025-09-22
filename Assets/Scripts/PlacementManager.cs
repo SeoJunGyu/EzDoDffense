@@ -39,35 +39,6 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.touchCount == 2)
-        {
-            var data = DataTableManager.AllyTable.Get(1101011001);
-            for (int i = 0; i < 3; i++)
-            {
-                if (!FindSameUnit(data, 0))
-                {
-                    PlaceInSocket(data, 0);
-                }
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            var data = DataTableManager.AllyTable.Get(1101011001);
-            for (int i = 0; i < 3; i++)
-            {
-                if (!FindSameUnit(data, 0))
-                {
-                    PlaceInSocket(data, 0);
-                }
-            }
-        }
-#endif
-
-    }
-
     public bool FindSameUnit(AllyData data)
     {
         foreach (var slot in slots)
@@ -160,9 +131,6 @@ public class PlacementManager : MonoBehaviour
 
             unit.OnSynthesis += () => Destroy(visualModel);
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
-
-            SetSkillData(unit, data);
-            SetParticle(unit, data);
 
             return true;
         }
@@ -257,31 +225,5 @@ public class PlacementManager : MonoBehaviour
         Variables.SelectedSlot.UnitDelete();
 
         Variables.Gold += 50;
-    }
-
-    private void SetSkillData(AllyUnit unit, AllyData data)
-    {
-        if (data.Unit_Skill_1 != 0)
-        {
-            unit.SingleSkill = DataTableManager.SingleSkillTable.Get(data.Unit_Skill_1);
-        }
-
-        if (data.Unit_Skill_2 != 0)
-        {
-            unit.MultiSkill = DataTableManager.MultiSkillTable.Get(data.Unit_Skill_2);
-        }
-    }
-
-    private void SetParticle(AllyUnit unit, AllyData data)
-    {
-        if (data.Unit_Skill_1 != 0)
-        {
-            unit.singleSkillParticle = SkillManager.Instance.CheckActive(unit.SingleSkill);
-        }
-
-        if (data.Unit_Skill_2 != 0)
-        {
-            unit.multiSkillParticle = SkillManager.Instance.CheckActive(unit.MultiSkill);
-        }
     }
 }

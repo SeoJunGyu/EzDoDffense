@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,12 +13,12 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     [SerializeField] private float maxHealth = 100f;
     private NavMeshAgent agent;
-    private int deffense = 1;
+    private float deffense = 1f;
     private EnemyTypes defType;
     public EnemyData Data { get; private set; }
 
-    private int beforeDeffense = 0;
-    private int beforeSpeed = 0;
+    private float beforeDeffense = 0;
+    private float beforeSpeed = 0;
     private float multipliedDamage = 0f;
 
     private Vector3 target;
@@ -33,7 +34,10 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     public bool IsTargetable => gameObject.activeInHierarchy;
 
     private Transform effectAnchor;
-    public Transform EffectAnchor => effectAnchor != null ? effectAnchor : transform;
+    public Transform EffectAnchor => transform;
+
+    private List<long> particles = new List<long>();
+    public List<long> ActiveParticle { get => particles; }
 
     public event Action OnDeath;
 
@@ -43,7 +47,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private Quaternion initialRotation;
 
-    public List<long> Buff = new List<long>();
+    private Animator animator;
 
     private void OnEnable()
     {
@@ -66,6 +70,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         target = transform.position;
     }
 
@@ -192,38 +197,70 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         Data = data;
     }
 
-    public void ApplySingleSkill(SingleSkillData data, AllyUnit caster)
+    public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
     {
-        if (Buff.Contains(data.Skill_ID))
-        {
-            return;
-        }
-
         switch (data.Skill_Effect)
         {
             case 3:
                 beforeDeffense = deffense;
-                deffense = deffense * (1 - data.Skill_Effect_Value / 100);
-                Buff.Add(data.Skill_ID);
-                var Deffenseskill = caster.singleSkillParticle.GetComponent<Skill>();
-                Deffenseskill.TraceTarget(gameObject);
+                deffense = deffense * (1 - data.Skill_Effect_Value / 100f);
+                particles.Add(data.Skill_ID);
                 break;
             case 4:
-                beforeSpeed = (int)agent.speed;
-                agent.speed = agent.speed * (1 - data.Skill_Effect_Value / 100);
-                Buff.Add(data.Skill_ID);
-                var Speedskill = caster.singleSkillParticle.GetComponent<Skill>();
-                Speedskill.TraceTarget(gameObject);
+                beforeSpeed = agent.speed;
+                agent.speed = agent.speed * (1 - data.Skill_Effect_Value / 100f);
+                particles.Add(data.Skill_ID);
                 break;
             case 5:
-                var damage = caster.Damage * (data.Skill_Effect_Value / 100);
+                var damage = caster.Damage * (data.Skill_Effect_Value / 100f);
                 OnDamage(caster.Damage, caster.UnitType);
+                particles.Add(data.Skill_ID);
                 break;
         }
     }
 
-    public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster)
+    public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster, ParticleSystem particle)
     {
-        throw new NotImplementedException();
+        switch (data.Skill_Effect_1)
+        {
+            case 5:
+                var damage = caster.Damage * (data.Skill_Effect_Value_1 / 100f);
+                OnDamage(caster.Damage, caster.UnitType);
+                particles.Add(data.Skill_ID);
+                break;
+        }
+
+        switch (data.Skill_Effect_2)
+        {
+            case 4:
+                beforeSpeed = agent.speed;
+                agent.speed = agent.speed * (1 - data.Skill_Effect_Value_2 / 100f);
+                particles.Add(data.Skill_ID);
+                break;
+            case 6:
+                if (!CanControlAgent)
+                {
+                    break;
+                }
+                agent.isStopped = true;
+                if(animator != null)
+                {
+                    animator.speed = 0f;
+                }
+                StartCoroutine(StunCoroutine(data.Skill_Duration_2));
+                break;
+        }
+    }
+
+    private bool CanControlAgent => agent != null && agent.enabled && gameObject.activeSelf && agent.isOnNavMesh;
+
+    private IEnumerator StunCoroutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        agent.isStopped = false;
+        if (animator != null) animator.speed = 1f; // 원래 값 복원
+
+        Debug.Log($"{gameObject.name} : 기절");
     }
 }

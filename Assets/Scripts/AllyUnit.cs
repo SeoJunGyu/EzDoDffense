@@ -23,11 +23,21 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     private long skill1;
     private long skill2;
 
-    public SingleSkillData SingleSkill { get; set; }
-    public MultiSkillData MultiSkill { get; set; }
+    public long Skill1
+    {
+        get
+        {
+            return skill1;
+        }
+    }
 
-    public ParticleSystem singleSkillParticle { get; set; }
-    public ParticleSystem multiSkillParticle { get; set; }
+    public long Skill2
+    {
+        get
+        {
+            return skill2;
+        }
+    }
 
     public float Damage
     {
@@ -47,25 +57,29 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     [SerializeField] private LayerMask enemyMask;
     private EnemyUnit target;
-    public EnemyUnit Target { get; }
+    public EnemyUnit Target { get => target; }
 
     private bool IsMove { get; set; }
 
     public event Action OnSynthesis;
+    public event Action OnDespawned;
 
     private Animator animator;
-
-    public SkillAgent skillAgent { get; set; }
 
     public bool IsTargetable => gameObject.activeInHierarchy;
 
     private Transform effectAnchor;
-    public Transform EffectAnchor => effectAnchor != null ? effectAnchor : transform;
+    public Transform EffectAnchor => transform;
+
+    private List<long> particles = new List<long>();
+    public List<long> ActiveParticle { get => particles; }
 
     public List<EnemyUnit> findSkillTarget = new List<EnemyUnit>();
 
     private void OnDisable()
     {
+        OnDespawned?.Invoke();
+
         OnSynthesis = null;
     }
 
@@ -137,11 +151,14 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             {
                 target.OnDamage(damage, unitType);
 
-                if(SingleSkill != null)
+                if(skill1 != 0)
                 {
                     SkillManager.Instance.ExecuteSingleSkill(this);
                 }
-                
+                if(skill2 != 0)
+                {
+                    SkillManager.Instance.ExecuteMultiSkill(this);
+                }
 
                 attackTimer = 0f;
             }
@@ -235,24 +252,22 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         Gizmos.DrawWireSphere(Center, range);
     }
 
-    public void ApplySingleSkill(SingleSkillData data, AllyUnit caster)
+    public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
     {
         switch (data.Skill_Effect)
         {
             case 1:
                 beforeDamage = damage;
-                damage = damage * (1 + data.Skill_Effect_Value / 100);
+                damage = damage * (1 + data.Skill_Effect_Value / 100f);
                 break;
             case 2:
                 beforeAttackSpeed = attackSpeed;
-                attackInterval = 1f / (attackSpeed * (1 + data.Skill_Effect_Value / 100));
+                attackInterval = 1f / (attackSpeed * (1 + data.Skill_Effect_Value / 100f));
                 break;
         }
-
-        Instantiate(data.SkillParticle, transform);
     }
 
-    public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster)
+    public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster, ParticleSystem particle)
     {
         return;
     }
