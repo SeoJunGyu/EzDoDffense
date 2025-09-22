@@ -4856,6 +4856,7 @@ GameObject:
   - component: {fileID: 8562403486903727490}
   - component: {fileID: 4398587302347107972}
   - component: {fileID: 3309756213563172839}
+  - component: {fileID: 5344035072354599298}
   m_Layer: 0
   m_Name: FX_SnowBlue
   m_TagString: Untagged
@@ -9691,3 +9692,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &5344035072354599298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7267017169874743788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5c7ffc9722b8847ba268baadd75c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

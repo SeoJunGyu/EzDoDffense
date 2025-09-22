@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1534735301767904865}
   - component: {fileID: 2886650641115945180}
   - component: {fileID: 2132736770632304031}
+  - component: {fileID: 2634991065198061670}
   m_Layer: 0
   m_Name: BasePrefab
   m_TagString: Untagged
@@ -96,3 +97,15 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &2634991065198061670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644199095732946418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd2edf06dac99a8498d7e181511789e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AllyUnit : MonoBehaviour
+public class AllyUnit : MonoBehaviour, ISkillTarget
 {
     private NavMeshAgent agent;
 
@@ -11,6 +12,9 @@ public class AllyUnit : MonoBehaviour
     public Vector3 Center { get; set; } //유닛이 있는 슬롯 중앙
 
     [SerializeField] private float attackInterval = 1f;
+    private float beforeAttackSpeed = 0f;
+    private float beforeDamage = 0f;
+    private float attackSpeed = 0f;
     private float attackTimer = 0f;
     private float damage = 10f;
     [SerializeField] private float range = 2f;
@@ -19,8 +23,31 @@ public class AllyUnit : MonoBehaviour
     private long skill1;
     private long skill2;
 
+    public SingleSkillData SingleSkill { get; set; }
+    public MultiSkillData MultiSkill { get; set; }
+
+    public ParticleSystem singleSkillParticle { get; set; }
+    public ParticleSystem multiSkillParticle { get; set; }
+
+    public float Damage
+    {
+        get
+        {
+            return damage;
+        }
+    }
+
+    public AttackTypes UnitType
+    {
+        get
+        {
+            return unitType;
+        }
+    }
+
     [SerializeField] private LayerMask enemyMask;
     private EnemyUnit target;
+    public EnemyUnit Target { get; }
 
     private bool IsMove { get; set; }
 
@@ -29,6 +56,13 @@ public class AllyUnit : MonoBehaviour
     private Animator animator;
 
     public SkillAgent skillAgent { get; set; }
+
+    public bool IsTargetable => gameObject.activeInHierarchy;
+
+    private Transform effectAnchor;
+    public Transform EffectAnchor => effectAnchor != null ? effectAnchor : transform;
+
+    public List<EnemyUnit> findSkillTarget = new List<EnemyUnit>();
 
     private void OnDisable()
     {
@@ -102,10 +136,34 @@ public class AllyUnit : MonoBehaviour
             if (attackTimer > attackInterval)
             {
                 target.OnDamage(damage, unitType);
+
+                if(SingleSkill != null)
+                {
+                    SkillManager.Instance.ExecuteSingleSkill(this);
+                }
+                
+
                 attackTimer = 0f;
             }
 
             return;
+        }
+
+        var skillhits = Physics.OverlapSphere(Center, range, enemyMask, QueryTriggerInteraction.Ignore);
+        foreach (var enemyCollider in skillhits)
+        {
+            var enemy = enemyCollider.GetComponent<EnemyUnit>();
+            if (enemy != null && enemy.gameObject.activeSelf && !enemy.IsDead)
+            {
+                if (findSkillTarget.Contains(enemy))
+                {
+                    continue;
+                }
+                else
+                {
+                    findSkillTarget.Add(enemy);
+                }
+            }
         }
 
         //타겟 발견 못했을 경우
@@ -135,6 +193,7 @@ public class AllyUnit : MonoBehaviour
         grade = data.Unit_Grade;
         unitType = (AttackTypes)data.Unit_Type;
         damage = data.Unit_ATK;
+        attackSpeed = data.Unit_ATK_SPD;
         attackInterval = 1f / data.Unit_ATK_SPD;
         range = data.Unit_ATK_RNG + 4f; //4f : 최소가 1f이니까
         agent.speed = data.Unit_Move_Speed;
@@ -176,4 +235,25 @@ public class AllyUnit : MonoBehaviour
         Gizmos.DrawWireSphere(Center, range);
     }
 
+    public void ApplySingleSkill(SingleSkillData data, AllyUnit caster)
+    {
+        switch (data.Skill_Effect)
+        {
+            case 1:
+                beforeDamage = damage;
+                damage = damage * (1 + data.Skill_Effect_Value / 100);
+                break;
+            case 2:
+                beforeAttackSpeed = attackSpeed;
+                attackInterval = 1f / (attackSpeed * (1 + data.Skill_Effect_Value / 100));
+                break;
+        }
+
+        Instantiate(data.SkillParticle, transform);
+    }
+
+    public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster)
+    {
+        return;
+    }
 }

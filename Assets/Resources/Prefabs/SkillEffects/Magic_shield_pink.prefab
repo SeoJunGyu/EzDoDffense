@@ -9793,6 +9793,7 @@ GameObject:
   - component: {fileID: 6205737666926490461}
   - component: {fileID: 8044789423087911113}
   - component: {fileID: 3802818915604165333}
+  - component: {fileID: -5156758026256169793}
   m_Layer: 0
   m_Name: Magic_shield_pink
   m_TagString: Untagged
@@ -14676,6 +14677,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-5156758026256169793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6287953604210959080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5c7ffc9722b8847ba268baadd75c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7628594910936866404
 GameObject:
   m_ObjectHideFlags: 0

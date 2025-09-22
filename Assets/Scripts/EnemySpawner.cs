@@ -5,12 +5,21 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static EnemySpawner Instance { get; private set; }
+
     public EnemyUnit prefab;
     public List<Transform> wayPoint;
     private Vector3[] way;
 
     private List<EnemyUnit> enemies = new List<EnemyUnit>();
     private int enemyCount = 0;
+    public List<EnemyUnit> GetEnemies
+    {
+        get
+        {
+            return enemies;
+        }
+    }
 
     private EnemyData currentEnemyData;
 
@@ -21,6 +30,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         way = new Vector3[wayPoint.Count];
         for(int i = 0; i < wayPoint.Count; i++)
         {

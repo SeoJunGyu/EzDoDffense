@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 
-public class EnemyUnit : MonoBehaviour, IDamagable
+public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 {
     [SerializeField] private float arriveTolerance = 0.1f;
 
@@ -15,6 +15,10 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     private int deffense = 1;
     private EnemyTypes defType;
     public EnemyData Data { get; private set; }
+
+    private int beforeDeffense = 0;
+    private int beforeSpeed = 0;
+    private float multipliedDamage = 0f;
 
     private Vector3 target;
     private Vector3[] wayPoints;
@@ -26,6 +30,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     public float Health { get; private set; }
     public bool IsDead { get; private set; }
 
+    public bool IsTargetable => gameObject.activeInHierarchy;
+
+    private Transform effectAnchor;
+    public Transform EffectAnchor => effectAnchor != null ? effectAnchor : transform;
+
     public event Action OnDeath;
 
     [SerializeField] private float adventageDamageRate = 1.2f;
@@ -33,6 +42,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable
     [SerializeField] private int addGold = 5;
 
     private Quaternion initialRotation;
+
+    public List<long> Buff = new List<long>();
 
     private void OnEnable()
     {
@@ -128,13 +139,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         else if(attackType == Data.Advangage)
         {
             Health -= baseDamage * adventageDamageRate;
-            Debug.Log($"蜡府 惑己 -> {damage} -> {damage * adventageDamageRate}");
             UpdateHealthBar();
         }
         else if(attackType == Data.Disadvangage)
         {
             Health -= baseDamage * disAdventageDamageRate;
-            Debug.Log($"阂府 惑己 -> {damage} -> {damage * disAdventageDamageRate}");
             UpdateHealthBar();
         }
         else
@@ -181,5 +190,40 @@ public class EnemyUnit : MonoBehaviour, IDamagable
         agent.speed = data.Move_Speed;
         CurrentWayIndex = 0;
         Data = data;
+    }
+
+    public void ApplySingleSkill(SingleSkillData data, AllyUnit caster)
+    {
+        if (Buff.Contains(data.Skill_ID))
+        {
+            return;
+        }
+
+        switch (data.Skill_Effect)
+        {
+            case 3:
+                beforeDeffense = deffense;
+                deffense = deffense * (1 - data.Skill_Effect_Value / 100);
+                Buff.Add(data.Skill_ID);
+                var Deffenseskill = caster.singleSkillParticle.GetComponent<Skill>();
+                Deffenseskill.TraceTarget(gameObject);
+                break;
+            case 4:
+                beforeSpeed = (int)agent.speed;
+                agent.speed = agent.speed * (1 - data.Skill_Effect_Value / 100);
+                Buff.Add(data.Skill_ID);
+                var Speedskill = caster.singleSkillParticle.GetComponent<Skill>();
+                Speedskill.TraceTarget(gameObject);
+                break;
+            case 5:
+                var damage = caster.Damage * (data.Skill_Effect_Value / 100);
+                OnDamage(caster.Damage, caster.UnitType);
+                break;
+        }
+    }
+
+    public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster)
+    {
+        throw new NotImplementedException();
     }
 }

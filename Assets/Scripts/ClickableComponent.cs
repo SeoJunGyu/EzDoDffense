@@ -167,7 +167,6 @@ public class ClickableComponent : MonoBehaviour
         if(results.Count > 0)
         {
             uiHit = results[0].gameObject;
-            Debug.Log(uiHit.name);
             return true;
         }
 

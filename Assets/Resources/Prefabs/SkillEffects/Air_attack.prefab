@@ -34386,6 +34386,7 @@ GameObject:
   - component: {fileID: 4497778198042028}
   - component: {fileID: 198456144781081308}
   - component: {fileID: 199996371780584620}
+  - component: {fileID: -4818824941839299236}
   m_Layer: 0
   m_Name: Air_attack
   m_TagString: Untagged
@@ -39297,6 +39298,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-4818824941839299236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718901854264978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5c7ffc9722b8847ba268baadd75c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1806937982596418
 GameObject:
   m_ObjectHideFlags: 0

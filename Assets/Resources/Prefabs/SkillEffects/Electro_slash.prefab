@@ -4960,6 +4960,7 @@ GameObject:
   - component: {fileID: 1233010467109672509}
   - component: {fileID: 2929425121346758057}
   - component: {fileID: 8342335964613171125}
+  - component: {fileID: 7120661685579986186}
   m_Layer: 0
   m_Name: Electro_slash
   m_TagString: Untagged
@@ -9844,6 +9845,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7120661685579986186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171201465392465800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5c7ffc9722b8847ba268baadd75c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1952637200638554557
 GameObject:
   m_ObjectHideFlags: 0

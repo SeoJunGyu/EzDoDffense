@@ -56,8 +56,6 @@ public class Clickable : MonoBehaviour, IClickable
 
     public void OnClick()
     {
-        Debug.Log($"{name} Click / SocketInCount : {SocketInCount}");
-
         if(Variables.SelectedSlot == null)
         {
             SelectThis();

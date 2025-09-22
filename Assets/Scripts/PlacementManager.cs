@@ -6,15 +6,26 @@ using UnityEngine;
 
 public class PlacementManager : MonoBehaviour
 {
+    public static PlacementManager Instance { get; private set; }
+
     [SerializeField] private AllyUnit prefab;
     private List<Clickable> slots = new List<Clickable>();
 
     private List<AllyUnit> allyUnits = new List<AllyUnit>();
+    public List<AllyUnit> GetAllyUnits
+    {
+        get
+        {
+            return allyUnits;
+        }
+    }
 
     public SkillManager skillManager;
 
     private void Awake()
     {
+        Instance = this;
+
         var slotGos = GameObject.FindGameObjectsWithTag("Slot");
         foreach (var slot in slotGos)
         {
@@ -150,8 +161,9 @@ public class PlacementManager : MonoBehaviour
             unit.OnSynthesis += () => Destroy(visualModel);
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
-            unit.skillAgent = skillManager.CreateSkillBase(data.Unit_Skill_1, data.Unit_Skill_2);
-            
+            SetSkillData(unit, data);
+            SetParticle(unit, data);
+
             return true;
         }
 
@@ -245,5 +257,31 @@ public class PlacementManager : MonoBehaviour
         Variables.SelectedSlot.UnitDelete();
 
         Variables.Gold += 50;
+    }
+
+    private void SetSkillData(AllyUnit unit, AllyData data)
+    {
+        if (data.Unit_Skill_1 != 0)
+        {
+            unit.SingleSkill = DataTableManager.SingleSkillTable.Get(data.Unit_Skill_1);
+        }
+
+        if (data.Unit_Skill_2 != 0)
+        {
+            unit.MultiSkill = DataTableManager.MultiSkillTable.Get(data.Unit_Skill_2);
+        }
+    }
+
+    private void SetParticle(AllyUnit unit, AllyData data)
+    {
+        if (data.Unit_Skill_1 != 0)
+        {
+            unit.singleSkillParticle = SkillManager.Instance.CheckActive(unit.SingleSkill);
+        }
+
+        if (data.Unit_Skill_2 != 0)
+        {
+            unit.multiSkillParticle = SkillManager.Instance.CheckActive(unit.MultiSkill);
+        }
     }
 }

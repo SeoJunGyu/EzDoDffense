@@ -49087,6 +49087,7 @@ GameObject:
   - component: {fileID: 198582548927777468}
   - component: {fileID: 199525072903191772}
   - component: {fileID: 82138677932548610}
+  - component: {fileID: 5486550776250884760}
   m_Layer: 0
   m_Name: Sword_crater
   m_TagString: Untagged
@@ -54124,6 +54125,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5486550776250884760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875634080049536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef5c7ffc9722b8847ba268baadd75c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1911381990267636
 GameObject:
   m_ObjectHideFlags: 0
