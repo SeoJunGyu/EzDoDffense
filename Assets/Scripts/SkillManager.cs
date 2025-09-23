@@ -9,6 +9,8 @@ public class SkillManager : MonoBehaviour
     public static SkillManager Instance { get; private set; }
 
     private Dictionary<long, Queue<ParticleSystem>> particles = new Dictionary<long, Queue<ParticleSystem>>();
+    private Dictionary<long, SingleSkillData> singleDatas = new Dictionary<long, SingleSkillData>();
+    private Dictionary<long, MultiSkillData> multiDatas = new Dictionary<long, MultiSkillData>();
 
     private void Awake()
     {
@@ -49,7 +51,9 @@ public class SkillManager : MonoBehaviour
             return false;
         }
 
-        return UnityEngine.Random.Range(0, 100) < chance;
+        var rnd = UnityEngine.Random.Range(0, 100);
+        Debug.Log($"{rnd}");
+        return rnd < chance;
     }
 
     //발동 대상 확인
@@ -167,33 +171,40 @@ public class SkillManager : MonoBehaviour
 
     public void ExecuteSingleSkill(AllyUnit caster)
     {
-        var data = DataTableManager.SingleSkillTable.Get(caster.Skill1);
-        var list = CheckSkillTarget(caster, DataTableManager.SingleSkillTable.Get(caster.Skill1));
-        foreach(var target in list)
+        var data = GetSingleData(caster.Skill1);
+        var list = CheckSkillTarget(caster, data);
+        if (CheckSkillRandom(data.Skill_Random))
         {
-            if (target.ActiveParticle.Contains(data.Skill_ID))
+            foreach (var target in list)
             {
-                continue;
+                if (target.ActiveParticle.Contains(data.Skill_ID))
+                {
+                    continue;
+                }
+
+                //var particle = CheckActive(data);
+                //particle.transform.SetParent(target.EffectAnchor);
+                //particle.transform.localPosition = Vector3.zero;
+                //particle.gameObject.SetActive(true);
+                //particle.Play();
+
+                target.ApplySingleSkill(data, caster, null);
+                target.ActiveParticle.Add(data.Skill_ID);
             }
-
-            //var particle = CheckActive(data);
-            //particle.transform.SetParent(target.EffectAnchor);
-            //particle.transform.localPosition = Vector3.zero;
-            //particle.gameObject.SetActive(true);
-            //particle.Play();
-
-            target.ApplySingleSkill(data, caster, null);
-            target.ActiveParticle.Add(data.Skill_ID);
         }
     }
 
     public void ExecuteMultiSkill(AllyUnit caster)
     {
-        var data = DataTableManager.MultiSkillTable.Get(caster.Skill2);
+        var data = GetMultiData(caster.Skill2);
         var list = CheckSkillTarget(caster, data);
-        foreach (var target in list)
+        if (CheckSkillRandom(data.Skill_Random))
         {
-            target.ApplyMultiSkill(data, caster, null);
+            Debug.Log("MultiSkill");
+            foreach (var target in list)
+            {
+                target.ApplyMultiSkill(data, caster, null);
+            }
         }
     }
 
@@ -245,5 +256,29 @@ public class SkillManager : MonoBehaviour
         inst.gameObject.SetActive(false);
         q.Enqueue(inst);
         return inst;
+    }
+
+    public SingleSkillData GetSingleData(long id)
+    {
+        if (singleDatas.ContainsKey(id))
+        {
+            return singleDatas[id];
+        }
+
+        var data = DataTableManager.SingleSkillTable.Get(id);
+        singleDatas.Add(id, data);
+        return data;
+    }
+
+    public MultiSkillData GetMultiData(long id)
+    {
+        if (multiDatas.ContainsKey(id))
+        {
+            return multiDatas[id];
+        }
+
+        var data = DataTableManager.MultiSkillTable.Get(id);
+        multiDatas.Add(id, data);
+        return data;
     }
 }

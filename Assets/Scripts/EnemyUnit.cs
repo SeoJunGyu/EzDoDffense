@@ -205,16 +205,22 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 beforeDeffense = deffense;
                 deffense = deffense * (1 - data.Skill_Effect_Value / 100f);
                 particles.Add(data.Skill_ID);
+
+                Debug.Log($"방어력 변화 : {data.Skill_Name} / {beforeDeffense} / {deffense}");
                 break;
             case 4:
                 beforeSpeed = agent.speed;
                 agent.speed = agent.speed * (1 - data.Skill_Effect_Value / 100f);
                 particles.Add(data.Skill_ID);
+
+                Debug.Log($"이동속도 변화 : {data.Skill_Name} / {beforeSpeed} / {agent.speed}");
                 break;
             case 5:
                 var damage = caster.Damage * (data.Skill_Effect_Value / 100f);
                 OnDamage(caster.Damage, caster.UnitType);
                 particles.Add(data.Skill_ID);
+
+                Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");
                 break;
         }
     }
@@ -227,6 +233,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 var damage = caster.Damage * (data.Skill_Effect_Value_1 / 100f);
                 OnDamage(caster.Damage, caster.UnitType);
                 particles.Add(data.Skill_ID);
+
+                Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");
                 break;
         }
 
@@ -236,6 +244,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 beforeSpeed = agent.speed;
                 agent.speed = agent.speed * (1 - data.Skill_Effect_Value_2 / 100f);
                 particles.Add(data.Skill_ID);
+
+                Debug.Log($"이동속도 변화 : {data.Skill_Name} / {beforeSpeed} / {agent.speed}");
                 break;
             case 6:
                 if (!CanControlAgent)
@@ -248,6 +258,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                     animator.speed = 0f;
                 }
                 StartCoroutine(StunCoroutine(data.Skill_Duration_2));
+
+                Debug.Log($"기절 {data.Skill_Name} / {data.Skill_Duration_2}초");
                 break;
         }
     }
@@ -260,7 +272,5 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
         agent.isStopped = false;
         if (animator != null) animator.speed = 1f; // 원래 값 복원
-
-        Debug.Log($"{gameObject.name} : 기절");
     }
 }
