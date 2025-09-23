@@ -49,7 +49,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private Animator animator;
 
-    
+    private HashSet<long> activeDebuff = new HashSet<long>();
 
     private void OnEnable()
     {
@@ -205,6 +205,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
     {
+        if (!activeDebuff.Add(data.Skill_ID))
+        {
+            return;
+        }
+
         switch (data.Skill_Effect)
         {
             case 3:
@@ -233,6 +238,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster, ParticleSystem particle)
     {
+        if (!activeDebuff.Add(data.Skill_ID))
+        {
+            return;
+        }
+
         switch (data.Skill_Effect_1)
         {
             case 5:
@@ -256,7 +266,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 agent.speed = agent.speed * (1 - data.Skill_Effect_Value_2 / 100f);
                 particles.Add(data.Skill_ID);
 
-                StartCoroutine(SpeedCoroutine(data.Skill_Duration_2));
+                StartCoroutine(SpeedCoroutine(data.Skill_ID, data.Skill_Duration_2));
 
                 Debug.Log($"이동속도 변화 : {data.Skill_Name} / {beforeSpeed} / {agent.speed}");
                 break;
@@ -270,7 +280,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 {
                     animator.speed = 0f;
                 }
-                StartCoroutine(StunCoroutine(data.Skill_Duration_2));
+                StartCoroutine(StunCoroutine(data.Skill_ID, data.Skill_Duration_2));
 
                 Debug.Log($"기절 {data.Skill_Name} / {data.Skill_Duration_2}초");
                 break;
@@ -279,19 +289,22 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private bool CanControlAgent => agent != null && agent.enabled && gameObject.activeSelf && agent.isOnNavMesh;
 
-    private IEnumerator StunCoroutine(float duration)
+    private IEnumerator StunCoroutine(long id, float duration)
     {
         yield return new WaitForSeconds(duration);
 
         agent.isStopped = false;
         if (animator != null) animator.speed = 1f; // 원래 값 복원
+
+        activeDebuff.Remove(id);
     }
 
-    private IEnumerator SpeedCoroutine(float duration)
+    private IEnumerator SpeedCoroutine(long id, float duration)
     {
         Debug.Log($"이동속도 지속시간 {duration}");
         yield return new WaitForSeconds(duration);
         agent.speed = beforeSpeed;
         Debug.Log($"이동속도 되돌아옴");
+        activeDebuff.Remove(id);
     }
 }
