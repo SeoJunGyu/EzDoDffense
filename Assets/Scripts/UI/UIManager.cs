@@ -93,6 +93,12 @@ public class UIManager : MonoBehaviour
         }
 
         AllyInfoPanel.SetAllyInfo(data);
+
+        if(Variables.SelectedSlot.SocketInCount > 0)
+        {
+            AllyInfoPanel.SetUnitCurrentInfo(Variables.SelectedSlot.GetPrimaryUnit());
+        }
+        
         AllyInfoPanel.gameObject.SetActive(true);
 
         EnemyInfoPanel.gameObject.SetActive(false);

@@ -24,10 +24,8 @@ public class UIUnitInfo : MonoBehaviour
 
     public void SetAllyInfo(AllyData data)
     {
-        Grade.text = data.Unit_Grade.ToString();
+        
         Unit_Name.text = data.Unit_Name;
-        Damage.text = data.Unit_ATK.ToString();
-        AttackSpeed.text = data.Unit_ATK_SPD.ToString();
 
         UnitImage.sprite = data.SpriteUnitIcon;
         DamageImage.sprite = data.SpriteDamageIcon;
@@ -52,6 +50,35 @@ public class UIUnitInfo : MonoBehaviour
         {
             Skill2.gameObject.SetActive(false);
         }
+    }
+
+    public void SetUnitCurrentInfo(AllyUnit unit)
+    {
+        string grade = null;
+        switch (unit.Grade)
+        {
+            case 1:
+                grade = "노멀";
+                break;
+            case 2:
+                grade = "레어";
+                break;
+            case 3:
+                grade = "유니크";
+                break;
+            case 4:
+                grade = "레전드";
+                break;
+            case 5:
+                grade = "에픽";
+                break;
+        }
+
+        var gradeUpgrade = PlacementManager.GradeUpgradeSave.ContainsKey(unit.Grade) ? $"+{PlacementManager.GradeUpgradeSave[unit.Grade]}" : "";
+
+        Grade.text = grade + gradeUpgrade;
+        Damage.text = unit.Damage.ToString();
+        AttackSpeed.text = unit.AtkSpeed.ToString();
     }
 
     public void SetEnemyInfo(EnemyUnit enemy)

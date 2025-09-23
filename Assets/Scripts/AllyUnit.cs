@@ -47,6 +47,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         }
     }
 
+    public float AtkSpeed { get => attackSpeed; }
+
     public AttackTypes UnitType
     {
         get
@@ -54,6 +56,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             return unitType;
         }
     }
+
+    public int Grade { get => grade; }
 
     [SerializeField] private LayerMask enemyMask;
     private EnemyUnit target;
@@ -209,15 +213,15 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         agent.SetDestination(socket);
     }
 
-    public void Setup(AllyData data, int gradeUpgrade, int typeUpgrade)
+    public void Setup(AllyData data, int gradeUpgrade)
     {
         grade = data.Unit_Grade;
         unitType = (AttackTypes)data.Unit_Type;
 
         //damage = data.Unit_ATK;
-        damage = GradeUpgradeDB.CalcDamage(data.Unit_ATK, grade, 1);
+        damage = GradeUpgradeDB.CalcDamage(data.Unit_ATK, grade, gradeUpgrade);
 
-        attackSpeed = GradeUpgradeDB.CalcAtkSpeed(data.Unit_ATK_SPD, grade, 1);
+        attackSpeed = GradeUpgradeDB.CalcAtkSpeed(data.Unit_ATK_SPD, grade, gradeUpgrade);
         Debug.Log($"{data.Unit_ATK_SPD} / {attackSpeed}");
 
         attackInterval = 1f / data.Unit_ATK_SPD;

@@ -410,4 +410,28 @@ public class Clickable : MonoBehaviour, IClickable
             Variables.SelectedSlot = null;
         }
     }
+
+    public AllyUnit GetPrimaryUnit()
+    {
+        foreach(var socket in sockets)
+        {
+            if (sockets[socket.Key] != null)
+            {
+                return sockets[socket.Key];
+            }
+        }
+
+        return null;
+    }
+
+    public void AllGradeUpgradeUnitSetup(int grade, int gradeUpgrade)
+    {
+        foreach(var socket in sockets)
+        {
+            if (sockets[socket.Key] != null && sockets[socket.Key].gameObject.activeSelf && CurrentData.Unit_Grade == grade)
+            {
+                sockets[socket.Key].Setup(CurrentData, gradeUpgrade);
+            }
+        }
+    }
 }

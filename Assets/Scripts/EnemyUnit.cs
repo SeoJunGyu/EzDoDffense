@@ -179,6 +179,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 if(Variables.Stage != 100)
                 {
                     Variables.Stage++;
+
+                    Variables.Gem += Variables.Stage % 10 == 0 ? Mathf.Min((Variables.Stage / 10 - 1) / 4 + 1, 3) : 0;
                 }
 
                 Variables.Boss = null;

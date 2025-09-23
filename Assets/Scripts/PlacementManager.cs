@@ -23,8 +23,8 @@ public class PlacementManager : MonoBehaviour
     public SkillManager skillManager;
 
     //강화 수치 관리
-    public Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
-    public Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
+    public static Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
+    public static Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
 
     private void Awake()
     {
@@ -130,7 +130,8 @@ public class PlacementManager : MonoBehaviour
         if (slot.SetSocket(unit, data))
         {
             var visualModel = Instantiate(data.VisualModel, unit.transform);
-            unit.Setup(data, 1, 1);
+            var grade = GradeUpgradeSave.ContainsKey(data.Unit_Grade) ? GradeUpgradeSave[data.Unit_Grade] : 0;
+            unit.Setup(data, grade);
             unit.gameObject.SetActive(true);
 
             unit.OnSynthesis += () => Destroy(visualModel);
@@ -229,5 +230,36 @@ public class PlacementManager : MonoBehaviour
         Variables.SelectedSlot.UnitDelete();
 
         Variables.Gold += 50;
+    }
+
+    public void GradeUpgrade(int grade)
+    {
+        if(GradeUpgradeSave.ContainsKey(grade))
+        {
+            if(GradeUpgradeSave[grade] >= 10)
+            {
+                return;
+            }
+
+            GradeUpgradeSave[grade]++;
+        }
+        else
+        {
+            GradeUpgradeSave.Add(grade, 1);
+        }
+
+        AllGradeUpgradeSetUp(GradeUpgradeSave[grade], grade);
+        return;
+    }
+
+    public void AllGradeUpgradeSetUp(int gradeUpdate, int grade)
+    {
+        foreach(var slot in slots)
+        {
+            if(slot.SocketInCount > 0)
+            {
+                slot.AllGradeUpgradeUnitSetup(grade, gradeUpdate);
+            }
+        }
     }
 }
