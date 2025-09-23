@@ -49,6 +49,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private Animator animator;
 
+    
+
     private void OnEnable()
     {
         IsDead = false;
@@ -221,7 +223,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 break;
             case 5:
                 var damage = caster.Damage * (data.Skill_Effect_Value / 100f);
-                OnDamage(caster.Damage, caster.UnitType);
+                OnDamage(damage, caster.UnitType);
                 particles.Add(data.Skill_ID);
 
                 Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");
@@ -235,7 +237,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         {
             case 5:
                 var damage = caster.Damage * (data.Skill_Effect_Value_1 / 100f);
-                OnDamage(caster.Damage, caster.UnitType);
+                OnDamage(damage, caster.UnitType);
                 particles.Add(data.Skill_ID);
 
                 Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");

@@ -46,7 +46,7 @@ public class UIUnitInfo : MonoBehaviour
         if (data.Unit_Skill_2 != 0)
         {
             Skill2.gameObject.SetActive(true);
-            Skill2.sprite = SkillManager.Instance.GetSingleData(data.Unit_Skill_2).SpriteSkillIcon;
+            Skill2.sprite = SkillManager.Instance.GetMultiData(data.Unit_Skill_2).SpriteSkillIcon;
         }
         else
         {
