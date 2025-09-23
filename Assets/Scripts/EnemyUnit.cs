@@ -172,7 +172,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
             if(Variables.Boss == this)
             {
-                Variables.Stage++;
+                if(Variables.Stage != 100)
+                {
+                    Variables.Stage++;
+                }
+
                 Variables.Boss = null;
             }
 
@@ -241,9 +245,16 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         switch (data.Skill_Effect_2)
         {
             case 4:
+                if(!gameObject.activeSelf || IsDead)
+                {
+                    return;
+                }
+
                 beforeSpeed = agent.speed;
                 agent.speed = agent.speed * (1 - data.Skill_Effect_Value_2 / 100f);
                 particles.Add(data.Skill_ID);
+
+                StartCoroutine(SpeedCoroutine(data.Skill_Duration_2));
 
                 Debug.Log($"이동속도 변화 : {data.Skill_Name} / {beforeSpeed} / {agent.speed}");
                 break;
@@ -272,5 +283,13 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
         agent.isStopped = false;
         if (animator != null) animator.speed = 1f; // 원래 값 복원
+    }
+
+    private IEnumerator SpeedCoroutine(float duration)
+    {
+        Debug.Log($"이동속도 지속시간 {duration}");
+        yield return new WaitForSeconds(duration);
+        agent.speed = beforeSpeed;
+        Debug.Log($"이동속도 되돌아옴");
     }
 }
