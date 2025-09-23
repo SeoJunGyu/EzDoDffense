@@ -76,9 +76,13 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public List<EnemyUnit> findSkillTarget = new List<EnemyUnit>();
 
+    private HashSet<long> activeBuff = new HashSet<long>();
+
     private void OnDisable()
     {
         OnDespawned?.Invoke();
+
+        activeBuff.Clear();
 
         OnSynthesis = null;
     }
@@ -254,6 +258,11 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
     {
+        if (!activeBuff.Add(data.Skill_ID))
+        {
+            return;
+        }
+
         switch (data.Skill_Effect)
         {
             case 1:

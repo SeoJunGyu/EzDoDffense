@@ -66,6 +66,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private void OnDisable()
     {
+        activeDebuff.Clear();
+
         OnDeath = null;
     }
 
@@ -205,14 +207,13 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
     {
-        if (!activeDebuff.Add(data.Skill_ID))
-        {
-            return;
-        }
-
         switch (data.Skill_Effect)
         {
             case 3:
+                if (!activeDebuff.Add(data.Skill_ID))
+                {
+                    return;
+                }
                 beforeDeffense = deffense;
                 deffense = deffense * (1 - data.Skill_Effect_Value / 100f);
                 particles.Add(data.Skill_ID);
@@ -220,6 +221,10 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 Debug.Log($"방어력 변화 : {data.Skill_Name} / {beforeDeffense} / {deffense}");
                 break;
             case 4:
+                if (!activeDebuff.Add(data.Skill_ID))
+                {
+                    return;
+                }
                 beforeSpeed = agent.speed;
                 agent.speed = agent.speed * (1 - data.Skill_Effect_Value / 100f);
                 particles.Add(data.Skill_ID);
@@ -238,11 +243,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster, ParticleSystem particle)
     {
-        if (!activeDebuff.Add(data.Skill_ID))
-        {
-            return;
-        }
-
         switch (data.Skill_Effect_1)
         {
             case 5:
@@ -256,8 +256,29 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
         switch (data.Skill_Effect_2)
         {
+            case 3:
+                if (!gameObject.activeSelf || IsDead)
+                {
+                    return;
+                }
+                if (!activeDebuff.Add(data.Skill_ID))
+                {
+                    return;
+                }
+                beforeDeffense = deffense;
+                deffense = deffense * (1 - data.Skill_Effect_Value_2 / 100f);
+                particles.Add(data.Skill_ID);
+
+                StartCoroutine(DeffenseCoroutine(data.Skill_ID, data.Skill_Duration_2));
+
+                Debug.Log($"방어력 변화 : {data.Skill_Name} / {beforeDeffense} / {deffense}");
+                break;
             case 4:
                 if(!gameObject.activeSelf || IsDead)
+                {
+                    return;
+                }
+                if (!activeDebuff.Add(data.Skill_ID))
                 {
                     return;
                 }
@@ -275,6 +296,11 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 {
                     break;
                 }
+                if (!activeDebuff.Add(data.Skill_ID))
+                {
+                    return;
+                }
+
                 agent.isStopped = true;
                 if(animator != null)
                 {
@@ -304,6 +330,15 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         Debug.Log($"이동속도 지속시간 {duration}");
         yield return new WaitForSeconds(duration);
         agent.speed = beforeSpeed;
+        Debug.Log($"이동속도 되돌아옴");
+        activeDebuff.Remove(id);
+    }
+
+    private IEnumerator DeffenseCoroutine(long id, float duration)
+    {
+        Debug.Log($"이동속도 지속시간 {duration}");
+        yield return new WaitForSeconds(duration);
+        deffense = beforeDeffense;
         Debug.Log($"이동속도 되돌아옴");
         activeDebuff.Remove(id);
     }
