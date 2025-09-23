@@ -32,6 +32,26 @@ public class UIUnitInfo : MonoBehaviour
         UnitImage.sprite = data.SpriteUnitIcon;
         DamageImage.sprite = data.SpriteDamageIcon;
         SpeedImage.sprite = data.SpriteATKSpeedIcon;
+
+        if(data.Unit_Skill_1 != 0)
+        {
+            Skill1.gameObject.SetActive(true);
+            Skill1.sprite = SkillManager.Instance.GetSingleData(data.Unit_Skill_1).SpriteSkillIcon;
+        }
+        else
+        {
+            Skill1.gameObject.SetActive(false);
+        }
+
+        if (data.Unit_Skill_2 != 0)
+        {
+            Skill2.gameObject.SetActive(true);
+            Skill2.sprite = SkillManager.Instance.GetSingleData(data.Unit_Skill_2).SpriteSkillIcon;
+        }
+        else
+        {
+            Skill2.gameObject.SetActive(false);
+        }
     }
 
     public void SetEnemyInfo(EnemyUnit enemy)
