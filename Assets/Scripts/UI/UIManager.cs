@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public UIUnitInfo EnemyInfoPanel;
     public Button UpgradeButton;
     public Button DeleteButton;
+    public Button EnforceButton;
 
     private float surviveTime = 0f; //살아있는 시간
     private float second = 0f; //초 시간
@@ -26,6 +27,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject GameOverUI;
     public GameObject VictoryUI;
+
+    public GameObject EnforcePanel;
+    public GameObject TypeEnforcePanel;
+    public GameObject GradeEnforcePanel;
 
     private void Awake()
     {
@@ -72,7 +77,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateGold()
     {
-        GoldText.text = $"Gold : {Variables.Gold}";
+        GoldText.text = $"{Variables.Gold}";
     }
 
     private void UpdateEnemyCount()
@@ -168,5 +173,11 @@ public class UIManager : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    public void ActiveEnforcePanel()
+    {
+        AllyInfoPanel.gameObject.SetActive(false);
+        EnforcePanel.SetActive(true);
     }
 }

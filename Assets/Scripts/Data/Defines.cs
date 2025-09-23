@@ -41,6 +41,7 @@ public static class Variables
     public static EnemyUnit SelectedEnemy { get; set; }
 
     public static int Gold { get; set; } = 150;
+    public static int Gem { get; set; } = 0;
 
     public static void Reset()
     {
@@ -52,6 +53,7 @@ public static class Variables
         SelectedSlot = null;
         SelectedEnemy = null;
         Gold = 150;
+        Gem = 0;
         Boss = null;
     }
 }

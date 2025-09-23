@@ -22,6 +22,10 @@ public class PlacementManager : MonoBehaviour
 
     public SkillManager skillManager;
 
+    //강화 수치 관리
+    public Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
+    public Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
+
     private void Awake()
     {
         Instance = this;
@@ -126,7 +130,7 @@ public class PlacementManager : MonoBehaviour
         if (slot.SetSocket(unit, data))
         {
             var visualModel = Instantiate(data.VisualModel, unit.transform);
-            unit.Setup(data);
+            unit.Setup(data, 1, 1);
             unit.gameObject.SetActive(true);
 
             unit.OnSynthesis += () => Destroy(visualModel);

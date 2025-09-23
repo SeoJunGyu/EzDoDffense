@@ -76,7 +76,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public List<EnemyUnit> findSkillTarget = new List<EnemyUnit>();
 
-    private HashSet<long> activeBuff = new HashSet<long>();
+    private HashSet<long> activeBuff = new HashSet<long>(); //유닛에 활성화된 버프
 
     private void OnDisable()
     {
@@ -209,12 +209,17 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         agent.SetDestination(socket);
     }
 
-    public void Setup(AllyData data)
+    public void Setup(AllyData data, int gradeUpgrade, int typeUpgrade)
     {
         grade = data.Unit_Grade;
         unitType = (AttackTypes)data.Unit_Type;
-        damage = data.Unit_ATK;
-        attackSpeed = data.Unit_ATK_SPD;
+
+        //damage = data.Unit_ATK;
+        damage = GradeUpgradeDB.CalcDamage(data.Unit_ATK, grade, 1);
+
+        attackSpeed = GradeUpgradeDB.CalcAtkSpeed(data.Unit_ATK_SPD, grade, 1);
+        Debug.Log($"{data.Unit_ATK_SPD} / {attackSpeed}");
+
         attackInterval = 1f / data.Unit_ATK_SPD;
         range = data.Unit_ATK_RNG + 4f; //4f : 최소가 1f이니까
         agent.speed = data.Unit_Move_Speed;

@@ -88,12 +88,12 @@ public class ClickableComponent : MonoBehaviour
         }
 
 
-        if (down && hitClickable != null)
+        if (down && hitClickable != null && !hitAny)
         {
             pressed = hitClickable;
             pressed.OnPress(true);
         }
-        else if(down && enemy != null)
+        else if(down && enemy != null && !hitAny)
         {
             Variables.SelectedEnemy = enemy;
         }

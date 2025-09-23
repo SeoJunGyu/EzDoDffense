@@ -11,6 +11,59 @@ public enum AttackTypes
     Magic,
 }
 
+public struct StatMods
+{
+    public float AtkMul;
+    public float AtkSpdMul;
+}
+
+public static class GradeUpgradeDB
+{
+    private static Dictionary<int, float> GradeDamageMultiplier = new Dictionary<int, float>()
+    {
+        {1, 1.00f },
+        {2, 1.10f },
+        {3, 1.25f },
+        {4, 1.40f },
+        {5, 1.60f },
+    };
+
+    private static Dictionary<int, float> GradeAtkSpeedMultiplier = new Dictionary<int, float>()
+    {
+        {1, 0.16f },
+        {2, 0.18f },
+        {3, 0.20f },
+        {4, 0.22f },
+        {5, 0.25f },
+    };
+
+    public static int CalcDamage(int baseAtk, int grade, int enhanceLevel)
+    {
+        if(!GradeDamageMultiplier.TryGetValue(grade, out float mul))
+        {
+            mul = 1f;
+        }
+
+        float result = baseAtk * mul * Mathf.Pow(1.08f, enhanceLevel);
+
+        return Mathf.CeilToInt(result);
+    }
+
+    private const float Decay = 0.8f;
+    public static float CalcAtkSpeed(float baseAtkSpeed, int grade, int enhanceLevel)
+    {
+        if (!GradeAtkSpeedMultiplier.TryGetValue(grade, out float mul))
+        {
+            mul = 1f;
+        }
+
+        float result = baseAtkSpeed * (1f + mul * (1f - Mathf.Pow(Decay, enhanceLevel)));
+        result = Mathf.Round(result * 100f) / 100f;
+
+        return result;
+    }
+}
+
 public class AllyData
 {
     public long Unit_ID { get; set; }
