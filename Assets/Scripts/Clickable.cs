@@ -145,7 +145,7 @@ public class Clickable : MonoBehaviour, IClickable
         IsSelected = true;
         Refresh();
 
-        if(count > 0)
+        if(SocketInCount > 0)
         {
             float diameter = (CurrentData.Unit_ATK_RNG +4f ) * 0.2f;
             Range.transform.localScale = new Vector3(diameter, diameter, 1f);
@@ -338,6 +338,8 @@ public class Clickable : MonoBehaviour, IClickable
         var prevFromData = from.CurrentData;
         from.CurrentData = to.CurrentData;
         to.CurrentData = prevFromData;
+
+        Variables.SelectedSlot = null;
     }
 
     public void SendUnitTo(AllyUnit unit, Vector3 dest)

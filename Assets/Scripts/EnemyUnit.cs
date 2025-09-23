@@ -87,7 +87,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private void LateUpdate()
     {
-        healthSlider.transform.rotation = initialRotation;
+        healthSlider.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
     }
 
     public void UpdateTrace()
