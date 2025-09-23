@@ -3,6 +3,7 @@ using UnityEngine;
 public class UICheat : MonoBehaviour
 {
     private bool infiniteGold = false;
+    private bool infiniteGem = false;
     public PlacementManager placementManager;
 
     private void Update()
@@ -11,11 +12,20 @@ public class UICheat : MonoBehaviour
         {
             Variables.Gold = 999;
         }
+        if (infiniteGem)
+        {
+            Variables.Gem = 999;
+        }
     }
 
     public void InfiniteGold()
     {
         infiniteGold = !infiniteGold;
+    }
+
+    public void InfiniteGem()
+    {
+        infiniteGem = !infiniteGem;
     }
 
     public void TreeEnemySpawn()
@@ -41,7 +51,7 @@ public class UICheat : MonoBehaviour
 
     public void OneTestEnemySpawn()
     {
-        var data = DataTableManager.AllyTable.Get(1310013001);
+        var data = DataTableManager.AllyTable.Get(1540023001);
         if (!placementManager.FindSameUnit(data, 0))
         {
             placementManager.PlaceInSocket(data, 0);

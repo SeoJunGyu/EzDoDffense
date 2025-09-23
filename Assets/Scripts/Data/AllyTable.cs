@@ -43,6 +43,10 @@ public static class GradeUpgradeDB
         {
             mul = 1f;
         }
+        if(enhanceLevel <= 0)
+        {
+            return baseAtk;
+        }
 
         float result = baseAtk * mul * Mathf.Pow(1.08f, enhanceLevel);
 
@@ -55,6 +59,10 @@ public static class GradeUpgradeDB
         if (!GradeAtkSpeedMultiplier.TryGetValue(grade, out float mul))
         {
             mul = 1f;
+        }
+        if(enhanceLevel <= 0)
+        {
+            return baseAtkSpeed;
         }
 
         float result = baseAtkSpeed * (1f + mul * (1f - Mathf.Pow(Decay, enhanceLevel)));

@@ -23,6 +23,9 @@ public class PlacementManager : MonoBehaviour
     public SkillManager skillManager;
 
     //강화 수치 관리
+    public static Dictionary<int, int> GradeUpgradeGold = new Dictionary<int, int>();
+    public static Dictionary<int, int> GradeUpgradeGem = new Dictionary<int, int>();
+
     public static Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
     public static Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
 
@@ -40,6 +43,11 @@ public class PlacementManager : MonoBehaviour
         for(int i = 0; i < 10; i++)
         {
             allyUnits.Add(CreateUnit());
+        }
+
+        for(int i = 1; i < 6; i++)
+        {
+            GradeUpgradeGold.Add(i, 30);
         }
     }
 
@@ -201,6 +209,17 @@ public class PlacementManager : MonoBehaviour
         return false;
     }
 
+    private bool TryPayGem(int cost)
+    {
+        if(Variables.Gem >= cost)
+        {
+            Variables.Gem -= cost;
+            return true;
+        }
+
+        return false;
+    }
+
     //유닛 합성
     public void UnitSynthesis()
     {
@@ -232,25 +251,56 @@ public class PlacementManager : MonoBehaviour
         Variables.Gold += 50;
     }
 
+    //강화 실행
     public void GradeUpgrade(int grade)
     {
-        if(GradeUpgradeSave.ContainsKey(grade))
+        int level = GradeUpgradeSave.TryGetValue(grade, out var saved) ? saved : 0;
+        if (level >= 10) return;
+
+        bool gemStage = IsGemStage(grade, level);
+
+        //골드 결제
+        int goldCostNow = gemStage ? 0 : CalcGold(level);
+        if (goldCostNow > 0 && !TryPay(goldCostNow))
         {
-            if(GradeUpgradeSave[grade] >= 10)
+            return;
+        }
+
+        //보석 결제
+        if (gemStage)
+        {
+            int gemCostNow = CalcGem(level);
+            if (gemCostNow > 0 && !TryPayGem(gemCostNow))
             {
                 return;
             }
+        }
 
-            GradeUpgradeSave[grade]++;
+        //강화 성공
+        level++;
+        GradeUpgradeSave[grade] = level;
+
+        //다음 비용
+        if (level >= 10)
+        {
+            GradeUpgradeGold[grade] = 0;
+            GradeUpgradeGem[grade] = 0;
         }
         else
         {
-            GradeUpgradeSave.Add(grade, 1);
+            bool nextGemStage = IsGemStage(grade, level);
+            GradeUpgradeGold[grade] = nextGemStage ? 0 : CalcGold(level);
+            GradeUpgradeGem[grade] = nextGemStage ? CalcGem(level) : 0;
         }
 
-        AllGradeUpgradeSetUp(GradeUpgradeSave[grade], grade);
-        return;
+        AllGradeUpgradeSetUp(level, grade);
     }
+
+    private bool IsGemStage(int grade, int level) => (grade == 4 || grade == 5) && level >= 5;
+
+    private int CalcGold(int level) => Mathf.CeilToInt(30f * Mathf.Pow(1.25f, level));
+
+    private int CalcGem(int level) => (level - 4);
 
     public void AllGradeUpgradeSetUp(int gradeUpdate, int grade)
     {

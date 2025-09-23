@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI StageText;
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI GoldText;
+    public TextMeshProUGUI GemText;
     public TextMeshProUGUI EnemyCountText;
 
     public UIUnitInfo AllyInfoPanel;
@@ -63,6 +64,7 @@ public class UIManager : MonoBehaviour
             if (Variables.Stage >= 100)
             {
                 Variables.Stage = 100;
+                return;
             }
             else if (Variables.Boss)
             {
@@ -78,6 +80,7 @@ public class UIManager : MonoBehaviour
     private void UpdateGold()
     {
         GoldText.text = $"{Variables.Gold}";
+        GemText.text = $"{Variables.Gem}";
     }
 
     private void UpdateEnemyCount()
