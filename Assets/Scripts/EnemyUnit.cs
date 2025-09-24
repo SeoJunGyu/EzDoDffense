@@ -40,6 +40,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     public List<long> ActiveParticle { get => particles; }
 
     public event Action OnDeath;
+    public event Action OnDisableUnit;
 
     [SerializeField] private float adventageDamageRate = 1.2f;
     [SerializeField] private float disAdventageDamageRate = 0.8f;
@@ -67,6 +68,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     private void OnDisable()
     {
         activeDebuff.Clear();
+
+        OnDisableUnit?.Invoke();
 
         OnDeath = null;
     }
@@ -245,6 +248,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");
                 break;
         }
+
+        OnDeath += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
     }
 
     public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster, ParticleSystem particle)
@@ -317,6 +322,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 Debug.Log($"기절 {data.Skill_Name} / {data.Skill_Duration_2}초");
                 break;
         }
+
+        OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
     }
 
     private bool CanControlAgent => agent != null && agent.enabled && gameObject.activeSelf && agent.isOnNavMesh;

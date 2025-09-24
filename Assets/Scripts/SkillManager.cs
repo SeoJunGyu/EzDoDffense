@@ -182,11 +182,11 @@ public class SkillManager : MonoBehaviour
                     continue;
                 }
 
-                //var particle = CheckActive(data);
-                //particle.transform.SetParent(target.EffectAnchor);
-                //particle.transform.localPosition = Vector3.zero;
-                //particle.gameObject.SetActive(true);
-                //particle.Play();
+                var particle = CheckActive(data);
+                particle.transform.SetParent(target.EffectAnchor);
+                particle.transform.localPosition = Vector3.zero;
+                particle.gameObject.SetActive(true);
+                particle.Play();
 
                 target.ApplySingleSkill(data, caster, null);
                 target.ActiveParticle.Add(data.Skill_ID);
@@ -216,21 +216,20 @@ public class SkillManager : MonoBehaviour
             particles.Add(data.Skill_ID, q);
         }
 
-        while(q.Count > 0)
+        ParticleSystem ps = null;
+
+        if(q.Count > 0)
         {
-            var candidate = q.Dequeue();
-            if(candidate != null)
-            {
-                candidate.gameObject.SetActive(false);
-                return candidate;
-            }
+            ps = q.Dequeue();
+        }
+        else
+        {
+            ps = Instantiate(data.SkillParticle, transform);
         }
 
-        //없는경우
-        var inst = Instantiate(data.SkillParticle, transform);
-        inst.gameObject.SetActive(false);
-        q.Enqueue(inst);
-        return inst;
+        ps.gameObject.SetActive(false);
+
+        return ps;
     }
 
     public ParticleSystem CheckActive(MultiSkillData data)
@@ -241,21 +240,35 @@ public class SkillManager : MonoBehaviour
             particles.Add(data.Skill_ID, q);
         }
 
-        while (q.Count > 0)
+        ParticleSystem ps = null;
+
+        if (q.Count > 0)
         {
-            var candidate = q.Dequeue();
-            if (candidate != null)
-            {
-                candidate.gameObject.SetActive(false);
-                return candidate;
-            }
+            ps = q.Dequeue();
+        }
+        else
+        {
+            ps = Instantiate(data.SkillParticle, transform);
         }
 
-        //없는경우
-        var inst = Instantiate(data.SkillParticle, transform);
-        inst.gameObject.SetActive(false);
-        q.Enqueue(inst);
-        return inst;
+        ps.gameObject.SetActive(false);
+
+        return ps;
+    }
+
+    public void ReturnParticle(long skillId, ParticleSystem ps)
+    {
+        if(ps == null)
+        {
+            return;
+        }
+
+        ps.transform.SetParent(transform);
+        ps.gameObject.SetActive(false);
+        if(particles.TryGetValue(skillId, out var q))
+        {
+            q.Enqueue(ps);
+        }
     }
 
     public SingleSkillData GetSingleData(long id)
