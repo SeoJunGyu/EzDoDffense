@@ -21,10 +21,19 @@ public class UIUnitInfo : MonoBehaviour
     public TextMeshProUGUI HP;
     public TextMeshProUGUI MoveSpeed;
 
+    public AllyData allyData;
+    public UISkillInfo SkillInfo;
+
+    private void OnEnable()
+    {
+        SkillInfo.gameObject.SetActive(false);
+    }
+
 
     public void SetAllyInfo(AllyData data)
     {
-        
+        allyData = data;
+
         Unit_Name.text = data.Unit_Name;
 
         UnitImage.sprite = data.SpriteUnitIcon;
@@ -91,5 +100,25 @@ public class UIUnitInfo : MonoBehaviour
         UnitImage.sprite = enemy.Data.SpriteUnitIcon;
         DamageImage.sprite = enemy.Data.SpriteDEFTypeIcon;
         SpeedImage.sprite = enemy.Data.SpriteMoveSpeedIcon;
+    }
+
+    public void ActiveSkillInfo(int index)
+    {
+        string skillInfo = null;
+        if(index == 1 && allyData.Unit_Skill_1 != 0)
+        {
+            skillInfo = SkillManager.Instance.GetSingleData(allyData.Unit_Skill_1).Text;
+        }
+        else if(index == 2 && allyData.Unit_Skill_2 != 0)
+        {
+            skillInfo = SkillManager.Instance.GetMultiData(allyData.Unit_Skill_2).Text;
+        }
+        else
+        {
+            skillInfo = "스킬 없음";
+        }
+
+        SkillInfo.SetSkillInfo(skillInfo);
+        SkillInfo.gameObject.SetActive(true);
     }
 }
