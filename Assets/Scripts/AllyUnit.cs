@@ -140,8 +140,6 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             return;
         }
 
-        findSkillTarget.Clear();
-
         attackTimer += Time.deltaTime;
         if(target != null)
         {
@@ -177,16 +175,14 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         }
 
         var skillhits = Physics.OverlapSphere(Center, range, enemyMask, QueryTriggerInteraction.Ignore);
+        var current = new List<EnemyUnit>();
         foreach (var enemyCollider in skillhits)
         {
             var enemy = enemyCollider.GetComponent<EnemyUnit>();
             if (enemy != null && enemy.gameObject.activeSelf && !enemy.IsDead)
             {
-                if (findSkillTarget.Contains(enemy))
-                {
-                    continue;
-                }
-                else
+                current.Add(enemy);
+                if (!findSkillTarget.Contains(enemy))
                 {
                     findSkillTarget.Add(enemy);
                 }
@@ -202,6 +198,14 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             {
                 target = enemy;
                 break;
+            }
+        }
+
+        for(int i = findSkillTarget.Count - 1; i >= 0; i--)
+        {
+            if (!current.Contains(findSkillTarget[i]))
+            {
+                findSkillTarget.RemoveAt(i);
             }
         }
     }

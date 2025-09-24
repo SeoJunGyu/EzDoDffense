@@ -33,6 +33,14 @@ public class SkillManager : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if(Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     //발동 확률 -> 스킬 대상 확인 -> 스킬 범위 확인 -> 스킬 적용 가능 여부 확인 -> 수치 적용 -> 스킬 지속시간 부여 -> 이펙트 플레이
     private static bool IsValid(ISkillTarget target)
     {
@@ -77,19 +85,14 @@ public class SkillManager : MonoBehaviour
                 }
                 break;
             case 3:
+                foreach (var target in caster.findSkillTarget)
                 {
-                    caster.findSkillTarget.RemoveAll(e => e == null || !e.gameObject.activeSelf || e.IsDead);
-
-                    foreach(var target in caster.findSkillTarget)
+                    if (IsValid(target))
                     {
-                        if (IsValid(target))
-                        {
-                            list.Add(target);
-                        }
+                        list.Add(target);
                     }
-
-                    break;
                 }
+                break;
             case 4:
                 foreach (var a in PlacementManager.Instance.GetAllyUnits)
                 {
@@ -177,7 +180,7 @@ public class SkillManager : MonoBehaviour
         {
             foreach (var target in list)
             {
-                if (target.ActiveParticle.Contains(data.Skill_ID))
+                if (!IsValid(target))
                 {
                     continue;
                 }
@@ -188,7 +191,7 @@ public class SkillManager : MonoBehaviour
                 particle.gameObject.SetActive(true);
                 particle.Play();
 
-                target.ApplySingleSkill(data, caster, null);
+                target.ApplySingleSkill(data, caster, particle);
                 target.ActiveParticle.Add(data.Skill_ID);
             }
         }
@@ -263,9 +266,26 @@ public class SkillManager : MonoBehaviour
             return;
         }
 
+        var p = ps.transform.parent;
+        if(p != null && !p.gameObject.activeSelf)
+        {
+            StartCoroutine(DeferReturn(skillId, ps));
+            return;
+        }
+        DoReturn(skillId, ps);
+    }
+
+    private IEnumerator DeferReturn(long skillId, ParticleSystem ps)
+    {
+        yield return null;
+        DoReturn(skillId, ps);
+    }
+
+    private void DoReturn(long skillId, ParticleSystem ps)
+    {
         ps.transform.SetParent(transform);
         ps.gameObject.SetActive(false);
-        if(particles.TryGetValue(skillId, out var q))
+        if (particles.TryGetValue(skillId, out var q))
         {
             q.Enqueue(ps);
         }
