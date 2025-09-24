@@ -184,15 +184,26 @@ public class SkillManager : MonoBehaviour
                 {
                     continue;
                 }
+                if (target.ActiveParticle.Contains(data.Skill_ID))
+                {
+                    continue;
+                }
 
                 var particle = CheckActive(data);
-                particle.transform.SetParent(target.EffectAnchor);
+                if(data.Skill_Target == 2)
+                {
+                    particle.transform.SetParent(caster.EffectAnchor);
+                    particle.transform.localRotation = Quaternion.identity;
+                }
+                else
+                {
+                    particle.transform.SetParent(target.EffectAnchor);
+                }
                 particle.transform.localPosition = Vector3.zero;
                 particle.gameObject.SetActive(true);
                 particle.Play();
 
                 target.ApplySingleSkill(data, caster, particle);
-                target.ActiveParticle.Add(data.Skill_ID);
             }
         }
     }
@@ -203,10 +214,24 @@ public class SkillManager : MonoBehaviour
         var list = CheckSkillTarget(caster, data);
         if (CheckSkillRandom(data.Skill_Random))
         {
-            Debug.Log("MultiSkill");
             foreach (var target in list)
             {
-                target.ApplyMultiSkill(data, caster, null);
+                if (!IsValid(target))
+                {
+                    continue;
+                }
+                if (target.ActiveParticle.Contains(data.Skill_ID))
+                {
+                    continue;
+                }
+
+                var particle = CheckActive(data);
+                particle.transform.SetParent(target.EffectAnchor);
+                particle.transform.localPosition = Vector3.zero;
+                particle.gameObject.SetActive(true);
+                particle.Play();
+
+                target.ApplyMultiSkill(data, caster, particle);
             }
         }
     }
@@ -230,6 +255,10 @@ public class SkillManager : MonoBehaviour
             ps = Instantiate(data.SkillParticle, transform);
         }
 
+        if(ps == null)
+        {
+            ps = Instantiate(data.SkillParticle, transform);
+        }
         ps.gameObject.SetActive(false);
 
         return ps;
@@ -272,12 +301,21 @@ public class SkillManager : MonoBehaviour
             StartCoroutine(DeferReturn(skillId, ps));
             return;
         }
+
         DoReturn(skillId, ps);
     }
 
-    private IEnumerator DeferReturn(long skillId, ParticleSystem ps)
+    public IEnumerator DeferReturn(long skillId, ParticleSystem ps)
     {
         yield return null;
+
+        DoReturn(skillId, ps);
+    }
+
+    public IEnumerator ReturnWhenDead(long skillId, ParticleSystem ps)
+    {
+        yield return new WaitWhile(() => ps != null && ps.IsAlive(true));
+
         DoReturn(skillId, ps);
     }
 

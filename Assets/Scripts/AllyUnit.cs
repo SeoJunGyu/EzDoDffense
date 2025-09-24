@@ -82,6 +82,9 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     private HashSet<long> activeBuff = new HashSet<long>(); //유닛에 활성화된 버프
 
+    private SingleSkillData singleData;
+    private MultiSkillData multiData;
+
     private void OnDisable()
     {
         OnDespawned?.Invoke();
@@ -140,6 +143,11 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             return;
         }
 
+        if (skill1 != 0 && singleData.Skill_Area == 1)
+        {
+            //SkillManager.Instance.ExecuteSingleSkill(this);
+        }
+
         attackTimer += Time.deltaTime;
         if(target != null)
         {
@@ -159,11 +167,11 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             {
                 target.OnDamage(damage, unitType);
 
-                if(skill1 != 0)
+                if (skill1 != 0)
                 {
-                    SkillManager.Instance.ExecuteSingleSkill(this);
+                    //SkillManager.Instance.ExecuteSingleSkill(this);
                 }
-                if(skill2 != 0)
+                if (skill2 != 0)
                 {
                     SkillManager.Instance.ExecuteMultiSkill(this);
                 }
@@ -235,6 +243,9 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         agent.speed = data.Unit_Move_Speed;
         skill1 = data.Unit_Skill_1;
         skill2 = data.Unit_Skill_2;
+
+        singleData = skill1 != 0 ? SkillManager.Instance.GetSingleData(skill1) : null;
+        multiData = skill2 != 0 ? SkillManager.Instance.GetMultiData(skill2) : null;
 
         animator = GetComponentInChildren<Animator>();
 
