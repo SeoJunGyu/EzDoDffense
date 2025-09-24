@@ -24,7 +24,7 @@ public static class UpgradeDB
         {1, 1.00f },
         {2, 1.10f },
         {3, 1.25f },
-        {4, 1.40f },
+        {4, 1.38f },
         {5, 1.60f },
     };
 
