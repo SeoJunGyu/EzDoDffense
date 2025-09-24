@@ -23,14 +23,12 @@ public class PlacementManager : MonoBehaviour
     public SkillManager skillManager;
 
     //강화 수치 관리
-    public static Dictionary<int, int> GradeUpgradeBaseGold = new Dictionary<int, int>();
-    public static Dictionary<int, int> GradeUpgradeGold = new Dictionary<int, int>();
-    public static Dictionary<int, int> GradeUpgradeGem = new Dictionary<int, int>();
-
-    public static Dictionary<int, int> TypeUpgradeGold = new Dictionary<int, int>();
-
-    public static Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
-    public static Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
+    public Dictionary<int, int> GradeUpgradeBaseGold = new Dictionary<int, int>();
+    public Dictionary<int, int> GradeUpgradeGold = new Dictionary<int, int>();
+    public Dictionary<int, int> GradeUpgradeGem = new Dictionary<int, int>();
+    public Dictionary<int, int> TypeUpgradeGold = new Dictionary<int, int>();
+    public Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
+    public Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
 
     private void Awake()
     {

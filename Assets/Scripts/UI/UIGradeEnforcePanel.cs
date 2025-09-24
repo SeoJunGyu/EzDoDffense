@@ -29,27 +29,27 @@ public class UIGradeEnforcePanel : UIPanel
 
     private void UpdateUpgradeGold()
     {
-        Normal.text = $"{PlacementManager.GradeUpgradeGold[1]}";
-        Rare.text = $"{PlacementManager.GradeUpgradeGold[2]}";
-        Unique.text = $"{PlacementManager.GradeUpgradeGold[3]}";
-        if(PlacementManager.GradeUpgradeSave.ContainsKey(4) && PlacementManager.GradeUpgradeSave[4] >= 5)
+        Normal.text = $"{PlacementManager.Instance.GradeUpgradeGold[1]}";
+        Rare.text = $"{PlacementManager.Instance.GradeUpgradeGold[2]}";
+        Unique.text = $"{PlacementManager.Instance.GradeUpgradeGold[3]}";
+        if(PlacementManager.Instance.GradeUpgradeSave.ContainsKey(4) && PlacementManager.Instance.GradeUpgradeSave[4] >= 5)
         {
             legendImage.sprite = Gem;
-            Legend.text = $"{PlacementManager.GradeUpgradeGem[4]}";
+            Legend.text = $"{PlacementManager.Instance.GradeUpgradeGem[4]}";
         }
         else
         {
-            Legend.text = $"{PlacementManager.GradeUpgradeGold[4]}";
+            Legend.text = $"{PlacementManager.Instance.GradeUpgradeGold[4]}";
         }
 
-        if (PlacementManager.GradeUpgradeSave.ContainsKey(5) && PlacementManager.GradeUpgradeSave[5] >= 5)
+        if (PlacementManager.Instance.GradeUpgradeSave.ContainsKey(5) && PlacementManager.Instance.GradeUpgradeSave[5] >= 5)
         {
             epicImage.sprite = Gem;
-            Epic.text = $"{PlacementManager.GradeUpgradeGem[5]}";
+            Epic.text = $"{PlacementManager.Instance.GradeUpgradeGem[5]}";
         }
         else
         {
-            Epic.text = $"{PlacementManager.GradeUpgradeGold[5]}";
+            Epic.text = $"{PlacementManager.Instance.GradeUpgradeGold[5]}";
         }
     }
 }

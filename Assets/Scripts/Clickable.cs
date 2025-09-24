@@ -443,7 +443,7 @@ public class Clickable : MonoBehaviour, IClickable
         {
             if (sockets[socket.Key] != null && sockets[socket.Key].gameObject.activeSelf && CurrentData.Unit_Grade == grade)
             {
-                int type = PlacementManager.TypeUpgradeSave.ContainsKey((int)sockets[socket.Key].UnitType) ? PlacementManager.TypeUpgradeSave[(int)sockets[socket.Key].UnitType] : 0;
+                int type = PlacementManager.Instance.TypeUpgradeSave.ContainsKey((int)sockets[socket.Key].UnitType) ? PlacementManager.Instance.TypeUpgradeSave[(int)sockets[socket.Key].UnitType] : 0;
                 sockets[socket.Key].Setup(CurrentData, gradeUpgrade, type);
             }
         }
@@ -455,7 +455,7 @@ public class Clickable : MonoBehaviour, IClickable
         {
             if (sockets[socket.Key] != null && sockets[socket.Key].gameObject.activeSelf && CurrentData.Unit_Type == type)
             {
-                int grade = PlacementManager.GradeUpgradeSave.ContainsKey(sockets[socket.Key].Grade) ? PlacementManager.GradeUpgradeSave[sockets[socket.Key].Grade] : 0;
+                int grade = PlacementManager.Instance.GradeUpgradeSave.ContainsKey(sockets[socket.Key].Grade) ? PlacementManager.Instance.GradeUpgradeSave[sockets[socket.Key].Grade] : 0;
                 sockets[socket.Key].Setup(CurrentData, grade, typeUpgrade);
             }
         }

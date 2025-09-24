@@ -16,4 +16,4 @@
 115300230,벼락 베기,1,1,5,300,2,3,0,30,Electro_slash,SFX_Vefects_Stylized_Slash_Electric,15_Lightning_Sword,[레어] 벼락 베기 : 단일 적군에게 공격력의 300%의 데미지를 가합니다.
 115200320,불꽃 폭주,1,1,5,200,3,2,0,30,Red_energy_explosion,SFX_Vefects_Stylized_Magic_Attack_Fire_Cast,459_Fire_MeteorShower,[레어] 불꽃 폭주 : 공격 사거리 내에 있는 적군들에게 공격력의 200%의 데미지를 가합니다.
 215350230,마암의 일격,2,1,5,350,2,3,0,30,Stone_slash,SFX_Vefects_Stylized_Slash_Earth,39_Earth_Sword,[유니크] 마암의 일격 : 단일 적군에게 공격력의 350%의 데미지를 가합니다.
-215250320,아이스 시클,2,1,5,250,3,2,0,30,Ice_attack,Ice_wall,487_Ice_Blizzard,[유니크] 아이스 시클 : 공격 사거리 내에 있는 적군들에게 공격력의 250%의 데미지를 가합니다.
+215250320,아이스 시클,2,1,5,250,3,2,0,30,FX_Ice_Crack,Ice_wall,487_Ice_Blizzard,[유니크] 아이스 시클 : 공격 사거리 내에 있는 적군들에게 공격력의 250%의 데미지를 가합니다.

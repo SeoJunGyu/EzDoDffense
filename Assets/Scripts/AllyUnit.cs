@@ -140,6 +140,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             return;
         }
 
+        findSkillTarget.Clear();
+
         attackTimer += Time.deltaTime;
         if(target != null)
         {

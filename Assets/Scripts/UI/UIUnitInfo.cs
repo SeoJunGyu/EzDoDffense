@@ -83,7 +83,7 @@ public class UIUnitInfo : MonoBehaviour
                 break;
         }
 
-        var gradeUpgrade = PlacementManager.GradeUpgradeSave.ContainsKey(unit.Grade) ? $"+{PlacementManager.GradeUpgradeSave[unit.Grade]}" : "";
+        var gradeUpgrade = PlacementManager.Instance.GradeUpgradeSave.ContainsKey(unit.Grade) ? $"+{PlacementManager.Instance.GradeUpgradeSave[unit.Grade]}" : "";
 
         Grade.text = grade + gradeUpgrade;
         Damage.text = unit.Damage.ToString();
