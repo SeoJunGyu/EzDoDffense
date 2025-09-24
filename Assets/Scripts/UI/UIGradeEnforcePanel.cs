@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIGradeEnforcePanel : UIPanel
 {
@@ -9,9 +10,17 @@ public class UIGradeEnforcePanel : UIPanel
     public TextMeshProUGUI Legend;
     public TextMeshProUGUI Epic;
 
+    public Button EnforceButton;
+
     private void Update()
     {
         UpdateUpgradeGold();
+    }
+
+    public override void Hide()
+    {
+        EnforceButton.gameObject.SetActive(true);
+        base.Hide();
     }
 
     private void UpdateUpgradeGold()

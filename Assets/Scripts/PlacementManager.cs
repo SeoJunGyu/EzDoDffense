@@ -23,6 +23,7 @@ public class PlacementManager : MonoBehaviour
     public SkillManager skillManager;
 
     //강화 수치 관리
+    public static Dictionary<int, int> GradeUpgradeBaseGold = new Dictionary<int, int>();
     public static Dictionary<int, int> GradeUpgradeGold = new Dictionary<int, int>();
     public static Dictionary<int, int> GradeUpgradeGem = new Dictionary<int, int>();
 
@@ -49,7 +50,25 @@ public class PlacementManager : MonoBehaviour
 
         for(int i = 1; i < 6; i++)
         {
+            if(i == 1)
+            {
+                GradeUpgradeBaseGold.Add(i, 10);
+                GradeUpgradeGold.Add(i, 10);
+                continue;
+            }
+            if (i == 2)
+            {
+                GradeUpgradeBaseGold.Add(i, 15);
+                GradeUpgradeGold.Add(i, 15);
+                continue;
+            }
+            GradeUpgradeBaseGold.Add(i, 30);
             GradeUpgradeGold.Add(i, 30);
+        }
+
+        for (int i = 1; i < 4; i++)
+        {
+            TypeUpgradeGold.Add(i, 50);
         }
     }
 
@@ -263,7 +282,7 @@ public class PlacementManager : MonoBehaviour
         bool gemStage = IsGemStage(grade, level);
 
         //골드 결제
-        int goldCostNow = gemStage ? 0 : CalcGold(level);
+        int goldCostNow = gemStage ? 0 : CalcGradeGold(grade, level);
         if (goldCostNow > 0 && !TryPay(goldCostNow))
         {
             return;
@@ -292,7 +311,7 @@ public class PlacementManager : MonoBehaviour
         else
         {
             bool nextGemStage = IsGemStage(grade, level);
-            GradeUpgradeGold[grade] = nextGemStage ? 0 : CalcGold(level);
+            GradeUpgradeGold[grade] = nextGemStage ? 0 : CalcGradeGold(grade, level);
             GradeUpgradeGem[grade] = nextGemStage ? CalcGem(level) : 0;
         }
 
@@ -305,7 +324,7 @@ public class PlacementManager : MonoBehaviour
         if (level >= 10) return;
 
         //골드 결제
-        int goldCostNow = CalcGold(level);
+        int goldCostNow = CalcTypeGold(level);
         if (goldCostNow > 0 && !TryPay(goldCostNow))
         {
             return;
@@ -322,7 +341,7 @@ public class PlacementManager : MonoBehaviour
         }
         else
         {
-            TypeUpgradeGold[type] = CalcGold(level);
+            TypeUpgradeGold[type] = CalcTypeGold(level);
         }
 
         AllTypeUpgradeSetUp(level, type);
@@ -330,7 +349,8 @@ public class PlacementManager : MonoBehaviour
 
     private bool IsGemStage(int grade, int level) => (grade == 4 || grade == 5) && level >= 5;
 
-    private int CalcGold(int level) => Mathf.CeilToInt(30f * Mathf.Pow(1.25f, level));
+    private int CalcGradeGold(int grade, int level) => Mathf.CeilToInt(GradeUpgradeBaseGold[grade] * Mathf.Pow(1.25f, level));
+    private int CalcTypeGold(int level) => Mathf.RoundToInt(50f * Mathf.Pow(1.15f, level));
 
     private int CalcGem(int level) => (level - 4);
 

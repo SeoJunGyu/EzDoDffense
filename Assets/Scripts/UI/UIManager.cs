@@ -188,5 +188,6 @@ public class UIManager : MonoBehaviour
     {
         AllyInfoPanel.gameObject.SetActive(false);
         EnforcePanel.SetActive(true);
+        EnforceButton.gameObject.SetActive(false);
     }
 }
