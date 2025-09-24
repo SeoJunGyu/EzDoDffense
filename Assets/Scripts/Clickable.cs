@@ -37,6 +37,7 @@ public class Clickable : MonoBehaviour, IClickable
     public AllyData CurrentData { get; set; }
 
     public GameObject Range;
+    public GameObject Marker;
 
     private void Awake()
     {
@@ -52,6 +53,18 @@ public class Clickable : MonoBehaviour, IClickable
         }
 
         ApplyColor(normal);
+    }
+
+    private void Update()
+    {
+        if(SocketInCount >= 3)
+        {
+            Marker.SetActive(true);
+        }
+        else
+        {
+            Marker.SetActive(false);
+        }
     }
 
     public void OnClick()
@@ -423,14 +436,27 @@ public class Clickable : MonoBehaviour, IClickable
 
         return null;
     }
-
+    
     public void AllGradeUpgradeUnitSetup(int grade, int gradeUpgrade)
     {
         foreach(var socket in sockets)
         {
             if (sockets[socket.Key] != null && sockets[socket.Key].gameObject.activeSelf && CurrentData.Unit_Grade == grade)
             {
-                sockets[socket.Key].Setup(CurrentData, gradeUpgrade);
+                int type = PlacementManager.TypeUpgradeSave.ContainsKey((int)sockets[socket.Key].UnitType) ? PlacementManager.TypeUpgradeSave[(int)sockets[socket.Key].UnitType] : 0;
+                sockets[socket.Key].Setup(CurrentData, gradeUpgrade, type);
+            }
+        }
+    }
+
+    public void AllTypeUpgradeUnitSetup(int type, int typeUpgrade)
+    {
+        foreach (var socket in sockets)
+        {
+            if (sockets[socket.Key] != null && sockets[socket.Key].gameObject.activeSelf && CurrentData.Unit_Type == type)
+            {
+                int grade = PlacementManager.GradeUpgradeSave.ContainsKey(sockets[socket.Key].Grade) ? PlacementManager.GradeUpgradeSave[sockets[socket.Key].Grade] : 0;
+                sockets[socket.Key].Setup(CurrentData, grade, typeUpgrade);
             }
         }
     }

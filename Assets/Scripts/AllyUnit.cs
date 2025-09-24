@@ -213,15 +213,15 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         agent.SetDestination(socket);
     }
 
-    public void Setup(AllyData data, int gradeUpgrade)
+    public void Setup(AllyData data, int gradeUpgrade, int typeUpgrade)
     {
         grade = data.Unit_Grade;
         unitType = (AttackTypes)data.Unit_Type;
 
         //damage = data.Unit_ATK;
-        damage = GradeUpgradeDB.CalcDamage(data.Unit_ATK, grade, gradeUpgrade);
+        damage = data.Unit_ATK + UpgradeDB.CalcGradeUpDamage(data.Unit_ATK, grade, gradeUpgrade) + UpgradeDB.CalcTypeUpDamage(data.Unit_ATK, typeUpgrade);
 
-        attackSpeed = GradeUpgradeDB.CalcAtkSpeed(data.Unit_ATK_SPD, grade, gradeUpgrade);
+        attackSpeed = data.Unit_ATK_SPD + UpgradeDB.CalcGradeUpAtkSpeed(data.Unit_ATK_SPD, grade, gradeUpgrade) + UpgradeDB.CalcTypeUpAtkSpeed(data.Unit_ATK_SPD, typeUpgrade);
         Debug.Log($"{data.Unit_ATK_SPD} / {attackSpeed}");
 
         attackInterval = 1f / data.Unit_ATK_SPD;

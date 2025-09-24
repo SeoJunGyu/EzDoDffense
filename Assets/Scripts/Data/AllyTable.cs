@@ -17,7 +17,7 @@ public struct StatMods
     public float AtkSpdMul;
 }
 
-public static class GradeUpgradeDB
+public static class UpgradeDB
 {
     private static Dictionary<int, float> GradeDamageMultiplier = new Dictionary<int, float>()
     {
@@ -37,7 +37,7 @@ public static class GradeUpgradeDB
         {5, 0.25f },
     };
 
-    public static int CalcDamage(int baseAtk, int grade, int enhanceLevel)
+    public static int CalcGradeUpDamage(int baseAtk, int grade, int enhanceLevel)
     {
         if(!GradeDamageMultiplier.TryGetValue(grade, out float mul))
         {
@@ -45,16 +45,17 @@ public static class GradeUpgradeDB
         }
         if(enhanceLevel <= 0)
         {
-            return baseAtk;
+            return 0;
         }
 
         float result = baseAtk * mul * Mathf.Pow(1.08f, enhanceLevel);
+        int calResult = Mathf.CeilToInt(result) - baseAtk;
 
-        return Mathf.CeilToInt(result);
+        return calResult;
     }
 
     private const float Decay = 0.8f;
-    public static float CalcAtkSpeed(float baseAtkSpeed, int grade, int enhanceLevel)
+    public static float CalcGradeUpAtkSpeed(float baseAtkSpeed, int grade, int enhanceLevel)
     {
         if (!GradeAtkSpeedMultiplier.TryGetValue(grade, out float mul))
         {
@@ -62,13 +63,40 @@ public static class GradeUpgradeDB
         }
         if(enhanceLevel <= 0)
         {
-            return baseAtkSpeed;
+            return 0;
         }
 
         float result = baseAtkSpeed * (1f + mul * (1f - Mathf.Pow(Decay, enhanceLevel)));
-        result = Mathf.Round(result * 100f) / 100f;
+        float calResult = (Mathf.Round(result * 100f) / 100f) - baseAtkSpeed;
 
-        return result;
+        return calResult;
+    }
+
+    public static int CalcTypeUpDamage(int baseAtk, int enhanceLevel)
+    {
+        if (enhanceLevel <= 0)
+        {
+            return 0;
+        }
+
+        float result = baseAtk * Mathf.Pow(1.08f, enhanceLevel);
+        int calResult = Mathf.CeilToInt(result) - baseAtk;
+
+        return calResult;
+    }
+
+    private const float TypeDecay = 0.8f;
+    public static float CalcTypeUpAtkSpeed(float baseAtkSpeed, int enhanceLevel)
+    {
+        if (enhanceLevel <= 0)
+        {
+            return 0;
+        }
+
+        float result = baseAtkSpeed * (1f + 0.2f * (1f - Mathf.Pow(TypeDecay, enhanceLevel)));
+        float calResult = (Mathf.Round(result * 100f) / 100f) - baseAtkSpeed;
+
+        return calResult;
     }
 }
 

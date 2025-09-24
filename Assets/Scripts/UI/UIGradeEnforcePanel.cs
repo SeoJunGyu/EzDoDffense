@@ -16,25 +16,25 @@ public class UIGradeEnforcePanel : UIPanel
 
     private void UpdateUpgradeGold()
     {
-        Normal.text = $"필요 골드 : {PlacementManager.GradeUpgradeGold[1]}G";
-        Rare.text = $"필요 골드 : {PlacementManager.GradeUpgradeGold[2]}G";
-        Unique.text = $"필요 골드 : {PlacementManager.GradeUpgradeGold[3]}G";
+        Normal.text = $"{PlacementManager.GradeUpgradeGold[1]}";
+        Rare.text = $"{PlacementManager.GradeUpgradeGold[2]}";
+        Unique.text = $"{PlacementManager.GradeUpgradeGold[3]}";
         if(PlacementManager.GradeUpgradeSave.ContainsKey(4) && PlacementManager.GradeUpgradeSave[4] >= 5)
         {
-            Legend.text = $"필요 보석 : {PlacementManager.GradeUpgradeGem[4]}개";
+            Legend.text = $"{PlacementManager.GradeUpgradeGem[4]}";
         }
         else
         {
-            Legend.text = $"필요 골드 : {PlacementManager.GradeUpgradeGold[4]}G";
+            Legend.text = $"{PlacementManager.GradeUpgradeGold[4]}";
         }
 
         if (PlacementManager.GradeUpgradeSave.ContainsKey(5) && PlacementManager.GradeUpgradeSave[5] >= 5)
         {
-            Epic.text = $"필요 보석 : {PlacementManager.GradeUpgradeGem[5]}개";
+            Epic.text = $"{PlacementManager.GradeUpgradeGem[5]}";
         }
         else
         {
-            Epic.text = $"필요 골드 : {PlacementManager.GradeUpgradeGold[5]}G";
+            Epic.text = $"{PlacementManager.GradeUpgradeGold[5]}";
         }
     }
 }

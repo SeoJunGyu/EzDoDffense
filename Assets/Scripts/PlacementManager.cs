@@ -26,6 +26,8 @@ public class PlacementManager : MonoBehaviour
     public static Dictionary<int, int> GradeUpgradeGold = new Dictionary<int, int>();
     public static Dictionary<int, int> GradeUpgradeGem = new Dictionary<int, int>();
 
+    public static Dictionary<int, int> TypeUpgradeGold = new Dictionary<int, int>();
+
     public static Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
     public static Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
 
@@ -139,7 +141,8 @@ public class PlacementManager : MonoBehaviour
         {
             var visualModel = Instantiate(data.VisualModel, unit.transform);
             var grade = GradeUpgradeSave.ContainsKey(data.Unit_Grade) ? GradeUpgradeSave[data.Unit_Grade] : 0;
-            unit.Setup(data, grade);
+            var type = TypeUpgradeSave.ContainsKey(data.Unit_Type) ? TypeUpgradeSave[data.Unit_Type] : 0;
+            unit.Setup(data, grade, type);
             unit.gameObject.SetActive(true);
 
             unit.OnSynthesis += () => Destroy(visualModel);
@@ -296,6 +299,35 @@ public class PlacementManager : MonoBehaviour
         AllGradeUpgradeSetUp(level, grade);
     }
 
+    public void TypeUpgrade(int type)
+    {
+        int level = TypeUpgradeSave.TryGetValue(type, out var saved) ? saved : 0;
+        if (level >= 10) return;
+
+        //골드 결제
+        int goldCostNow = CalcGold(level);
+        if (goldCostNow > 0 && !TryPay(goldCostNow))
+        {
+            return;
+        }
+
+        //강화 성공
+        level++;
+        TypeUpgradeSave[type] = level;
+
+        //다음 비용
+        if (level >= 10)
+        {
+            TypeUpgradeGold[type] = 0;
+        }
+        else
+        {
+            TypeUpgradeGold[type] = CalcGold(level);
+        }
+
+        AllTypeUpgradeSetUp(level, type);
+    }
+
     private bool IsGemStage(int grade, int level) => (grade == 4 || grade == 5) && level >= 5;
 
     private int CalcGold(int level) => Mathf.CeilToInt(30f * Mathf.Pow(1.25f, level));
@@ -309,6 +341,17 @@ public class PlacementManager : MonoBehaviour
             if(slot.SocketInCount > 0)
             {
                 slot.AllGradeUpgradeUnitSetup(grade, gradeUpdate);
+            }
+        }
+    }
+
+    public void AllTypeUpgradeSetUp(int typeUpdate, int type)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.SocketInCount > 0)
+            {
+                slot.AllTypeUpgradeUnitSetup(type, typeUpdate);
             }
         }
     }
