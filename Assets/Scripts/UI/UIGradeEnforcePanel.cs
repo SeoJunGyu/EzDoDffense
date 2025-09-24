@@ -12,6 +12,10 @@ public class UIGradeEnforcePanel : UIPanel
 
     public Button EnforceButton;
 
+    public Sprite Gem;
+    public Image legendImage;
+    public Image epicImage;
+
     private void Update()
     {
         UpdateUpgradeGold();
@@ -30,6 +34,7 @@ public class UIGradeEnforcePanel : UIPanel
         Unique.text = $"{PlacementManager.GradeUpgradeGold[3]}";
         if(PlacementManager.GradeUpgradeSave.ContainsKey(4) && PlacementManager.GradeUpgradeSave[4] >= 5)
         {
+            legendImage.sprite = Gem;
             Legend.text = $"{PlacementManager.GradeUpgradeGem[4]}";
         }
         else
@@ -39,6 +44,7 @@ public class UIGradeEnforcePanel : UIPanel
 
         if (PlacementManager.GradeUpgradeSave.ContainsKey(5) && PlacementManager.GradeUpgradeSave[5] >= 5)
         {
+            epicImage.sprite = Gem;
             Epic.text = $"{PlacementManager.GradeUpgradeGem[5]}";
         }
         else

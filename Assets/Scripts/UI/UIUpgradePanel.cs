@@ -16,13 +16,13 @@ public class UIUpgradePanel : UIPanel
 
     public void OnClickType()
     {
-        Hide();
+        base.Hide();
         typePanel.Show();
     }
 
     public void OnClickGrade()
     {
-        Hide();
+        base.Hide();
         gradePanel.Show();
     }
 }
