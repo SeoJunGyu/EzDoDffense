@@ -48,6 +48,12 @@ public class UIManager : MonoBehaviour
         UpdateTime();
         UpdateGold();
         UpdateEnemyCount();
+
+        if (!Variables.Boss)
+        {
+            BossSpawnText.SetActive(false);
+            StageGo.SetActive(true);
+        }
     }
 
     private void UpdateStage()

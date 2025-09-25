@@ -264,7 +264,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
         OnDespawned?.Invoke();
 
-        if(singleData.Skill_Area == 1)
+        if(Skill1 != 0 && singleData.Skill_Area == 1)
         {
             SkillManager.Instance.ReturnActiveEffect(singleData);
         }

@@ -1,11 +1,16 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioMixer mixer;
+    [SerializeField] private AudioSource AreaSource;
+    [SerializeField] private AudioClip deadSound;
+    [SerializeField] private AudioClip sailSound;
+    [SerializeField] private AudioClip spawnSound;
+    [SerializeField] private AudioClip synthesisSound;
 
     private void Awake()
     {
@@ -19,16 +24,31 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayHit()
+    public void PlayDead()
     {
-        audioSource.PlayOneShot(hitSound);
+        AreaSource.PlayOneShot(deadSound);
     }
 
     public void PlaySkill(AudioClip clip)
     {
         if(clip != null)
         {
-            audioSource.PlayOneShot(clip);
+            AreaSource.PlayOneShot(clip);
         }
+    }
+
+    public void PlaySail()
+    {
+        AreaSource.PlayOneShot(sailSound);
+    }
+
+    public void PlaySpawn()
+    {
+        AreaSource.PlayOneShot(spawnSound);
+    }
+
+    public void PlaySynthesis()
+    {
+        AreaSource.PlayOneShot(synthesisSound);
     }
 }

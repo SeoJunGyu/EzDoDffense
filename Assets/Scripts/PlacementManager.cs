@@ -165,6 +165,8 @@ public class PlacementManager : MonoBehaviour
             unit.OnSynthesis += () => Destroy(visualModel);
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
+            AudioManager.Instance.PlaySpawn();
+
             return true;
         }
 
@@ -261,6 +263,8 @@ public class PlacementManager : MonoBehaviour
             PlaceInSocket(data, 0);
         }
 
+        AudioManager.Instance.PlaySynthesis();
+
         Variables.SelectedSlot.DeselectThis();
     }
 
@@ -269,6 +273,8 @@ public class PlacementManager : MonoBehaviour
         Variables.SelectedSlot.UnitDelete();
 
         Variables.Gold += 50;
+
+        AudioManager.Instance.PlaySail();
     }
 
     //강화 실행

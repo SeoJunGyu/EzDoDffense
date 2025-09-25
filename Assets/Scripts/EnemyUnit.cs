@@ -203,6 +203,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 Variables.SelectedEnemy = null;
             }
 
+            AudioManager.Instance.PlayDead();
+
             OnDisableUnit?.Invoke();
 
             OnDeath?.Invoke();
