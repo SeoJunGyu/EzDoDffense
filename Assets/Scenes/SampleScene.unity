@@ -2470,6 +2470,7 @@ GameObject:
   - component: {fileID: 207916317}
   - component: {fileID: 207916319}
   - component: {fileID: 207916321}
+  - component: {fileID: 207916322}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2636,6 +2637,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4f89f0f97ea45459e7f6d0d17e23e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &207916322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207916316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c7f09b3dd6e0546b28fef45571c82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: -7067036799409768801, guid: c893ec4a51825584191b9a4150d92c12, type: 3}
+  hitSound: {fileID: 0}
 --- !u!1 &223869457
 GameObject:
   m_ObjectHideFlags: 0
@@ -2772,6 +2787,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223869457}
   m_CullTransparentMesh: 1
+--- !u!1 &234604098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7768114536553187090, guid: 0e0effbfbafd4498cb1719569c229262, type: 3}
+  m_PrefabInstance: {fileID: 1223307223}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &239341217
 GameObject:
   m_ObjectHideFlags: 0
@@ -8240,16 +8260,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702703464}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1742109377}
+  m_Father: {fileID: 840410807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.00070572, y: -50}
+  m_AnchoredPosition: {x: 0.00070572, y: 24.129776}
   m_SizeDelta: {x: 376.94, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &702703466
@@ -11073,6 +11093,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1742109377}
+  - {fileID: 702703465}
+  - {fileID: 1853682339}
   - {fileID: 111539827}
   - {fileID: 867480757}
   - {fileID: 1363341616}
@@ -15471,7 +15493,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1150280052
@@ -15949,6 +15971,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 746716638}
   m_SourcePrefab: {fileID: 100100000, guid: e8b10f16bedb0497f91bfee48e1d1e9b, type: 3}
+--- !u!114 &1206651375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7768114538433754367, guid: 0e0effbfbafd4498cb1719569c229262, type: 3}
+  m_PrefabInstance: {fileID: 1223307223}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1213137161 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8727731053293271691, guid: ad7fa8c46bbe34e0cb4a52dfc65ae941, type: 3}
@@ -19643,6 +19676,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2185742954001189189, guid: eb617182d60494c038ee33adf8a5b517, type: 3}
   m_PrefabInstance: {fileID: 911429019}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1552187285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6979038496253249249, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
+  m_PrefabInstance: {fileID: 1742109376}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1573927263 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2163780804370068581, guid: bbaf64c93af6e49f692e3e56ebab564c, type: 3}
@@ -21899,6 +21937,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.6415094
       objectReference: {fileID: 0}
+    - target: {fileID: 6979038496163428207, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6979038496253249249, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
       propertyPath: m_Name
       value: Title_LineTopBottom_03_Yellow
@@ -22126,13 +22168,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6979038497430808363, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6979038496253249262, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 702703465}
-    - targetCorrespondingSourceObject: {fileID: 6979038496253249262, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1853682339}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f58a0e21916594d64a9536893d543ad0, type: 3}
 --- !u!224 &1742109377 stripped
@@ -23196,16 +23232,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853682338}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1742109377}
+  m_Father: {fileID: 840410807}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -124}
+  m_AnchoredPosition: {x: 0, y: -49.870224}
   m_SizeDelta: {x: 416.0476, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1853682340
@@ -25409,6 +25445,9 @@ MonoBehaviour:
   EnforcePanel: {fileID: 1045983053}
   TypeEnforcePanel: {fileID: 0}
   GradeEnforcePanel: {fileID: 0}
+  BossSpawnText: {fileID: 234604098}
+  StageGo: {fileID: 1552187285}
+  BossNameText: {fileID: 1206651375}
 --- !u!1 &2024295240
 GameObject:
   m_ObjectHideFlags: 0
