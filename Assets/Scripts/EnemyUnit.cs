@@ -219,7 +219,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
             case 3:
                 if (particles.Contains(data.Skill_ID))
                 {
-                    return;
+                    break;
                 }
                 particles.Add(data.Skill_ID);
                 beforeDeffense = deffense;
@@ -232,7 +232,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
             case 4:
                 if (particles.Contains(data.Skill_ID))
                 {
-                    return;
+                    break;
                 }
                 particles.Add(data.Skill_ID);
                 beforeSpeed = agent.speed;

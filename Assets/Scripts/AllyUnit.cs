@@ -80,16 +80,12 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public List<EnemyUnit> findSkillTarget = new List<EnemyUnit>();
 
-    private HashSet<long> activeBuff = new HashSet<long>(); //유닛에 활성화된 버프
-
     private SingleSkillData singleData;
     private MultiSkillData multiData;
 
     private void OnDisable()
     {
-        OnDespawned?.Invoke();
-
-        activeBuff.Clear();
+        particles.Clear();
 
         OnSynthesis = null;
     }
@@ -145,7 +141,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
         if (skill1 != 0 && singleData.Skill_Area == 1)
         {
-            //SkillManager.Instance.ExecuteSingleSkill(this);
+            SkillManager.Instance.ExecuteSingleSkill(this);
         }
 
         attackTimer += Time.deltaTime;
@@ -169,7 +165,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
                 if (skill1 != 0)
                 {
-                    //SkillManager.Instance.ExecuteSingleSkill(this);
+                    SkillManager.Instance.ExecuteSingleSkill(this);
                 }
                 if (skill2 != 0)
                 {
@@ -255,6 +251,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     {
         animator = null;
 
+        OnDespawned?.Invoke();
+
         OnSynthesis?.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
     }
 
@@ -284,7 +282,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
     {
-        if (!activeBuff.Add(data.Skill_ID))
+        if (particles.Contains(data.Skill_ID))
         {
             return;
         }
@@ -292,12 +290,20 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         switch (data.Skill_Effect)
         {
             case 1:
+                particles.Add(data.Skill_ID);
                 beforeDamage = damage;
                 damage = damage * (1 + data.Skill_Effect_Value / 100f);
+
+                OnDespawned += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
+
                 break;
             case 2:
+                particles.Add(data.Skill_ID);
                 beforeAttackSpeed = attackSpeed;
                 attackInterval = 1f / (attackSpeed * (1 + data.Skill_Effect_Value / 100f));
+
+                OnDespawned += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
+
                 break;
         }
     }
