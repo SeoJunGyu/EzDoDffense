@@ -10,6 +10,7 @@ public static class DefineNames
     public static readonly string AllysModelFolder = "Prefabs/Allys";
     public static readonly string EnemyModelFolder = "Prefabs/Enemies";
     public static readonly string SkillEffectFolder = "Prefabs/SkillEffects";
+    public static readonly string SoundFolder = "Sounds";
 }
 
 public static class DataTableIds

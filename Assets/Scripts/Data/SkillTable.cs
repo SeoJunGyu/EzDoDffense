@@ -27,6 +27,7 @@ public class SingleSkillData
     public Sprite SpriteSkillIcon => Resources.Load<Sprite>($"{DefineNames.SkillIconsFolder}/{icon}");
     [Ignore]
     public ParticleSystem SkillParticle => Resources.Load<ParticleSystem>($"{DefineNames.SkillEffectFolder}/{Skill_Effect_Name}");
+    public AudioClip SkillAudio => Resources.Load<AudioClip>($"{DefineNames.SoundFolder}/{Skill_Sound}");
 }
 
 public class MultiSkillData
@@ -57,6 +58,7 @@ public class MultiSkillData
     public Sprite SpriteSkillIcon => Resources.Load<Sprite>($"{DefineNames.SkillIconsFolder}/{icon}");
     [Ignore]
     public ParticleSystem SkillParticle => Resources.Load<ParticleSystem>($"{DefineNames.SkillEffectFolder}/{Skill_Effect_Name}");
+    public AudioClip SkillAudio => Resources.Load<AudioClip>($"{DefineNames.SoundFolder}/{Skill_Sound}");
 }
 
 public class SingleSkillTable : DataTable

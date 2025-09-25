@@ -53,6 +53,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     public Dictionary<long, float> ActiveBuffValue = new Dictionary<long, float>();
     public Dictionary<long, ParticleSystem> ActiveBuffParticle = new Dictionary<long, ParticleSystem>();
 
+    public string UnitName { get; private set; }
+
     private void OnEnable()
     {
         IsDead = false;
@@ -211,6 +213,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public void Setup(EnemyData data)
     {
+        UnitName = data.Unit_Name;
         maxHealth = data.Unit_HP;
         deffense = data.Unit_DEF;
         defType = (EnemyTypes)data.Unit_DEF_TYPE;
@@ -246,7 +249,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
                 OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
 
-                Debug.Log($"방어력 변화 : {data.Skill_Name} / {beforeDeffense} / {deffense}");
                 break;
             case 4:
                 if (particles.Contains(data.Skill_ID))
@@ -271,14 +273,12 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
                 OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
 
-                Debug.Log($"이동속도 변화 : {data.Skill_Name} / {beforeSpeed} / {agent.speed}");
                 break;
             case 5:
                 var damage = caster.Damage * (data.Skill_Effect_Value / 100f);
                 OnDamage(damage, caster.UnitType);
                 SkillManager.Instance.StartCoroutine(SkillManager.Instance.ReturnWhenDead(data.Skill_ID, particle));
 
-                Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");
                 break;
         }
     }
@@ -292,7 +292,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 OnDamage(damage, caster.UnitType);
                 SkillManager.Instance.StartCoroutine(SkillManager.Instance.ReturnWhenDead(data.Skill_ID, particle));
 
-                Debug.Log($"데미지 변화 : {data.Skill_Name} / {caster.Damage} / {damage}");
                 break;
         }
 
@@ -314,7 +313,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
                 StartCoroutine(DeffenseCoroutine(data.Skill_ID, data.Skill_Duration_2));
 
-                Debug.Log($"방어력 변화 : {data.Skill_Name} / {beforeDeffense} / {deffense}");
                 break;
             case 4:
                 if(!gameObject.activeSelf || IsDead)
@@ -332,7 +330,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
                 StartCoroutine(SpeedCoroutine(data.Skill_ID, data.Skill_Duration_2));
 
-                Debug.Log($"이동속도 변화 : {data.Skill_Name} / {beforeSpeed} / {agent.speed}");
                 break;
             case 6:
                 if (!CanControlAgent)
@@ -352,7 +349,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 SkillManager.Instance.StartCoroutine(SkillManager.Instance.ReturnWhenDead(data.Skill_ID, particle));
                 StartCoroutine(StunCoroutine(data.Skill_ID, data.Skill_Duration_2));
 
-                Debug.Log($"기절 {data.Skill_Name} / {data.Skill_Duration_2}초");
                 break;
         }
     }
@@ -371,19 +367,15 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private IEnumerator SpeedCoroutine(long id, float duration)
     {
-        Debug.Log($"이동속도 지속시간 {duration}");
         yield return new WaitForSeconds(duration);
         agent.speed = beforeSpeed;
-        Debug.Log($"이동속도 되돌아옴");
         particles.Remove(id);
     }
 
     private IEnumerator DeffenseCoroutine(long id, float duration)
     {
-        Debug.Log($"이동속도 지속시간 {duration}");
         yield return new WaitForSeconds(duration);
         deffense = beforeDeffense;
-        Debug.Log($"이동속도 되돌아옴");
         particles.Remove(id);
     }
 

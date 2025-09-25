@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIUnitInfo : MonoBehaviour
+public class UIUnitInfo : UIPanel
 {
     public UIManager uiManager;
 
@@ -24,6 +24,8 @@ public class UIUnitInfo : MonoBehaviour
     public AllyData allyData;
     public UISkillInfo SkillInfo;
 
+    public GameObject BattleInfo;
+
     private void OnEnable()
     {
         SkillInfo.gameObject.SetActive(false);
@@ -33,8 +35,6 @@ public class UIUnitInfo : MonoBehaviour
     public void SetAllyInfo(AllyData data)
     {
         allyData = data;
-
-        Unit_Name.text = data.Unit_Name;
 
         UnitImage.sprite = data.SpriteUnitIcon;
         DamageImage.sprite = data.SpriteDamageIcon;
@@ -84,8 +84,10 @@ public class UIUnitInfo : MonoBehaviour
         }
 
         var gradeUpgrade = PlacementManager.Instance.GradeUpgradeSave.ContainsKey(unit.Grade) ? $"+{PlacementManager.Instance.GradeUpgradeSave[unit.Grade]}" : "";
+        var typeUpgrade = PlacementManager.Instance.TypeUpgradeSave.ContainsKey((int)unit.UnitType) ? $"{unit.UnitName} +{PlacementManager.Instance.TypeUpgradeSave[(int)unit.UnitType]}" : $"{unit.UnitName}";
 
         Grade.text = grade + gradeUpgrade;
+        Unit_Name.text = typeUpgrade;
         Damage.text = unit.Damage.ToString();
         AttackSpeed.text = unit.AtkSpeed.ToString();
     }
@@ -120,5 +122,15 @@ public class UIUnitInfo : MonoBehaviour
 
         SkillInfo.SetSkillInfo(skillInfo);
         SkillInfo.gameObject.SetActive(true);
+    }
+
+    public void ActiveBattleInfo()
+    {
+        BattleInfo.SetActive(true);
+    }
+
+    public void UnActiveBattleInfo()
+    {
+        BattleInfo.SetActive(false);
     }
 }

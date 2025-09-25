@@ -12,6 +12,8 @@ public class SkillManager : MonoBehaviour
     private Dictionary<long, SingleSkillData> singleDatas = new Dictionary<long, SingleSkillData>();
     private Dictionary<long, MultiSkillData> multiDatas = new Dictionary<long, MultiSkillData>();
 
+    public Dictionary<long, AudioClip> sounds = new Dictionary<long, AudioClip>();
+
     private void Awake()
     {
         if(Instance == null)
@@ -388,5 +390,27 @@ public class SkillManager : MonoBehaviour
         var data = DataTableManager.MultiSkillTable.Get(id);
         multiDatas.Add(id, data);
         return data;
+    }
+
+    public AudioClip GetSingleSkillSound(SingleSkillData data)
+    {
+        if (sounds.ContainsKey(data.Skill_ID))
+        {
+            return sounds[data.Skill_ID];
+        }
+
+        sounds.Add(data.Skill_ID, data.SkillAudio);
+        return data.SkillAudio;
+    }
+
+    public AudioClip GetMultiSkillSound(MultiSkillData data)
+    {
+        if (sounds.ContainsKey(data.Skill_ID))
+        {
+            return sounds[data.Skill_ID];
+        }
+
+        sounds.Add(data.Skill_ID, data.SkillAudio);
+        return data.SkillAudio;
     }
 }

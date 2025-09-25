@@ -146,10 +146,13 @@ public class GameManager : MonoBehaviour
                 if (bossTimer >= 55f)
                 {
                     WarningText.gameObject.SetActive(true);
+                    uiManager.ActiveBossSpawnText(true);
+                    uiManager.BossNameText.text = Variables.Boss.UnitName;
                     WarningText.text = "1분안에 모험가를 잡으세요";
                 }
                 else
                 {
+                    uiManager.ActiveBossSpawnText(false);
                     WarningText.gameObject.SetActive(false);
                 }
 

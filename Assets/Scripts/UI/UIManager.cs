@@ -33,6 +33,10 @@ public class UIManager : MonoBehaviour
     public GameObject TypeEnforcePanel;
     public GameObject GradeEnforcePanel;
 
+    public GameObject BossSpawnText;
+    public GameObject StageGo;
+    public TextMeshProUGUI BossNameText;
+
     private void Awake()
     {
         cheat.gameObject.SetActive(false);
@@ -175,13 +179,9 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void QuitGame()
+    public void BackGame()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        SceneManager.LoadScene(0);
     }
 
     public void ActiveEnforcePanel()
@@ -189,5 +189,11 @@ public class UIManager : MonoBehaviour
         AllyInfoPanel.gameObject.SetActive(false);
         EnforcePanel.SetActive(true);
         EnforceButton.gameObject.SetActive(false);
+    }
+
+    public void ActiveBossSpawnText(bool spawn)
+    {
+        BossSpawnText.SetActive(spawn);
+        StageGo.SetActive(!spawn);
     }
 }

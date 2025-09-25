@@ -57,6 +57,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         }
     }
 
+    public string UnitName { get; private set; }
+
     public int Grade { get => grade; }
 
     [SerializeField] private LayerMask enemyMask;
@@ -236,12 +238,12 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     {
         grade = data.Unit_Grade;
         unitType = (AttackTypes)data.Unit_Type;
+        UnitName = data.Unit_Name;
 
         //damage = data.Unit_ATK;
         damage = data.Unit_ATK + UpgradeDB.CalcGradeUpDamage(data.Unit_ATK, grade, gradeUpgrade) + UpgradeDB.CalcTypeUpDamage(data.Unit_ATK, typeUpgrade);
 
         attackSpeed = data.Unit_ATK_SPD + UpgradeDB.CalcGradeUpAtkSpeed(data.Unit_ATK_SPD, grade, gradeUpgrade) + UpgradeDB.CalcTypeUpAtkSpeed(data.Unit_ATK_SPD, typeUpgrade);
-        Debug.Log($"{data.Unit_ATK_SPD} / {attackSpeed}");
 
         attackInterval = 1f / attackSpeed;
         range = data.Unit_ATK_RNG + 4f; //4f : 최소가 1f이니까
