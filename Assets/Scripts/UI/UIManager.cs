@@ -42,6 +42,12 @@ public class UIManager : MonoBehaviour
         cheat.gameObject.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        GameOverUI.SetActive(false);
+        VictoryUI.SetActive(false);
+    }
+
     private void Update()
     {
         UpdateStage();

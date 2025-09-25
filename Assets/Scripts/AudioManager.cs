@@ -1,6 +1,6 @@
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -28,6 +28,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void Start()
     {
         float bgm = PlayerPrefs.GetFloat("BGM", 1f);
@@ -35,6 +45,8 @@ public class AudioManager : MonoBehaviour
 
         SetVolume(bgmParam, bgm);
         SetVolume(sfxParam, sfx);
+
+        ApplySavedVolumes();
     }
 
     public void ApplySavedVolumes()
@@ -84,5 +96,10 @@ public class AudioManager : MonoBehaviour
     {
         float value = Mathf.Clamp(vol, 0.001f, 1f);
         mixer.SetFloat(param, Mathf.Log10(value) * 20);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mod)
+    {
+        ApplySavedVolumes();
     }
 }

@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
         WarningText.gameObject.SetActive(false);
     }
 
+    private void OnEnable()
+    {
+        Variables.Reset();
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
