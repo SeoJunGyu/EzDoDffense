@@ -50,6 +50,9 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     private List<long> particles = new List<long>();
     public List<long> ActiveParticle => particles;
 
+    public Dictionary<long, float> ActiveBuffValue = new Dictionary<long, float>();
+    public Dictionary<long, ParticleSystem> ActiveBuffParticle = new Dictionary<long, ParticleSystem>();
+
     private void OnEnable()
     {
         IsDead = false;
@@ -61,6 +64,10 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         canvas.gameObject.SetActive(false);
 
         initialRotation = healthSlider.transform.rotation;
+
+        ActiveBuffValue.Clear();
+        ActiveBuffParticle.Clear();
+        particles.Clear();
     }
 
     private void OnDisable()
@@ -223,7 +230,19 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 }
                 particles.Add(data.Skill_ID);
                 beforeDeffense = deffense;
-                deffense = deffense * (1 - data.Skill_Effect_Value / 100f);
+                var deffenseDebuffValue = 1 - data.Skill_Effect_Value / 100f;
+                deffense = deffense * deffenseDebuffValue;
+
+                if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
+                {
+                    ActiveBuffValue.Add(data.Skill_ID, deffenseDebuffValue);
+                    ActiveBuffParticle.Add(data.Skill_ID, particle);
+                }
+                else
+                {
+                    ActiveBuffValue[data.Skill_ID] = deffenseDebuffValue;
+                    ActiveBuffParticle[data.Skill_ID] = particle;
+                }
 
                 OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
 
@@ -236,7 +255,19 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 }
                 particles.Add(data.Skill_ID);
                 beforeSpeed = agent.speed;
-                agent.speed = agent.speed * (1 - data.Skill_Effect_Value / 100f);
+                var atkSpeedDebuffValue = 1 - data.Skill_Effect_Value / 100f;
+                agent.speed = agent.speed * atkSpeedDebuffValue;
+
+                if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
+                {
+                    ActiveBuffValue.Add(data.Skill_ID, atkSpeedDebuffValue);
+                    ActiveBuffParticle.Add(data.Skill_ID, particle);
+                }
+                else
+                {
+                    ActiveBuffValue[data.Skill_ID] = atkSpeedDebuffValue;
+                    ActiveBuffParticle[data.Skill_ID] = particle;
+                }
 
                 OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
 
@@ -354,5 +385,39 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         deffense = beforeDeffense;
         Debug.Log($"이동속도 되돌아옴");
         particles.Remove(id);
+    }
+
+    public void ResetBuffValue(long skillId, int Skill_Effect)
+    {
+        if (!ActiveBuffValue.TryGetValue(skillId, out var mult))
+        {
+            return;
+        }
+        if (mult == 0f || float.IsNaN(mult))
+        {
+            return;
+        }
+
+        ActiveBuffParticle.TryGetValue(skillId, out var par);
+
+        ActiveBuffValue.Remove(skillId);
+        ActiveBuffParticle.Remove(skillId);
+
+        switch (Skill_Effect)
+        {
+            case 3:
+                deffense = deffense / mult;
+                break;
+            case 4:
+                agent.speed = agent.speed / mult;
+                break;
+        }
+
+        if (par != null)
+        {
+            SkillManager.Instance.ReturnParticle(skillId, par);
+        }
+
+        particles.Remove(skillId);
     }
 }

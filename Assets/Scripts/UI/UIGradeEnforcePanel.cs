@@ -29,13 +29,13 @@ public class UIGradeEnforcePanel : UIPanel
 
     private void UpdateUpgradeGold()
     {
-        Normal.text = $"{PlacementManager.Instance.GradeUpgradeGold[1]}";
-        Rare.text = $"{PlacementManager.Instance.GradeUpgradeGold[2]}";
-        Unique.text = $"{PlacementManager.Instance.GradeUpgradeGold[3]}";
+        Normal.text = PlacementManager.Instance.GradeUpgradeGold[1] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGold[1]}" : "MAX";
+        Rare.text = PlacementManager.Instance.GradeUpgradeGold[2] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGold[2]}" : "MAX";
+        Unique.text = PlacementManager.Instance.GradeUpgradeGold[3] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGold[3]}" : "MAX";
         if(PlacementManager.Instance.GradeUpgradeSave.ContainsKey(4) && PlacementManager.Instance.GradeUpgradeSave[4] >= 5)
         {
             legendImage.sprite = Gem;
-            Legend.text = $"{PlacementManager.Instance.GradeUpgradeGem[4]}";
+            Legend.text = PlacementManager.Instance.GradeUpgradeGem[4] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGem[4]}" : "MAX";
         }
         else
         {
@@ -45,7 +45,7 @@ public class UIGradeEnforcePanel : UIPanel
         if (PlacementManager.Instance.GradeUpgradeSave.ContainsKey(5) && PlacementManager.Instance.GradeUpgradeSave[5] >= 5)
         {
             epicImage.sprite = Gem;
-            Epic.text = $"{PlacementManager.Instance.GradeUpgradeGem[5]}";
+            Epic.text = PlacementManager.Instance.GradeUpgradeGold[5] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGem[5]}" : "MAX";
         }
         else
         {

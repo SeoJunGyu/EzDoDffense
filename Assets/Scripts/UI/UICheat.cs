@@ -42,7 +42,7 @@ public class UICheat : MonoBehaviour
 
     public void OneEnemySpawn()
     {
-        var data = DataTableManager.AllyTable.Get(1202012001);
+        var data = DataTableManager.AllyTable.Get(1202013002);
         if (!placementManager.FindSameUnit(data, 0))
         {
             placementManager.PlaceInSocket(data, 0);
@@ -51,7 +51,7 @@ public class UICheat : MonoBehaviour
 
     public void OneTestEnemySpawn()
     {
-        var data = DataTableManager.AllyTable.Get(1425012001);
+        var data = DataTableManager.AllyTable.Get(1202012001);
         if (!placementManager.FindSameUnit(data, 0))
         {
             placementManager.PlaceInSocket(data, 0);

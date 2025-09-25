@@ -24,8 +24,8 @@ public class UITypeEnforcePanel : UIPanel
 
     private void UpdateUpgradeGold()
     {
-        Normal.text = $"{PlacementManager.Instance.TypeUpgradeGold[1]}";
-        Piercing.text = $"{PlacementManager.Instance.TypeUpgradeGold[2]}";
-        Magic.text = $"{PlacementManager.Instance.TypeUpgradeGold[3]}";
+        Normal.text = PlacementManager.Instance.TypeUpgradeGold[1] > 0 ? $"{PlacementManager.Instance.TypeUpgradeGold[1]}" : "MAX";
+        Piercing.text = PlacementManager.Instance.TypeUpgradeGold[2] > 0 ? $"{PlacementManager.Instance.TypeUpgradeGold[2]}" : "MAX";
+        Magic.text = PlacementManager.Instance.TypeUpgradeGold[3] > 0 ? $"{PlacementManager.Instance.TypeUpgradeGold[3]}" : "MAX";
     }
 }

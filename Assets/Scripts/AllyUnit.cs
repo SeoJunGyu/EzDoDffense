@@ -67,6 +67,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public event Action OnSynthesis;
     public event Action OnDespawned;
+    public Dictionary<long, float> ActiveBuffValue = new Dictionary<long, float>();
+    public Dictionary<long, ParticleSystem> ActiveBuffParticle = new Dictionary<long, ParticleSystem>();
 
     private Animator animator;
 
@@ -82,6 +84,13 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     private SingleSkillData singleData;
     private MultiSkillData multiData;
+
+    private void OnEnable()
+    {
+        ActiveBuffValue.Clear();
+        ActiveBuffParticle.Clear();
+        particles.Clear();
+    }
 
     private void OnDisable()
     {
@@ -99,7 +108,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     {
         UpdateMove();
         UpdateAttack();
-
+        
         if (target)
         {
             Vector3 dir = target.transform.position - transform.position;
@@ -234,7 +243,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         attackSpeed = data.Unit_ATK_SPD + UpgradeDB.CalcGradeUpAtkSpeed(data.Unit_ATK_SPD, grade, gradeUpgrade) + UpgradeDB.CalcTypeUpAtkSpeed(data.Unit_ATK_SPD, typeUpgrade);
         Debug.Log($"{data.Unit_ATK_SPD} / {attackSpeed}");
 
-        attackInterval = 1f / data.Unit_ATK_SPD;
+        attackInterval = 1f / attackSpeed;
         range = data.Unit_ATK_RNG + 4f; //4f : 최소가 1f이니까
         agent.speed = data.Unit_Move_Speed;
         skill1 = data.Unit_Skill_1;
@@ -252,6 +261,11 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         animator = null;
 
         OnDespawned?.Invoke();
+
+        if(singleData.Skill_Area == 1)
+        {
+            SkillManager.Instance.ReturnActiveEffect(singleData);
+        }
 
         OnSynthesis?.Invoke(); //비주얼 모델 제거 후 프리펩 비활성화
     }
@@ -292,7 +306,19 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             case 1:
                 particles.Add(data.Skill_ID);
                 beforeDamage = damage;
-                damage = damage * (1 + data.Skill_Effect_Value / 100f);
+                var damageBuffValue = 1 + data.Skill_Effect_Value / 100f;
+                damage = damage * damageBuffValue;
+
+                if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
+                {
+                    ActiveBuffValue.Add(data.Skill_ID, damageBuffValue);
+                    ActiveBuffParticle.Add(data.Skill_ID, particle);
+                }
+                else
+                {
+                    ActiveBuffValue[data.Skill_ID] = damageBuffValue;
+                    ActiveBuffParticle[data.Skill_ID] = particle;
+                }
 
                 OnDespawned += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
 
@@ -300,7 +326,20 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             case 2:
                 particles.Add(data.Skill_ID);
                 beforeAttackSpeed = attackSpeed;
-                attackInterval = 1f / (attackSpeed * (1 + data.Skill_Effect_Value / 100f));
+                var speedBuffValue = 1 + data.Skill_Effect_Value / 100f;
+                attackSpeed = attackSpeed * speedBuffValue;
+                attackInterval = 1f / attackSpeed;
+
+                if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
+                {
+                    ActiveBuffValue.Add(data.Skill_ID, speedBuffValue);
+                    ActiveBuffParticle.Add(data.Skill_ID, particle);
+                }
+                else
+                {
+                    ActiveBuffValue[data.Skill_ID] = speedBuffValue;
+                    ActiveBuffParticle[data.Skill_ID] = particle;
+                }
 
                 OnDespawned += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
 
@@ -311,5 +350,40 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     public void ApplyMultiSkill(MultiSkillData data, AllyUnit caster, ParticleSystem particle)
     {
         return;
+    }
+
+    public void ResetBuffValue(long skillId, int Skill_Effect)
+    {
+        if(!ActiveBuffValue.TryGetValue(skillId, out var mult))
+        {
+            return;
+        }
+        if(mult == 0f || float.IsNaN(mult))
+        {
+            return;
+        }
+
+        ActiveBuffParticle.TryGetValue(skillId, out var par);
+
+        ActiveBuffValue.Remove(skillId);
+        ActiveBuffParticle.Remove(skillId);
+
+        switch (Skill_Effect)
+        {
+            case 1:
+                damage = damage / mult;
+                break;
+            case 2:
+                attackSpeed = attackSpeed / mult;
+                attackInterval = 1f / attackSpeed;
+                break;
+        }
+
+        if(par != null)
+        {
+            SkillManager.Instance.ReturnParticle(skillId, par);
+        }
+        
+        particles.Remove(skillId);
     }
 }

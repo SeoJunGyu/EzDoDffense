@@ -202,7 +202,7 @@ public class SkillManager : MonoBehaviour
                 particle.transform.localPosition = Vector3.zero;
                 particle.gameObject.SetActive(true);
                 particle.Play();
-
+                
                 target.ApplySingleSkill(data, caster, particle);
             }
         }
@@ -305,6 +305,40 @@ public class SkillManager : MonoBehaviour
         DoReturn(skillId, ps);
     }
 
+    public void ReturnActiveEffect(SingleSkillData singleData)
+    {
+        if(singleData.Skill_Target == 4)
+        {
+            foreach (var a in PlacementManager.Instance.GetAllyUnits)
+            { 
+                if (!a.gameObject.activeSelf)
+                {
+                    continue;
+                }
+
+                if (a.ActiveBuffValue.ContainsKey(singleData.Skill_ID))
+                {
+                    a.ResetBuffValue(singleData.Skill_ID, singleData.Skill_Effect);
+                }
+            }
+        }
+        else
+        {
+            foreach (var a in EnemySpawner.Instance.GetEnemies)
+            {
+                if (!a.gameObject.activeSelf)
+                {
+                    continue;
+                }
+
+                if (a.ActiveBuffValue.ContainsKey(singleData.Skill_ID))
+                {
+                    a.ResetBuffValue(singleData.Skill_ID, singleData.Skill_Effect);
+                }
+            }
+        }
+    }
+
     public IEnumerator DeferReturn(long skillId, ParticleSystem ps)
     {
         yield return null;
@@ -325,7 +359,10 @@ public class SkillManager : MonoBehaviour
         ps.gameObject.SetActive(false);
         if (particles.TryGetValue(skillId, out var q))
         {
-            q.Enqueue(ps);
+            if (!q.Contains(ps))
+            {
+                q.Enqueue(ps);
+            }
         }
     }
 
