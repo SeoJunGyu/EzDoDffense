@@ -204,7 +204,9 @@ public class SkillManager : MonoBehaviour
                 particle.transform.localPosition = Vector3.zero;
                 particle.gameObject.SetActive(true);
                 particle.Play();
-                
+
+                AudioManager.Instance.PlaySkill(data.SkillAudio);
+
                 target.ApplySingleSkill(data, caster, particle);
             }
         }
@@ -232,6 +234,8 @@ public class SkillManager : MonoBehaviour
                 particle.transform.localPosition = Vector3.zero;
                 particle.gameObject.SetActive(true);
                 particle.Play();
+
+                AudioManager.Instance.PlaySkill(data.SkillAudio);
 
                 target.ApplyMultiSkill(data, caster, particle);
             }
