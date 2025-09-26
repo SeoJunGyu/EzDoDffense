@@ -88,15 +88,15 @@ public class UIUnitInfo : UIPanel
 
         Grade.text = grade + gradeUpgrade;
         Unit_Name.text = typeUpgrade;
-        Damage.text = unit.Damage.ToString();
-        AttackSpeed.text = unit.AtkSpeed.ToString();
+        Damage.text = unit.Damage.ToString("F2");
+        AttackSpeed.text = unit.AtkSpeed.ToString("F2");
     }
 
     public void SetEnemyInfo(EnemyUnit enemy)
     {
         Unit_Name.text = enemy.Data.Unit_Name;
-        Deffense.text = enemy.Data.Unit_DEF.ToString();
-        MoveSpeed.text = enemy.Data.Move_Speed.ToString();
+        Deffense.text = enemy.Data.Unit_DEF.ToString("F2");
+        MoveSpeed.text = enemy.Data.Move_Speed.ToString("F2");
         HP.text = enemy.Data.Unit_HP.ToString();
 
         UnitImage.sprite = enemy.Data.SpriteUnitIcon;

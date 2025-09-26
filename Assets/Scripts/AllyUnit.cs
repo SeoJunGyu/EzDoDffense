@@ -96,6 +96,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     private void OnDisable()
     {
+        ActiveBuffValue.Clear();
+        ActiveBuffParticle.Clear();
         particles.Clear();
 
         OnSynthesis = null;
@@ -256,6 +258,9 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
         animator = GetComponentInChildren<Animator>();
 
+        ActiveBuffValue.Clear();
+        ActiveBuffParticle.Clear();
+        particles.Clear();
     }
 
     public void SynthesisAfter()

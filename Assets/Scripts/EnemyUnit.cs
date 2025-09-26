@@ -19,7 +19,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private float beforeDeffense = 0;
     private float beforeSpeed = 0;
-    private float multipliedDamage = 0f;
 
     private Vector3 target;
     private Vector3[] wayPoints;
@@ -74,6 +73,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private void OnDisable()
     {
+        ActiveBuffValue.Clear();
+        ActiveBuffParticle.Clear();
         particles.Clear();
 
         OnDeath = null;

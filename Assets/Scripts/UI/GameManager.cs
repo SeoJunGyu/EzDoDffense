@@ -16,12 +16,11 @@ public class GameManager : MonoBehaviour
 
     public GameTimer Timer { get; private set; } = new GameTimer();
 
-    [SerializeField] private bool useUnScaledTime = false;
+    
     [SerializeField] private float timeScale = 5f;
 
     //FPS
     private float dt = 0f;
-    [SerializeField] private int size = 25;
     [SerializeField] private Color color = Color.red;
     public TextMeshProUGUI FPSText;
 
