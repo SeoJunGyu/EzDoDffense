@@ -205,7 +205,10 @@ public class SkillManager : MonoBehaviour
                 particle.gameObject.SetActive(true);
                 particle.Play();
 
-                AudioManager.Instance.PlaySkill(data.SkillAudio);
+                if(data.Skill_Target != 5)
+                {
+                    AudioManager.Instance.PlaySkill(data.SkillAudio);
+                }
 
                 target.ApplySingleSkill(data, caster, particle);
             }

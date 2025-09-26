@@ -57,7 +57,7 @@ public class Clickable : MonoBehaviour, IClickable
 
     private void Update()
     {
-        if(SocketInCount >= 3)
+        if(SocketInCount >= 3 && CurrentData.Unit_Grade != 5)
         {
             Marker.SetActive(true);
         }

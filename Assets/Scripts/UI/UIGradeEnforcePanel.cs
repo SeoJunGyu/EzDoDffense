@@ -45,7 +45,7 @@ public class UIGradeEnforcePanel : UIPanel
         if (PlacementManager.Instance.GradeUpgradeSave.ContainsKey(5) && PlacementManager.Instance.GradeUpgradeSave[5] >= 5)
         {
             epicImage.sprite = Gem;
-            Epic.text = PlacementManager.Instance.GradeUpgradeGold[5] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGem[5]}" : "MAX";
+            Epic.text = PlacementManager.Instance.GradeUpgradeGem[5] > 0 ? $"{PlacementManager.Instance.GradeUpgradeGem[5]}" : "MAX";
         }
         else
         {

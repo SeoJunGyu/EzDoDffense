@@ -122,7 +122,7 @@ public class UIManager : MonoBehaviour
 
         EnemyInfoPanel.gameObject.SetActive(false);
 
-        if(Variables.SelectedSlot.SocketInCount >= 3)
+        if(Variables.SelectedSlot.SocketInCount >= 3 && Variables.SelectedSlot.CurrentData.Unit_Grade != 5)
         {
             UpgradeButton.gameObject.SetActive(true);
         }
