@@ -79,7 +79,7 @@ public class ClickableComponent : MonoBehaviour
 
             pressed = null;
         }
-        else if(down && enemy == null)
+        if(down && !hitAny && enemy == null)
         {
             if(Variables.SelectedEnemy != null)
             {

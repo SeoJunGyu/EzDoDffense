@@ -31,6 +31,12 @@ public class UIUnitInfo : UIPanel
         SkillInfo.gameObject.SetActive(false);
     }
 
+    private void OnDisable()
+    {
+        SkillInfo.gameObject.SetActive(false);
+        BattleInfo.gameObject.SetActive(false);
+    }
+
 
     public void SetAllyInfo(AllyData data)
     {
