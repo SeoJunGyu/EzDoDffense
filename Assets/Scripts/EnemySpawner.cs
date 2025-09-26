@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private EnemyData currentEnemyData;
+    public EnemyData CurrentEnemyData { get => currentEnemyData; }
 
     [SerializeField] private float spawnInterval = 1.5f;
     [SerializeField] private float spawnTime = 0f;

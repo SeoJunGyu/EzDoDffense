@@ -39,7 +39,7 @@ public static class Variables
 
     public static int SlotCount { get; set; } = 21; //현재 등록가능한 슬롯 수
     public static Clickable SelectedSlot { get; set; } //선택된 슬롯
-    public static EnemyUnit SelectedEnemy { get; set; }
+    public static EnemyData SelectedEnemy { get; set; }
 
     public static int Gold { get; set; } = 150;
     public static int Gem { get; set; } = 0;

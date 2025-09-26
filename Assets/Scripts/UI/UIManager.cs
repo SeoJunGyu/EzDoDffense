@@ -141,7 +141,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ActiveInfoPanel(EnemyUnit enemy)
+    public void ActiveInfoPanel(EnemyData enemy)
     {
         EnemyInfoPanel.SetEnemyInfo(enemy);
         EnemyInfoPanel.gameObject.SetActive(true);

@@ -199,7 +199,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 Variables.Boss = null;
             }
 
-            if(Variables.SelectedEnemy == this)
+            if(Variables.SelectedEnemy == Data)
             {
                 Variables.SelectedEnemy = null;
             }
