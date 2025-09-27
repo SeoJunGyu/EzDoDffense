@@ -46,6 +46,8 @@ public class UIManager : MonoBehaviour
     {
         GameOverUI.SetActive(false);
         VictoryUI.SetActive(false);
+        UpgradeButton.gameObject.SetActive(false);
+        DeleteButton.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -111,6 +113,8 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        DeleteButton.gameObject.SetActive(true);
+
         AllyInfoPanel.SetAllyInfo(data);
 
         if(Variables.SelectedSlot.SocketInCount > 0)
@@ -155,6 +159,8 @@ public class UIManager : MonoBehaviour
     {
         EnemyInfoPanel.gameObject.SetActive(false);
         AllyInfoPanel.gameObject.SetActive(false);
+        DeleteButton.gameObject.SetActive(false);
+        UpgradeButton.gameObject.SetActive(false);
     }
 
     public void ActiveCheat()
