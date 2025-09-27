@@ -56,7 +56,15 @@ public class UITitle : MonoBehaviour
     public void StartGame()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        SceneManager.LoadScene(1);
+        switch (save.Tutorial)
+        {
+            case 0:
+                SceneManager.LoadScene(1);
+                break;
+            case 1:
+                SceneManager.LoadScene(2);
+                break;
+        }
     }
 
     public void EndGame()

@@ -8,6 +8,7 @@ public class SaveData
 {
     public float BgmVolume = 1f;
     public float SfxVolume = 1f;
+    public int Tutorial = 0;
 }
 
 public static class SaveManager

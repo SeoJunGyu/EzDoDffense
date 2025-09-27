@@ -13,18 +13,30 @@ public class UITutorial : UIPanel
     [SerializeField] private GameObject TextPanel;
     [SerializeField] private TextMeshProUGUI tutorialText;
     [SerializeField] private GameObject TutorialPanel;
+    [SerializeField] private GameObject NextButton;
+    [SerializeField] private GameObject PrevButton;
+    [SerializeField] private GameObject GameStartButton;
 
     private int index;
 
+    private SaveData save;
+
     private void OnEnable()
     {
+        save = SaveManager.Load();
+
         index = 0;
         mainImage.sprite = sprites[0];
         TextPanel.SetActive(false);
+        NextButton.SetActive(false);
+        PrevButton.SetActive(false);
     }
 
     public void TutorialSkip()
     {
+        save.Tutorial = 1;
+        SaveManager.Save(save);
+
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         SceneManager.LoadScene(2);
     }
@@ -32,6 +44,9 @@ public class UITutorial : UIPanel
     public void TutorialUnSkip()
     {
         TutorialPanel.SetActive(false);
+        NextButton.SetActive(true);
+        PrevButton.SetActive(true);
+        TextPanel.SetActive(true);
         if (index < sprites.Count - 1)
         {
             index++;
@@ -71,11 +86,20 @@ public class UITutorial : UIPanel
             index++;
             UpdateView();
         }
+
+        if(index == sprites.Count - 1)
+        {
+            NextButton.SetActive(false);
+            GameStartButton.SetActive(true);
+        }
     }
 
     public void OnClickPrev()
     {
-        if(index > 0)
+        NextButton.SetActive(true);
+        GameStartButton.SetActive(false);
+
+        if(index > 1)
         {
             index--;
             UpdateView();
