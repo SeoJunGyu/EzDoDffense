@@ -615,10 +615,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3200449708297259335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.015789473, y: 0.05}
-  m_AnchorMax: {x: 0.051368427, y: 0.11000001}
-  m_AnchoredPosition: {x: -1.692627, y: 0.7233887}
-  m_SizeDelta: {x: 0, y: -2}
+  m_AnchorMin: {x: 0.015789473, y: 0.11666667}
+  m_AnchorMax: {x: 0.051421054, y: 0.17500001}
+  m_AnchoredPosition: {x: 0, y: -0.5}
+  m_SizeDelta: {x: 0, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &489941492
 MonoBehaviour:
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3018868, g: 0.14173536, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -883,11 +883,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3200449708297259335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.94263166, y: 0.058333334}
-  m_AnchorMax: {x: 0.97921056, y: 0.11666667}
-  m_AnchoredPosition: {x: 0.17163086, y: 0.15002441}
-  m_SizeDelta: {x: -1, y: -1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.94263166, y: 0.125}
+  m_AnchorMax: {x: 0.97921056, y: 0.18}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_SizeDelta: {x: 0, y: 0.0000038146973}
+  m_Pivot: {x: 0.56891876, y: 1.529195}
 --- !u!114 &744298674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2174,7 +2174,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\r"
+  m_text: "\uC720\uB2DB\uC740 \uC911\uC559\uC758 \uAC00\uB85C 7\uCE78, \uC138\uB85C
+    3\uCE78\uC5D0 \uBC30\uCE58\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.\r\n\uC720\uB2DB\uC744
+    \uD130\uCE58\uD558\uBA74 \uC120\uD0DD \uC0C1\uD0DC\uAC00 \uB418\uACE0, \uB2E4\uB978
+    \uCE78\uC744 \uD130\uCE58\uD558\uBA74 \uD574\uB2F9 \uCE78\uC73C\uB85C \uC720\uB2DB\uC774
+    \uC774\uB3D9\uD569\uB2C8\uB2E4.\r\n\uB9CC\uC57D, \uC720\uB2DB\uC758 \uC120\uD0DD
+    \uC0C1\uD0DC\uB97C \uD574\uC81C\uD558\uACE0 \uC2F6\uB2E4\uBA74 \uC120\uD0DD\uD55C
+    \uC720\uB2DB\uC744 \uB2E4\uC2DC \uD130\uCE58\uD558\uBA74 \uB429\uB2C8\uB2E4.
+    \r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6e5c7c6548c01094caa1a2e362fe5eea, type: 2}
   m_sharedMaterial: {fileID: -4236193874447128172, guid: 6e5c7c6548c01094caa1a2e362fe5eea, type: 2}
@@ -2201,7 +2208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 32.2
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2681,10 +2688,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3223781585162890722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.059214346, y: 0.068609856}
-  m_AnchorMax: {x: 0.94100004, y: 0.92200005}
-  m_AnchoredPosition: {x: -2.3208008, y: 0.7549896}
-  m_SizeDelta: {x: 1.109375, y: -1.5099945}
+  m_AnchorMin: {x: 0.06957938, y: 0.068609856}
+  m_AnchorMax: {x: 0.9157343, y: 1}
+  m_AnchoredPosition: {x: -0.9567871, y: 2.2281036}
+  m_SizeDelta: {x: 2.1399, y: -62.3488}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8352989461249328195
 GameObject:

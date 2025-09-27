@@ -102,4 +102,16 @@ public class AudioManager : MonoBehaviour
     {
         ApplySavedVolumes();
     }
+
+    public void MuteAll(bool mute)
+    {
+        if (mute)
+        {
+            mixer.SetFloat("Master", -80f);
+        }
+        else
+        {
+            mixer.SetFloat("Master", 0f);
+        }
+    }
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
+    //public float beforeBgmVolume = 1f;
+    //public float beforeSfxVolume = 1f;
     public float BgmVolume = 1f;
     public float SfxVolume = 1f;
     public int Tutorial = 0;

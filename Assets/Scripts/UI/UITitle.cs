@@ -85,4 +85,9 @@ public class UITitle : MonoBehaviour
     {
         Option.SetActive(false);
     }
+
+    public void MuteAll(bool mute)
+    {
+        AudioManager.Instance.MuteAll(mute);
+    }
 }
