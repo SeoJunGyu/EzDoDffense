@@ -207,7 +207,7 @@ public class SkillManager : MonoBehaviour
 
                 if(data.Skill_Target != 5)
                 {
-                    AudioManager.Instance.PlaySkill(data.SkillAudio);
+                    //AudioManager.Instance.PlaySkill(data.SkillAudio);
                 }
 
                 target.ApplySingleSkill(data, caster, particle);
@@ -238,7 +238,7 @@ public class SkillManager : MonoBehaviour
                 particle.gameObject.SetActive(true);
                 particle.Play();
 
-                AudioManager.Instance.PlaySkill(data.SkillAudio);
+                //AudioManager.Instance.PlaySkill(data.SkillAudio);
 
                 target.ApplyMultiSkill(data, caster, particle);
             }

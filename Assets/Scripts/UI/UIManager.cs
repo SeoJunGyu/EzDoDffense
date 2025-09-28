@@ -40,6 +40,10 @@ public class UIManager : MonoBehaviour
     private bool isOption = false;
     [SerializeField] private UIOption OptionPanel;
 
+    public GameObject TimeTextGo;
+
+    public TextMeshProUGUI TimeScaleText;
+
     private void Awake()
     {
         cheat.gameObject.SetActive(false);
@@ -231,5 +235,15 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.ResumGame();
             OptionPanel.gameObject.SetActive(false);
         }
+    }
+
+    public void TimeScaleChange()
+    {
+        Time.timeScale++;
+        if(Time.timeScale >= 4f)
+        {
+            Time.timeScale = 1f;
+        }
+        TimeScaleText.text = $"X{Time.timeScale.ToString()}";
     }
 }

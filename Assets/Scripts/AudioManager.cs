@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -15,6 +17,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip sailSound;
     [SerializeField] private AudioClip spawnSound;
     [SerializeField] private AudioClip synthesisSound;
+
+    private Queue<AudioSource> audios = new Queue<AudioSource>();
 
     private void Awake()
     {
@@ -47,6 +51,11 @@ public class AudioManager : MonoBehaviour
         SetVolume(sfxParam, sfx);
 
         ApplySavedVolumes();
+
+        for(int i = 0; i < 10; i++)
+        {
+            var s = Instantiate(AreaSource, transform);
+        }
     }
 
     public void ApplySavedVolumes()

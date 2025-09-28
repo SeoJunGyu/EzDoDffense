@@ -263,6 +263,8 @@ public class PlacementManager : MonoBehaviour
             PlaceInSocket(data, 0);
         }
 
+        AllSetUp();
+
         AudioManager.Instance.PlaySynthesis();
 
         Variables.SelectedSlot.DeselectThis();
@@ -292,6 +294,8 @@ public class PlacementManager : MonoBehaviour
                 Variables.Gold += 500;
                 break;
         }
+
+        AllSetUp();
 
         AudioManager.Instance.PlaySail();
     }
@@ -395,6 +399,17 @@ public class PlacementManager : MonoBehaviour
             if (slot.SocketInCount > 0)
             {
                 slot.AllTypeUpgradeUnitSetup(type, typeUpdate);
+            }
+        }
+    }
+
+    public void AllSetUp()
+    {
+        foreach(var slot in slots)
+        {
+            if(slot.SocketInCount > 0)
+            {
+                slot.AllSetUp();
             }
         }
     }

@@ -87,6 +87,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     private SingleSkillData singleData;
     private MultiSkillData multiData;
 
+    private AudioSource audio;
+
     private void OnEnable()
     {
         ActiveBuffValue.Clear();
@@ -106,6 +108,11 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
+        audio = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -259,6 +266,10 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         animator = GetComponentInChildren<Animator>();
 
         ActiveBuffValue.Clear();
+        foreach(var pair in ActiveBuffParticle)
+        {
+            SkillManager.Instance.ReturnParticle(pair.Key, pair.Value);
+        }
         ActiveBuffParticle.Clear();
         particles.Clear();
     }

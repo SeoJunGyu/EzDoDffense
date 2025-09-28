@@ -460,4 +460,17 @@ public class Clickable : MonoBehaviour, IClickable
             }
         }
     }
+
+    public void AllSetUp()
+    {
+        foreach(var socket in sockets)
+        {
+            if(sockets[socket.Key] != null && sockets[socket.Key].gameObject.activeSelf)
+            {
+                int grade = PlacementManager.Instance.GradeUpgradeSave.ContainsKey(sockets[socket.Key].Grade) ? PlacementManager.Instance.GradeUpgradeSave[sockets[socket.Key].Grade] : 0;
+                int type = PlacementManager.Instance.TypeUpgradeSave.ContainsKey((int)sockets[socket.Key].UnitType) ? PlacementManager.Instance.TypeUpgradeSave[(int)sockets[socket.Key].UnitType] : 0;
+                sockets[socket.Key].Setup(CurrentData, grade, type);
+            }
+        }
+    }
 }

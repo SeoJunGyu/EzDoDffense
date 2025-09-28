@@ -161,7 +161,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 WarningTimer.gameObject.SetActive(true);
-                uiManager.TimeText.gameObject.SetActive(false);
+                //uiManager.TimeText.gameObject.SetActive(false);
+                uiManager.TimeTextGo.SetActive(false);
 
                 bossTimer -= Time.deltaTime;
                 WarningTimer.text = $"{Mathf.CeilToInt(Mathf.Max(0f, bossTimer))}";
@@ -179,7 +180,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 WarningTimer.gameObject.SetActive(true);
-                uiManager.TimeText.gameObject.SetActive(false);
+                //uiManager.TimeText.gameObject.SetActive(false);
+                uiManager.TimeTextGo.SetActive(false);
 
                 enemyCountTimer -= Time.deltaTime;
                 WarningTimer.text = $"{Mathf.CeilToInt(Mathf.Max(0f, enemyCountTimer))}";
@@ -192,7 +194,8 @@ public class GameManager : MonoBehaviour
 
                 WarningTimer.gameObject.SetActive(false);
                 WarningText.gameObject.SetActive(false);
-                uiManager.TimeText.gameObject.SetActive(true);
+                //uiManager.TimeText.gameObject.SetActive(true);
+                uiManager.TimeTextGo.SetActive(true);
                 break;
         }
     }
