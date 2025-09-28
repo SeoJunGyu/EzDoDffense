@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        if(Variables.Stage > 100)
+        if(Variables.Stage >= 100 && Variables.IsBoss)
         {
             return;
         }

@@ -197,7 +197,7 @@ public class UIManager : MonoBehaviour
     {
         Variables.Reset();
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void BackGame()
