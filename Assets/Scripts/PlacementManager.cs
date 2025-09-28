@@ -165,7 +165,7 @@ public class PlacementManager : MonoBehaviour
             unit.OnSynthesis += () => Destroy(visualModel);
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
-            AudioManager.Instance.PlaySpawn();
+            AudioManager.Instance.PlaySpawn(unit.transform.position);
 
             return true;
         }
@@ -265,7 +265,7 @@ public class PlacementManager : MonoBehaviour
 
         AllSetUp();
 
-        AudioManager.Instance.PlaySynthesis();
+        AudioManager.Instance.PlaySynthesis(Vector3.zero);
 
         Variables.SelectedSlot.DeselectThis();
     }
@@ -297,7 +297,7 @@ public class PlacementManager : MonoBehaviour
 
         AllSetUp();
 
-        AudioManager.Instance.PlaySail();
+        AudioManager.Instance.PlaySail(Vector3.zero);
     }
 
     //강화 실행

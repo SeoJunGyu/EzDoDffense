@@ -1,8 +1,10 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class AudioManager : MonoBehaviour
     private string bgmParam = "BGM";
     private string sfxParam = "SFX";
 
-    [SerializeField] private AudioSource AreaSource;
+    [SerializeField] private AudioSource sampleSource;
     [SerializeField] private AudioClip deadSound;
     [SerializeField] private AudioClip sailSound;
     [SerializeField] private AudioClip spawnSound;
@@ -54,7 +56,9 @@ public class AudioManager : MonoBehaviour
 
         for(int i = 0; i < 10; i++)
         {
-            var s = Instantiate(AreaSource, transform);
+            var s = Instantiate(sampleSource, transform);
+            s.gameObject.SetActive(false);
+            audios.Enqueue(s);
         }
     }
 
@@ -65,32 +69,32 @@ public class AudioManager : MonoBehaviour
         SetVolume("SFX", save.SfxVolume);
     }
 
-    public void PlayDead()
+    public void PlayDead(Vector3 pos)
     {
-        AreaSource.PlayOneShot(deadSound);
+        PlaySfx(deadSound, pos);
     }
 
-    public void PlaySkill(AudioClip clip)
+    public void PlaySkill(AudioClip clip, Vector3 pos)
     {
         if(clip != null)
         {
-            AreaSource.PlayOneShot(clip);
+            PlaySfx(clip, pos);
         }
     }
 
-    public void PlaySail()
+    public void PlaySail(Vector3 pos)
     {
-        AreaSource.PlayOneShot(sailSound);
+        PlaySfx(sailSound, pos);
     }
 
-    public void PlaySpawn()
+    public void PlaySpawn(Vector3 pos)
     {
-        AreaSource.PlayOneShot(spawnSound);
+        PlaySfx(spawnSound, pos);
     }
 
-    public void PlaySynthesis()
+    public void PlaySynthesis(Vector3 pos)
     {
-        AreaSource.PlayOneShot(synthesisSound);
+        PlaySfx(synthesisSound, pos);
     }
 
     public void SetMasterVolume(float vol)
@@ -103,8 +107,26 @@ public class AudioManager : MonoBehaviour
 
     private void SetVolume(string param, float vol)
     {
-        float value = Mathf.Clamp(vol, 0.001f, 1f);
-        mixer.SetFloat(param, Mathf.Log10(value) * 20);
+        // 0~1 슬라이더
+        float t = Mathf.Clamp01(vol);
+
+        // 아주 낮은 구간은 '묵음 스냅' (원하면 0.02~0.05 사이로 조정)
+        if (t < 0.02f)
+        {
+            mixer.SetFloat(param, -80f);
+            return;
+        }
+
+        // 저역 민감도 눌러주기 (k > 1 이면 처음 구간이 완만해짐)
+        const float k = 2.2f;    // 1.8~3.0 사이에서 취향대로 조절
+        t = Mathf.Pow(t, k);
+
+        // 로그 스케일 유지 + 바닥값으로 급상승 방지
+        const float vMin = 0.0001f; // 실제 무음에 가까운 바닥
+        float v = Mathf.Lerp(vMin, 1f, t);
+
+        float dB = 20f * Mathf.Log10(v); // 0dB ~ -80dB 사이 자연스러운 체감
+        mixer.SetFloat(param, dB);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mod)
@@ -122,5 +144,37 @@ public class AudioManager : MonoBehaviour
         {
             mixer.SetFloat("Master", 0f);
         }
+    }
+
+    private AudioSource GetSource()
+    {
+        if(audios.Count > 0)
+        {
+            var s = audios.Dequeue();
+            s.gameObject.SetActive(true);
+            return s;
+        }
+
+        return Instantiate(sampleSource, transform);
+    }
+
+    private void ReturnSource(AudioSource s)
+    {
+        s.gameObject.SetActive(false);
+        audios.Enqueue(s);
+    }
+
+    public void PlaySfx(AudioClip clip, Vector3 pos)
+    {
+        var s = GetSource();
+        s.transform.position = pos;
+        s.PlayOneShot(clip);
+        StartCoroutine(ReturnAfterPlay(s, clip.length));
+    }
+
+    private IEnumerator ReturnAfterPlay(AudioSource s, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ReturnSource(s);
     }
 }
