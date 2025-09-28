@@ -270,9 +270,28 @@ public class PlacementManager : MonoBehaviour
 
     public void UnitSale()
     {
+        int grade = Variables.SelectedSlot.CurrentData.Unit_Grade;
+
         Variables.SelectedSlot.UnitDelete();
 
-        Variables.Gold += 50;
+        switch (grade)
+        {
+            case 1:
+                Variables.Gold += 40;
+                break;
+            case 2:
+                Variables.Gold += 60;
+                break;
+            case 3:
+                Variables.Gold += 150;
+                break;
+            case 4:
+                Variables.Gold += 350;
+                break;
+            case 5:
+                Variables.Gold += 500;
+                break;
+        }
 
         AudioManager.Instance.PlaySail();
     }

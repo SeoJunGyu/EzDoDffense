@@ -37,6 +37,9 @@ public class UIManager : MonoBehaviour
     public GameObject StageGo;
     public TextMeshProUGUI BossNameText;
 
+    private bool isOption = false;
+    [SerializeField] private UIOption OptionPanel;
+
     private void Awake()
     {
         cheat.gameObject.SetActive(false);
@@ -213,5 +216,20 @@ public class UIManager : MonoBehaviour
     {
         BossSpawnText.SetActive(spawn);
         StageGo.SetActive(!spawn);
+    }
+
+    public void ActiveOption()
+    {
+        isOption = !isOption;
+        if (isOption)
+        {
+            GameManager.Instance.PauseGame();
+            OptionPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            GameManager.Instance.ResumGame();
+            OptionPanel.gameObject.SetActive(false);
+        }
     }
 }

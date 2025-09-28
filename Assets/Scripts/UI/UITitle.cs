@@ -88,6 +88,16 @@ public class UITitle : MonoBehaviour
 
     public void MuteAll(bool mute)
     {
-        AudioManager.Instance.MuteAll(mute);
+        save.IsMute = mute;
+        if (mute)
+        {
+            mixer.SetFloat("Master", -80f);
+        }
+        else
+        {
+            mixer.SetFloat("Master", 0f);
+        }
+
+        SaveManager.Save(save);
     }
 }
