@@ -190,12 +190,24 @@ public class AudioManager : MonoBehaviour
         var s = GetSource();
         s.transform.position = pos;
         s.PlayOneShot(clip);
-        StartCoroutine(ReturnAfterPlay(s, clip.length));
+        StartCoroutine(ReturnAfterPlay(s, clip));
     }
 
-    private IEnumerator ReturnAfterPlay(AudioSource s, float delay)
+    private IEnumerator ReturnAfterPlay(AudioSource s, AudioClip clip)
     {
-        yield return new WaitForSeconds(delay);
+        float est = clip.length / Mathf.Max(0.01f, Mathf.Abs(s.pitch));
+
+        est += 0.02f; //보정용 버퍼
+
+        yield return new WaitForSeconds(est);
+
+        while(s != null && s.isPlaying)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSecondsRealtime(0.03f);
+
         ReturnSource(s);
     }
 }
