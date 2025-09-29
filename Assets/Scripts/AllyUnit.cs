@@ -76,8 +76,8 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public bool IsTargetable => gameObject.activeInHierarchy;
 
-    private Transform effectAnchor;
-    public Transform EffectAnchor => transform;
+    [SerializeField] private Transform effectAnchor;
+    public Transform EffectAnchor => effectAnchor;
 
     private List<long> particles = new List<long>();
     public List<long> ActiveParticle { get => particles; }

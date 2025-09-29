@@ -364,7 +364,7 @@ public class SkillManager : MonoBehaviour
 
     private void DoReturn(long skillId, ParticleSystem ps)
     {
-        ps.transform.localScale = Vector3.one;
+        //ps.transform.localScale = Vector3.one;
         ps.transform.SetParent(transform);
         ps.gameObject.SetActive(false);
         if (particles.TryGetValue(skillId, out var q))

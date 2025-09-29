@@ -33,8 +33,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public bool IsTargetable => gameObject.activeInHierarchy;
 
-    private Transform effectAnchor;
-    public Transform EffectAnchor => transform;
+    [SerializeField] private Transform effectAnchor;
+    public Transform EffectAnchor => effectAnchor;
 
     public event Action OnDeath;
     public event Action OnDisableUnit;
