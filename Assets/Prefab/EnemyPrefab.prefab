@@ -168,7 +168,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4644199095732946418}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 8
@@ -299,6 +299,7 @@ MonoBehaviour:
   adventageDamageRate: 1.2
   disAdventageDamageRate: 0.8
   addGold: 5
+  useRailMove: 1
 --- !u!1001 &5214562869626004514
 PrefabInstance:
   m_ObjectHideFlags: 0

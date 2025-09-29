@@ -55,7 +55,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public string UnitName { get; private set; }
 
-    [SerializeField] private bool useRailMove = true;
     private bool paused;
 
     private void OnEnable()
@@ -73,6 +72,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         ActiveBuffValue.Clear();
         ActiveBuffParticle.Clear();
         particles.Clear();
+
+        paused = false;
     }
 
     private void OnDisable()
@@ -103,42 +104,12 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private void Update()
     {
-        if (useRailMove)
-        {
-            RailMoveUpdate();
-        }
-        else
-        {
-            UpdateTrace();
-        }
+        RailMoveUpdate();
     }
 
     private void LateUpdate()
     {
         healthSlider.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-    }
-
-    public void UpdateTrace()
-    {
-        if(wayPoints == null || wayPoints.Length == 0)
-        {
-            return;
-        }
-        if (!agent.isOnNavMesh)
-        {
-            return;
-        }
-        if (agent.pathPending)
-        {
-            return;
-        }
-
-        if(agent.remainingDistance <= agent.stoppingDistance + arriveTolerance)
-        {
-            CurrentWayIndex = (CurrentWayIndex + 1) % wayPoints.Length;
-            target = wayPoints[CurrentWayIndex];
-            agent.SetDestination(target);
-        }
     }
 
     public void RailMoveUpdate()
@@ -406,7 +377,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
                 break;
             case 6:
-                if (!CanControlAgent)
+                if (!gameObject.activeSelf || IsDead)
                 {
                     break;
                 }
@@ -415,7 +386,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                     break;
                 }
                 particles.Add(data.Skill_ID);
-                agent.isStopped = true;
+                //agent.isStopped = true;
                 if(animator != null)
                 {
                     animator.speed = 0f;
@@ -427,8 +398,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         }
     }
 
-    private bool CanControlAgent => agent != null && agent.enabled && gameObject.activeSelf && agent.isOnNavMesh;
-
     private IEnumerator StunCoroutine(long id, float duration)
     {
         paused = true;
@@ -436,6 +405,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         {
             animator.speed = 0f;
         }
+        Debug.Log("스턴");
 
         yield return new WaitForSeconds(duration);
 
@@ -444,6 +414,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         if (animator != null) animator.speed = 1f; // 원래 값 복원
 
         particles.Remove(id);
+        Debug.Log("스턴풀림");
     }
 
     private IEnumerator SpeedCoroutine(long id, float duration)
