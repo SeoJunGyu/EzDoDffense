@@ -60,8 +60,24 @@ public class PlacementManager : MonoBehaviour
                 GradeUpgradeGold.Add(i, 15);
                 continue;
             }
-            GradeUpgradeBaseGold.Add(i, 30);
-            GradeUpgradeGold.Add(i, 30);
+            if(i == 3)
+            {
+                GradeUpgradeBaseGold.Add(i, 20);
+                GradeUpgradeGold.Add(i, 20);
+                continue;
+            }
+            if (i == 4)
+            {
+                GradeUpgradeBaseGold.Add(i, 50);
+                GradeUpgradeGold.Add(i, 50);
+                continue;
+            }
+            if (i == 5)
+            {
+                GradeUpgradeBaseGold.Add(i, 80);
+                GradeUpgradeGold.Add(i, 80);
+                continue;
+            }
         }
 
         for (int i = 1; i < 4; i++)
