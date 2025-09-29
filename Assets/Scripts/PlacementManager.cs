@@ -393,7 +393,7 @@ public class PlacementManager : MonoBehaviour
     private bool IsGemStage(int grade, int level) => (grade == 4 || grade == 5) && level >= 5;
 
     private int CalcGradeGold(int grade, int level) => Mathf.CeilToInt(GradeUpgradeBaseGold[grade] * Mathf.Pow(1.25f, level));
-    private int CalcTypeGold(int level) => Mathf.RoundToInt(50f * Mathf.Pow(1.15f, level));
+    private int CalcTypeGold(int level) => Mathf.RoundToInt(50f * Mathf.Pow(1.2f, level));
 
     private int CalcGem(int level) => (level - 4);
 

@@ -129,7 +129,7 @@ public class EnemySpawner : MonoBehaviour
         {
             visualModel.transform.localScale *= 2f;
             Vector3 pos = new Vector3(0f, 3.5f, 0f);
-            //enemy.canvas.transform.position = pos;
+            enemy.canvas.transform.localPosition = pos;
             Variables.Boss = enemy;
             Variables.BossSummoned = true;
         }

@@ -237,7 +237,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 transform.localScale = Vector3.one;
 
                 Vector3 pos = new Vector3(0f, 2f, 0f);
-                //canvas.transform.position = pos;
+                canvas.transform.localPosition = pos;
 
                 Variables.Boss = null;
             }
