@@ -240,9 +240,13 @@ public class UIManager : MonoBehaviour
     public void TimeScaleChange()
     {
         timeValue++;
-        if(timeValue >= 4f)
+        if(timeValue >= 6f)
         {
             timeValue = 1f;
+        }
+        else if(timeValue >= 4f)
+        {
+            timeValue = 5f;
         }
         Time.timeScale = timeValue;
         TimeScaleText.text = $"X{timeValue.ToString()}";
