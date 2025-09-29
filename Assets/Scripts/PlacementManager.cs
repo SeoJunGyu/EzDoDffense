@@ -345,6 +345,8 @@ public class PlacementManager : MonoBehaviour
         level++;
         GradeUpgradeSave[grade] = level;
 
+        AudioManager.Instance.Playenforce();
+
         //다음 비용
         if (level >= 10)
         {
@@ -376,6 +378,8 @@ public class PlacementManager : MonoBehaviour
         //강화 성공
         level++;
         TypeUpgradeSave[type] = level;
+
+        AudioManager.Instance.Playenforce();
 
         //다음 비용
         if (level >= 10)

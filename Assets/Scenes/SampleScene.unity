@@ -2910,6 +2910,7 @@ MonoBehaviour:
   sailSound: {fileID: 8300000, guid: 9b5c1b48e433b3143af08381b03a4827, type: 3}
   spawnSound: {fileID: 8300000, guid: 4cdbeadadc00d6b4495e11634e88af78, type: 3}
   synthesisSound: {fileID: 8300000, guid: 5a9af89a0c873b04fb3a02c683bb8f2b, type: 3}
+  enforceSound: {fileID: 8300000, guid: a2cc4eb8123f5264cae43ee17fdf8f30, type: 3}
 --- !u!82 &207916323
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6268,7 +6269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705498221812046974, guid: 09c2dc74d1d7f4cf2add8df9679a1124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.5812168
+      value: 0.5812092
       objectReference: {fileID: 0}
     - target: {fileID: 2992864372807100855, guid: 09c2dc74d1d7f4cf2add8df9679a1124, type: 3}
       propertyPath: m_Name
