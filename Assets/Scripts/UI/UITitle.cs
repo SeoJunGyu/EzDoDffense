@@ -34,6 +34,8 @@ public class UITitle : MonoBehaviour
         SetVolume(KEY_BGM, save.BgmVolume);
         SetVolume(KEY_SFX, save.SfxVolume);
 
+        MuteAll(save.IsMute);
+
         bgmSlider.onValueChanged.AddListener(v => {
             save.BgmVolume = v;
             SaveManager.Save(save);

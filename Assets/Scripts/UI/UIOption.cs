@@ -5,6 +5,7 @@ public class UIOption : UIPanel
 {
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Toggle mute;
     private SaveData save;
 
     private void Start()
@@ -15,6 +16,8 @@ public class UIOption : UIPanel
 
         AudioManager.Instance.SetBgmVolume(save.BgmVolume);
         AudioManager.Instance.SetSfxVolume(save.SfxVolume);
+
+        mute.isOn = save.IsMute;
 
         bgmSlider.onValueChanged.AddListener(v => {
             save.BgmVolume = v;

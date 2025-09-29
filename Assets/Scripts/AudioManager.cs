@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour
 
     private Queue<AudioSource> audios = new Queue<AudioSource>();
 
+    private SaveData save;
+
     private void Awake()
     {
         if(Instance == null)
@@ -47,11 +49,10 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        float bgm = PlayerPrefs.GetFloat("BGM", 1f);
-        float sfx = PlayerPrefs.GetFloat("SFX", 1f);
+        save = SaveManager.Load();
 
-        SetVolume(bgmParam, bgm);
-        SetVolume(sfxParam, sfx);
+        float bgm = PlayerPrefs.GetFloat(bgmParam, 1f);
+        float sfx = PlayerPrefs.GetFloat(sfxParam, 1f);
 
         ApplySavedVolumes();
 
@@ -65,9 +66,9 @@ public class AudioManager : MonoBehaviour
 
     public void ApplySavedVolumes()
     {
-        var save = SaveManager.Load();
-        SetVolume("BGM", save.BgmVolume);
-        SetVolume("SFX", save.SfxVolume);
+        SetVolume(bgmParam, save.BgmVolume);
+        SetVolume(sfxParam, save.SfxVolume);
+        MuteAll(save.IsMute);
     }
 
     public void PlayDead(Vector3 pos)
@@ -108,8 +109,18 @@ public class AudioManager : MonoBehaviour
         SetBgmVolume(vol);
         SetSfxVolume(vol);
     }
-    public void SetBgmVolume(float vol) => SetVolume("BGM", vol);
-    public void SetSfxVolume(float vol) => SetVolume("SFX", vol);
+    public void SetBgmVolume(float vol)
+    {
+        save.BgmVolume = vol;
+        SetVolume(bgmParam, vol);
+        SaveManager.Save(save);
+    }
+    public void SetSfxVolume(float vol)
+    {
+        save.SfxVolume = vol;
+        SetVolume(sfxParam, vol);
+        SaveManager.Save(save);
+    }
 
     private void SetVolume(string param, float vol)
     {
@@ -137,11 +148,13 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mod)
     {
+        save = SaveManager.Load();
         ApplySavedVolumes();
     }
 
     public void MuteAll(bool mute)
     {
+        save.IsMute = mute;
         if (mute)
         {
             mixer.SetFloat("Master", -80f);
@@ -150,6 +163,8 @@ public class AudioManager : MonoBehaviour
         {
             mixer.SetFloat("Master", 0f);
         }
+
+        SaveManager.Save(save);
     }
 
     private AudioSource GetSource()
