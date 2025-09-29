@@ -197,6 +197,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                     Variables.Stage++;
                 }
 
+                transform.localScale = Vector3.one;
+
                 Variables.Boss = null;
             }
 

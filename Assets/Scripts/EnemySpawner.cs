@@ -127,6 +127,7 @@ public class EnemySpawner : MonoBehaviour
 
         if(Variables.Stage % 10 == 0)
         {
+            enemy.transform.localScale *= 2f;
             Variables.Boss = enemy;
             Variables.BossSummoned = true;
         }
