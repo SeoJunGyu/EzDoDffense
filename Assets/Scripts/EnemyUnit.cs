@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.Android;
 using UnityEngine.UI;
 
 public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
@@ -54,6 +55,9 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     public string UnitName { get; private set; }
 
+    [SerializeField] private bool useRailMove = true;
+    private bool paused;
+
     private void OnEnable()
     {
         IsDead = false;
@@ -88,11 +92,25 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         target = transform.position;
     }
 
-    
+    private void Start()
+    {
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+
+        agent.radius = 0.01f;
+        agent.avoidancePriority = 50;
+    }
 
     private void Update()
     {
-        UpdateTrace();
+        if (useRailMove)
+        {
+            RailMoveUpdate();
+        }
+        else
+        {
+            UpdateTrace();
+        }
     }
 
     private void LateUpdate()
@@ -123,20 +141,68 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         }
     }
 
-    public void SetTarget(Vector3[] wayPoint)
+    public void RailMoveUpdate()
     {
-        wayPoints = wayPoint;
+        if (paused)
+        {
+            return;
+        }
         if(wayPoints == null || wayPoints.Length == 0)
         {
             return;
         }
-        if (!agent.isOnNavMesh)
+
+        float remaining = agent.speed * Time.deltaTime;
+        Vector3 pos = transform.position;
+
+        int safety = 0;
+        while(remaining > 0f && safety++ < 8)
+        {
+            Vector3 to = wayPoints[CurrentWayIndex];
+            Vector3 delta = to - pos;
+            float dist = delta.magnitude;
+
+            //코너
+            if(dist <= arriveTolerance)
+            {
+                pos = to;
+
+                int next = (CurrentWayIndex + 1) % wayPoints.Length;
+
+                Vector3 dir = wayPoints[next] - to;
+                if(dir.sqrMagnitude > 0.0001f)
+                {
+                    transform.rotation = Quaternion.LookRotation(dir);
+                }
+
+                CurrentWayIndex = next;
+                continue;
+            }
+
+            float step = Mathf.Min(remaining, dist);
+            pos += (delta / dist) * step;
+            remaining -= step;
+        }
+
+        transform.position = pos;
+    }
+
+    public void SetTarget(Vector3[] wayPoint)
+    {
+        wayPoints = wayPoint;
+
+        CurrentWayIndex = 0;
+
+        if(wayPoints == null || wayPoints.Length == 0)
         {
             return;
         }
 
-        target = wayPoints[CurrentWayIndex];
-        agent.SetDestination(target);
+        Vector3 dir = wayPoints[0] - transform.position;
+        if(dir.sqrMagnitude > 0.0001f)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);
+        }
     }
 
     public void OnDamage(float damage, AttackTypes attackType)
@@ -365,9 +431,16 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private IEnumerator StunCoroutine(long id, float duration)
     {
+        paused = true;
+        if(animator != null)
+        {
+            animator.speed = 0f;
+        }
+
         yield return new WaitForSeconds(duration);
 
-        agent.isStopped = false;
+        //agent.isStopped = false;
+        paused = false;
         if (animator != null) animator.speed = 1f; // 원래 값 복원
 
         particles.Remove(id);
