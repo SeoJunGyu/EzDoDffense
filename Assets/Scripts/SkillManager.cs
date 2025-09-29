@@ -205,7 +205,7 @@ public class SkillManager : MonoBehaviour
                 particle.gameObject.SetActive(true);
                 particle.Play();
 
-                if(data.Skill_Target != 5)
+                if(data.Skill_Target != 5 && data.Skill_Target != 4)
                 {
                     AudioManager.Instance.PlaySkill(data.SkillAudio, target.EffectAnchor.position);
                 }

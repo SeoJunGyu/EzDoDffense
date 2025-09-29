@@ -28,7 +28,7 @@ public class ClickableComponent : MonoBehaviour
 
         bool hitAny = false;
         IClickable hitClickable = null;
-        EnemyData enemy = null;
+        EnemyUnit enemy = null;
 
         if(Input.touchCount == 1)
         {
@@ -42,7 +42,7 @@ public class ClickableComponent : MonoBehaviour
 
                 if(hit.collider.gameObject.tag.Equals("Enemy"))
                 {
-                    enemy = EnemySpawner.Instance.CurrentEnemyData;
+                    enemy = hit.collider.gameObject.GetComponent<EnemyUnit>();
                 }
             }
         }
@@ -60,7 +60,7 @@ public class ClickableComponent : MonoBehaviour
 
                 if (hit.collider.gameObject.tag.Equals("Enemy"))
                 {
-                    enemy = EnemySpawner.Instance.CurrentEnemyData;
+                    enemy = hit.collider.gameObject.GetComponent<EnemyUnit>();
                 }
             }
         }
@@ -113,7 +113,7 @@ public class ClickableComponent : MonoBehaviour
         {
             uiManager.ActiveInfoPanel(Variables.SelectedSlot.CurrentData);
         }
-        else if(Variables.SelectedEnemy != null)
+        else if(Variables.SelectedEnemy)
         {
             uiManager.ActiveInfoPanel(Variables.SelectedEnemy);
         }

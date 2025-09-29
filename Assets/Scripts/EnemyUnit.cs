@@ -236,10 +236,13 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
                 transform.localScale = Vector3.one;
 
+                Vector3 pos = new Vector3(0f, 2f, 0f);
+                //canvas.transform.position = pos;
+
                 Variables.Boss = null;
             }
 
-            if(Variables.SelectedEnemy == Data)
+            if(Variables.SelectedEnemy == this)
             {
                 Variables.SelectedEnemy = null;
             }

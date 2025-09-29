@@ -98,16 +98,16 @@ public class UIUnitInfo : UIPanel
         AttackSpeed.text = unit.AtkSpeed.ToString("F2");
     }
 
-    public void SetEnemyInfo(EnemyData enemy)
+    public void SetEnemyInfo(EnemyUnit enemy)
     {
-        Unit_Name.text = enemy.Unit_Name;
-        Deffense.text = enemy.Unit_DEF.ToString("F2");
-        MoveSpeed.text = enemy.Move_Speed.ToString("F2");
-        HP.text = enemy.Unit_HP.ToString();
+        Unit_Name.text = enemy.Data.Unit_Name;
+        Deffense.text = enemy.Data.Unit_DEF.ToString("F2");
+        MoveSpeed.text = enemy.Data.Move_Speed.ToString("F2");
+        HP.text = enemy.Data.Unit_HP.ToString();
 
-        UnitImage.sprite = enemy.SpriteUnitIcon;
-        DamageImage.sprite = enemy.SpriteDEFTypeIcon;
-        SpeedImage.sprite = enemy.SpriteMoveSpeedIcon;
+        UnitImage.sprite = enemy.Data.SpriteUnitIcon;
+        DamageImage.sprite = enemy.Data.SpriteDEFTypeIcon;
+        SpeedImage.sprite = enemy.Data.SpriteMoveSpeedIcon;
     }
 
     public void ActiveSkillInfo(int index)
