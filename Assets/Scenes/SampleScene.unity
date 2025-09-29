@@ -6269,7 +6269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705498221812046974, guid: 09c2dc74d1d7f4cf2add8df9679a1124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.5812092
+      value: 0.5811405
       objectReference: {fileID: 0}
     - target: {fileID: 2992864372807100855, guid: 09c2dc74d1d7f4cf2add8df9679a1124, type: 3}
       propertyPath: m_Name
@@ -17824,6 +17824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSlider: {fileID: 124422633}
   sfxSlider: {fileID: 511866315}
+  mute: {fileID: 1188630381}
 --- !u!1 &1080558812
 GameObject:
   m_ObjectHideFlags: 0
@@ -19513,6 +19514,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177617310}
   m_CullTransparentMesh: 1
+--- !u!114 &1188630381 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1199770349545263009, guid: bda2a332f31322142b8f0d4e22d6ee63, type: 3}
+  m_PrefabInstance: {fileID: 1070869679}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1194119796
 GameObject:
   m_ObjectHideFlags: 0

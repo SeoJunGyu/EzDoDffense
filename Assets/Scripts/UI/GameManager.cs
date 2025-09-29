@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void ResumGame()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = uiManager.timeValue;
         Timer.Resume();
     }
 

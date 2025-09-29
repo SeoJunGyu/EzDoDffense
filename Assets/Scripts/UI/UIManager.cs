@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UIOption OptionPanel;
 
     public GameObject TimeTextGo;
-
+    public float timeValue { get; private set; } = 1f;
     public TextMeshProUGUI TimeScaleText;
 
     private void Awake()
@@ -239,11 +239,12 @@ public class UIManager : MonoBehaviour
 
     public void TimeScaleChange()
     {
-        Time.timeScale++;
-        if(Time.timeScale >= 4f)
+        timeValue++;
+        if(timeValue >= 4f)
         {
-            Time.timeScale = 1f;
+            timeValue = 1f;
         }
-        TimeScaleText.text = $"X{Time.timeScale.ToString()}";
+        Time.timeScale = timeValue;
+        TimeScaleText.text = $"X{timeValue.ToString()}";
     }
 }
