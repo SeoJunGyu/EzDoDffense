@@ -101,6 +101,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         particles.Clear();
 
         OnSynthesis = null;
+        OnDespawned = null;
     }
 
     private void Awake()

@@ -78,6 +78,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         particles.Clear();
 
         OnDeath = null;
+        OnDisableUnit = null;
     }
 
     private void Awake()
@@ -223,6 +224,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         agent.speed = data.Move_Speed;
         CurrentWayIndex = 0;
         Data = data;
+
+        particles.Clear();
     }
 
     public void ApplySingleSkill(SingleSkillData data, AllyUnit caster, ParticleSystem particle)
