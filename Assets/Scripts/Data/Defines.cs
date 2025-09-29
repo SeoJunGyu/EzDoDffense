@@ -32,6 +32,7 @@ public static class Variables
 
     public static bool IsBoss { get; set; } = false;
     public static EnemyUnit Boss { get; set; }
+    public static bool BossSummoned;
 
     public static int Stage { get; set; } = 1;
     public static int EnemyTotalCount { get; set; } = 0;

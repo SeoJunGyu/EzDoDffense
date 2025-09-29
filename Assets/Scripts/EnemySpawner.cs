@@ -76,6 +76,10 @@ public class EnemySpawner : MonoBehaviour
                 currentStage = Variables.Stage;
                 GetCurrentEnemyData();
 
+                if(Variables.Stage < 100)
+                {
+                    Variables.BossSummoned = false;
+                }
                 enemyCount = 0;
             }
             CreateEnemy();
@@ -85,6 +89,10 @@ public class EnemySpawner : MonoBehaviour
     
     public void CreateEnemy()
     {
+        if(Variables.Stage >= 100 && Variables.BossSummoned)
+        {
+            return;
+        }
         EnemyUnit enemy = null;
         foreach(var enem in enemies)
         {
@@ -99,8 +107,11 @@ public class EnemySpawner : MonoBehaviour
 
         if(enemy == null)
         {
-            enemy = Instantiate(prefab, transform.position, transform.rotation);
-            enemies.Add(enemy);
+            if(!Variables.BossSummoned && Variables.Boss == null)
+            {
+                enemy = Instantiate(prefab, transform.position, transform.rotation);
+                enemies.Add(enemy);
+            }
         }
 
         enemy.Setup(currentEnemyData);
@@ -117,6 +128,7 @@ public class EnemySpawner : MonoBehaviour
         if(Variables.Stage % 10 == 0)
         {
             Variables.Boss = enemy;
+            Variables.BossSummoned = true;
         }
     }
 

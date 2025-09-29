@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckVictory()
     {
-        if(Variables.Stage == 100 && Variables.IsBoss && Variables.Boss == null && Variables.EnemyTotalCount <= 0)
+        if(Variables.Stage == 100 && Variables.BossSummoned && Variables.Boss == null && Variables.EnemyTotalCount <= 0)
         {
             VictoryGame();
         }

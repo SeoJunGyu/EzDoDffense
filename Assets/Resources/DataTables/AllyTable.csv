@@ -1,5 +1,5 @@
 Unit_ID,Unit_Name,Unit_Type,Unit_Grade,Unit_ATK,Unit_ATK_SPD,Unit_ATK_RNG,Unit_Move_Speed,Unit_Skill_1,Unit_Skill_2,Icon,Model,Text
-1101011001,[일반형]박쥐,1,1,10,1.1,1,7,213010511,0,Bat(1)_icon,BatPADefault(1),"일반형 : 경장갑형에게 120%의 데미지를 주고 중장갑, 영웅장갑형에게는 80%의 데미지를 줍니다."
+1101011001,[일반형]박쥐,1,1,10,1.1,1,7,0,0,Bat(1)_icon,BatPADefault(1),"일반형 : 경장갑형에게 120%의 데미지를 주고 중장갑, 영웅장갑형에게는 80%의 데미지를 줍니다."
 1101011002,[일반형]버섯,1,1,10,1.1,1,7,0,0,MushroomSmile(1)_icon,MushroomSmilePADefault(1),"일반형 : 경장갑형에게 120%의 데미지를 주고 중장갑, 영웅장갑형에게는 80%의 데미지를 줍니다."
 1101111001,[일반형]거미,1,1,11,1.0,1,7,0,0,Spider(1)_icon,SpiderPADefault(1),"일반형 : 경장갑형에게 120%의 데미지를 주고 중장갑, 영웅장갑형에게는 80%의 데미지를 줍니다."
 1101012001,[일반형]선인장,1,1,10,1.0,4,7,0,0,Cactus(1)_icon,CactusPADefault(1),"일반형 : 경장갑형에게 120%의 데미지를 주고 중장갑, 영웅장갑형에게는 80%의 데미지를 줍니다."
