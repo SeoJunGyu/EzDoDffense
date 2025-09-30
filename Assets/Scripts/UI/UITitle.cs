@@ -102,4 +102,10 @@ public class UITitle : MonoBehaviour
 
         SaveManager.Save(save);
     }
+
+    public void LoadTutorial()
+    {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        SceneManager.LoadScene(1);
+    }
 }
