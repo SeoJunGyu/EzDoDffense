@@ -41,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
 
         GetCurrentEnemyData();
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 121; i++)
         {
             var enemy = Instantiate(prefab, transform.position, transform.rotation);
             enemies.Add(enemy);

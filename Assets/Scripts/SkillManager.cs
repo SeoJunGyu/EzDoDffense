@@ -62,7 +62,6 @@ public class SkillManager : MonoBehaviour
         }
 
         var rnd = UnityEngine.Random.Range(0, 100);
-        Debug.Log($"{rnd}");
         return rnd < chance;
     }
 
