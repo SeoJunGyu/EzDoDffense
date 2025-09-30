@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
     private EnemyData currentEnemyData;
     public EnemyData CurrentEnemyData { get => currentEnemyData; }
 
-    [SerializeField] private float spawnInterval = 1.5f;
+    [SerializeField] private float spawnInterval = 0.0001f;
     [SerializeField] private float spawnTime = 0f;
 
     private float currentStage = 1;
@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         spawnTime += Time.deltaTime;
-        if(spawnTime > spawnInterval)
+        if(spawnTime >= spawnInterval)
         {
             if(currentStage != Variables.Stage)
             {
