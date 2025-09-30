@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    public enum SfxChoice { World, Button}
+
     [SerializeField] private AudioMixer mixer;
     private string bgmParam = "BGM";
     private string sfxParam = "SFX";
@@ -24,9 +26,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip clickSound;
 
     private const int POOLSIZE = 20;
+    private const int ReservedPOOLSIZE = 8;
 
     private Queue<AudioSource> audios = new Queue<AudioSource>();
+    private Queue<AudioSource> buttonAudios = new Queue<AudioSource>();
     private Dictionary<AudioSource, AudioClip> playing = new Dictionary<AudioSource, AudioClip>();
+    private Dictionary<AudioSource, SfxChoice> sourceKinds = new Dictionary<AudioSource, SfxChoice>();
 
     private SaveData save;
 
@@ -68,6 +73,13 @@ public class AudioManager : MonoBehaviour
             audios.Enqueue(s);
         }
 
+        for(int i = 0; i < ReservedPOOLSIZE; i++)
+        {
+            var s = Instantiate(sampleSource, transform);
+            s.gameObject.SetActive(false);
+            buttonAudios.Enqueue(s);
+        }
+
         bgmSource.priority = 0;
         
     }
@@ -94,27 +106,27 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySail(Vector3 pos)
     {
-        PlaySfx(sailSound, pos);
+        PlaySfx(sailSound, pos, SfxChoice.Button);
     }
 
     public void PlaySpawn(Vector3 pos)
     {
-        PlaySfx(spawnSound, pos);
+        PlaySfx(spawnSound, pos, SfxChoice.Button);
     }
 
     public void PlaySynthesis(Vector3 pos)
     {
-        PlaySfx(synthesisSound, pos);
+        PlaySfx(synthesisSound, pos, SfxChoice.Button);
     }
 
     public void Playenforce()
     {
-        PlaySfx(enforceSound, Vector3.zero);
+        PlaySfx(enforceSound, Vector3.zero, SfxChoice.Button);
     }
 
     public void PlayClick()
     {
-        PlaySfx(clickSound, Vector3.zero);
+        PlaySfx(clickSound, Vector3.zero, SfxChoice.Button);
     }
 
     public void SetMasterVolume(float vol)
@@ -180,12 +192,14 @@ public class AudioManager : MonoBehaviour
         SaveManager.Save(save);
     }
 
-    private AudioSource GetSource()
+    private AudioSource GetSource(SfxChoice kind)
     {
-        if(audios.Count > 0)
+        Queue<AudioSource> q = (kind == SfxChoice.World) ? audios : buttonAudios;
+        if(q.Count > 0)
         {
-            var s = audios.Dequeue();
+            var s = q.Dequeue();
             s.gameObject.SetActive(true);
+            sourceKinds[s] = kind;
             return s;
         }
 
@@ -201,25 +215,34 @@ public class AudioManager : MonoBehaviour
 
         playing.Remove(s); //현재 재생중 목록에서 제거
 
-        audios.Enqueue(s); //비활성 목록에 추가
+        if(!sourceKinds.TryGetValue(s, out var kind))
+        {
+            kind = SfxChoice.World;
+        }
+
+        s.gameObject.SetActive(false);
+        (kind == SfxChoice.World ? audios : buttonAudios).Enqueue(s); //비활성 목록에 추가
     }
 
-    public void PlaySfx(AudioClip clip, Vector3 pos)
+    public void PlaySfx(AudioClip clip, Vector3 pos, SfxChoice kind = SfxChoice.World)
     {
         if(clip == null)
         {
             return;
         }
 
-        int activeCount = POOLSIZE - audios.Count;
+        int poolSize = (kind == SfxChoice.World) ? POOLSIZE : ReservedPOOLSIZE;
+        Queue<AudioSource> q = (kind == SfxChoice.World) ? audios : buttonAudios;
 
-        if(activeCount >= POOLSIZE)
+        int activeCount = poolSize - q.Count;
+
+        if(activeCount >= poolSize)
         {
             return;
         }
 
         //19개 재생중 -> 같은 클립 재생할거면 무시, 다른 클립 허용
-        if(activeCount == POOLSIZE - 1)
+        if(activeCount == poolSize - 1)
         {
             foreach(var kv in playing)
             {
@@ -230,7 +253,7 @@ public class AudioManager : MonoBehaviour
             }
         }
 
-        var s = GetSource();
+        var s = GetSource(kind);
         if(s == null)
         {
             return;
