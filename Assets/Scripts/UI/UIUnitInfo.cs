@@ -128,15 +128,18 @@ public class UIUnitInfo : UIPanel
 
         SkillInfo.SetSkillInfo(skillInfo);
         SkillInfo.gameObject.SetActive(true);
+        AudioManager.Instance.PlayClick();
     }
 
     public void ActiveBattleInfo()
     {
+        AudioManager.Instance.PlayClick();
         BattleInfo.SetActive(true);
     }
 
     public void UnActiveBattleInfo()
     {
+        AudioManager.Instance.PlayClick();
         BattleInfo.SetActive(false);
     }
 }

@@ -132,6 +132,8 @@ public class EnemySpawner : MonoBehaviour
             enemy.canvas.transform.localPosition = pos;
             Variables.Boss = enemy;
             Variables.BossSummoned = true;
+
+            Handheld.Vibrate();
         }
     }
 

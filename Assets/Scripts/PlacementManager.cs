@@ -182,6 +182,7 @@ public class PlacementManager : MonoBehaviour
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
             AudioManager.Instance.PlaySpawn(unit.transform.position);
+            Handheld.Vibrate();
 
             return true;
         }

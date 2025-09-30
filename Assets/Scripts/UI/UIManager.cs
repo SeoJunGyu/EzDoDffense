@@ -211,6 +211,8 @@ public class UIManager : MonoBehaviour
 
     public void ActiveEnforcePanel()
     {
+        AudioManager.Instance.PlayClick();
+
         AllyInfoPanel.gameObject.SetActive(false);
         EnforcePanel.SetActive(true);
         EnforceButton.gameObject.SetActive(false);
@@ -232,6 +234,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlayClick();
+
             GameManager.Instance.ResumGame();
             OptionPanel.gameObject.SetActive(false);
         }

@@ -19,6 +19,7 @@ public class UITypeEnforcePanel : UIPanel
     public override void Hide()
     {
         EnforceButton.gameObject.SetActive(true);
+        AudioManager.Instance.PlayClick();
         base.Hide();
     }
 

@@ -17,12 +17,14 @@ public class UIUpgradePanel : UIPanel
     public void OnClickType()
     {
         base.Hide();
+        AudioManager.Instance.PlayClick();
         typePanel.Show();
     }
 
     public void OnClickGrade()
     {
         base.Hide();
+        AudioManager.Instance.PlayClick();
         gradePanel.Show();
     }
 }

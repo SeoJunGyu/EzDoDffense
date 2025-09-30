@@ -20,6 +20,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip spawnSound;
     [SerializeField] private AudioClip synthesisSound;
     [SerializeField] private AudioClip enforceSound;
+    [SerializeField] private AudioClip clickSound;
 
     private Queue<AudioSource> audios = new Queue<AudioSource>();
 
@@ -102,6 +103,11 @@ public class AudioManager : MonoBehaviour
     public void Playenforce()
     {
         PlaySfx(enforceSound, Vector3.zero);
+    }
+
+    public void PlayClick()
+    {
+        PlaySfx(clickSound, Vector3.zero);
     }
 
     public void SetMasterVolume(float vol)

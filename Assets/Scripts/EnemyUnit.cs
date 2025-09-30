@@ -230,8 +230,16 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                         3;
 
                     Variables.Gem += gem;
-                    Variables.Gold += gem * 100;
-                    Variables.Stage++;
+                    if(gem >= 3)
+                    {
+                        Variables.Gold += gem * 100 + 100;
+                    }
+                    else
+                    {
+                        Variables.Gold += gem * 100;
+                    }
+
+                        Variables.Stage++;
                 }
 
                 transform.localScale = Vector3.one;
@@ -240,6 +248,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 canvas.transform.localPosition = pos;
 
                 Variables.Boss = null;
+
+                Handheld.Vibrate();
             }
 
             if(Variables.SelectedEnemy == this)
