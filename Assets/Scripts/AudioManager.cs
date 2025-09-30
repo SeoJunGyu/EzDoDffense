@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     private string bgmParam = "BGM";
     private string sfxParam = "SFX";
 
+    [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sampleSource;
     [SerializeField] private AudioClip deadSound;
     [SerializeField] private AudioClip sailSound;
@@ -22,7 +23,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip enforceSound;
     [SerializeField] private AudioClip clickSound;
 
+    private const int POOLSIZE = 20;
+
     private Queue<AudioSource> audios = new Queue<AudioSource>();
+    private Dictionary<AudioSource, AudioClip> playing = new Dictionary<AudioSource, AudioClip>();
 
     private SaveData save;
 
@@ -57,12 +61,15 @@ public class AudioManager : MonoBehaviour
 
         ApplySavedVolumes();
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < POOLSIZE; i++)
         {
             var s = Instantiate(sampleSource, transform);
             s.gameObject.SetActive(false);
             audios.Enqueue(s);
         }
+
+        bgmSource.priority = 0;
+        
     }
 
     public void ApplySavedVolumes()
@@ -182,19 +189,55 @@ public class AudioManager : MonoBehaviour
             return s;
         }
 
-        return Instantiate(sampleSource, transform);
+        return null;
     }
 
     private void ReturnSource(AudioSource s)
     {
-        s.gameObject.SetActive(false);
-        audios.Enqueue(s);
+        if(s == null)
+        {
+            return;
+        }
+
+        playing.Remove(s); //현재 재생중 목록에서 제거
+
+        audios.Enqueue(s); //비활성 목록에 추가
     }
 
     public void PlaySfx(AudioClip clip, Vector3 pos)
     {
+        if(clip == null)
+        {
+            return;
+        }
+
+        int activeCount = POOLSIZE - audios.Count;
+
+        if(activeCount >= POOLSIZE)
+        {
+            return;
+        }
+
+        //19개 재생중 -> 같은 클립 재생할거면 무시, 다른 클립 허용
+        if(activeCount == POOLSIZE - 1)
+        {
+            foreach(var kv in playing)
+            {
+                if(kv.Value == clip)
+                {
+                    return;
+                }
+            }
+        }
+
         var s = GetSource();
+        if(s == null)
+        {
+            return;
+        }
+
         s.transform.position = pos;
+        playing[s] = clip;
         s.PlayOneShot(clip);
         StartCoroutine(ReturnAfterPlay(s, clip));
     }
