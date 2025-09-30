@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(0);
