@@ -494,7 +494,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 117.55
+  m_fontSize: 150
   m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -667,6 +667,7 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: d8d4081368fa05c4fb6c1e6843b6a062, type: 2}
   bgmSlider: {fileID: 5473111036794092487}
   sfxSlider: {fileID: 2358717269396723563}
+  tutorialBtn: {fileID: 1863821916}
 --- !u!224 &449505785 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6181964427758910630, guid: 1010e62b07a2543358d074cc5373dbad, type: 3}
@@ -1645,7 +1646,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 98.15
+  m_fontSize: 127.95
   m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 1

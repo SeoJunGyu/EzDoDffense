@@ -44,6 +44,8 @@ public class UIManager : MonoBehaviour
     public float timeValue { get; private set; } = 1f;
     public TextMeshProUGUI TimeScaleText;
 
+    private SaveData save;
+
     private void Awake()
     {
         cheat.gameObject.SetActive(false);

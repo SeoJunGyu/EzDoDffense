@@ -8,7 +8,7 @@ public class SaveData
 {
     public float BgmVolume = 1f;
     public float SfxVolume = 1f;
-    public int Tutorial = 0;
+    public bool Tutorial = false;
     public bool IsMute = false;
 }
 

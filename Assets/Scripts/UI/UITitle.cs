@@ -13,6 +13,8 @@ public class UITitle : MonoBehaviour
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
 
+    [SerializeField] private Button tutorialBtn;
+
     private const string KEY_BGM = "BGM";
     private const string KEY_SFX = "SFX";
 
@@ -47,6 +49,15 @@ public class UITitle : MonoBehaviour
             SaveManager.Save(save);
             SetVolume(KEY_SFX, v);
         });
+
+        if(!save.Tutorial)
+        {
+            tutorialBtn.gameObject.SetActive(false);
+        }
+        else
+        {
+            tutorialBtn.gameObject.SetActive(true);
+        }
     }
 
     private void SetVolume(string param, float vol)
@@ -58,14 +69,13 @@ public class UITitle : MonoBehaviour
     public void StartGame()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        switch (save.Tutorial)
+        if (save.Tutorial)
         {
-            case 0:
-                SceneManager.LoadScene(1);
-                break;
-            case 1:
-                SceneManager.LoadScene(2);
-                break;
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
         }
     }
 

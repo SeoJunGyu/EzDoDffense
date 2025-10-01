@@ -30,11 +30,16 @@ public class UITutorial : UIPanel
         TextPanel.SetActive(false);
         NextButton.SetActive(false);
         PrevButton.SetActive(false);
+
+        if (save.Tutorial)
+        {
+            TutorialUnSkip();
+        }
     }
 
     public void TutorialSkip()
     {
-        save.Tutorial = 1;
+        save.Tutorial = true;
         SaveManager.Save(save);
 
         Screen.orientation = ScreenOrientation.LandscapeLeft;
