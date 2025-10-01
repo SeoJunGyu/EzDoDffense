@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public Button UpgradeButton;
     public Button DeleteButton;
     public Button EnforceButton;
+    public GameObject SalePrice;
 
     private float surviveTime = 0f; //살아있는 시간
     private float second = 0f; //초 시간
@@ -57,6 +58,7 @@ public class UIManager : MonoBehaviour
         VictoryUI.SetActive(false);
         UpgradeButton.gameObject.SetActive(false);
         DeleteButton.gameObject.SetActive(false);
+        SalePrice.SetActive(false);
     }
 
     private void Update()
@@ -123,6 +125,9 @@ public class UIManager : MonoBehaviour
         }
 
         DeleteButton.gameObject.SetActive(true);
+        SalePrice.gameObject.SetActive(true);
+
+        //SalePrice.text = 
 
         AllyInfoPanel.SetAllyInfo(data);
 

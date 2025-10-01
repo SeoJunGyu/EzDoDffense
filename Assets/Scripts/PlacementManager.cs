@@ -30,6 +30,8 @@ public class PlacementManager : MonoBehaviour
     public Dictionary<int, int> GradeUpgradeSave = new Dictionary<int, int>();
     public Dictionary<int, int> TypeUpgradeSave = new Dictionary<int, int>();
 
+    public List<int> UnitPrice = new List<int>();
+
     private void Awake()
     {
         Instance = this;
@@ -83,6 +85,28 @@ public class PlacementManager : MonoBehaviour
         for (int i = 1; i < 4; i++)
         {
             TypeUpgradeGold.Add(i, 50);
+        }
+
+        for(int i = 0; i < 5; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    UnitPrice.Add(40);
+                    break;
+                case 1:
+                    UnitPrice.Add(60);
+                    break;
+                case 2:
+                    UnitPrice.Add(150);
+                    break;
+                case 3:
+                    UnitPrice.Add(350);
+                    break;
+                case 4:
+                    UnitPrice.Add(500);
+                    break;
+            }
         }
     }
 
