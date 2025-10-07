@@ -11,6 +11,7 @@ public class UIUnitInfo : UIPanel
     public TextMeshProUGUI Unit_Name;
     public TextMeshProUGUI Damage;
     public TextMeshProUGUI AttackSpeed;
+    public TextMeshProUGUI SalePrice;
     public Image UnitImage;
     public Image DamageImage;
     public Image SpeedImage;
@@ -65,6 +66,8 @@ public class UIUnitInfo : UIPanel
         {
             Skill2.gameObject.SetActive(false);
         }
+
+        SalePrice.text = PlacementManager.Instance.UnitPrice[data.Unit_Grade - 1].ToString();
     }
 
     public void SetUnitCurrentInfo(AllyUnit unit)

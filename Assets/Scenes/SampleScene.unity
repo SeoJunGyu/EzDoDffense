@@ -715,6 +715,7 @@ MonoBehaviour:
   Unit_Name: {fileID: 735505667}
   Damage: {fileID: 1975366090}
   AttackSpeed: {fileID: 1596851091}
+  SalePrice: {fileID: 210989316}
   UnitImage: {fileID: 581828744}
   DamageImage: {fileID: 1512052327}
   SpeedImage: {fileID: 869234044}
@@ -2786,6 +2787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 2132736770632304031, guid: 21848f29db579134faa4be2afe16f9c4, type: 3}
   skillManager: {fileID: 207916321}
+  UnitPrice: 
 --- !u!82 &207916320
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3013,6 +3015,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &210989316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6736566889420441771, guid: d5cb60b55a2264364a7c2b52d2096984, type: 3}
+  m_PrefabInstance: {fileID: 966849557}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &215366888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6276,7 +6289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 705498221812046974, guid: 09c2dc74d1d7f4cf2add8df9679a1124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.58053017
+      value: 0.580492
       objectReference: {fileID: 0}
     - target: {fileID: 2992864372807100855, guid: 09c2dc74d1d7f4cf2add8df9679a1124, type: 3}
       propertyPath: m_Name
@@ -9583,6 +9596,7 @@ MonoBehaviour:
   Unit_Name: {fileID: 1997106712}
   Damage: {fileID: 0}
   AttackSpeed: {fileID: 0}
+  SalePrice: {fileID: 0}
   UnitImage: {fileID: 172618915}
   DamageImage: {fileID: 1865564671}
   SpeedImage: {fileID: 2022133924}
@@ -23059,6 +23073,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7608439691893699733, guid: 60b75116ab291bc4da9dc3a741131f24, type: 3}
   m_PrefabInstance: {fileID: 1440092998}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1442716335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1363849030900622882, guid: d5cb60b55a2264364a7c2b52d2096984, type: 3}
+  m_PrefabInstance: {fileID: 966849557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1445004055
 GameObject:
   m_ObjectHideFlags: 0
@@ -30525,6 +30544,7 @@ MonoBehaviour:
   UpgradeButton: {fileID: 257977850}
   DeleteButton: {fileID: 125019762}
   EnforceButton: {fileID: 965855046}
+  SalePrice: {fileID: 1442716335}
   cheat: {fileID: 1335062884}
   GameOverUI: {fileID: 549730457}
   VictoryUI: {fileID: 2024295240}

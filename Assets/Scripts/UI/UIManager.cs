@@ -165,6 +165,7 @@ public class UIManager : MonoBehaviour
         EnemyInfoPanel.gameObject.SetActive(true);
 
         AllyInfoPanel.gameObject.SetActive(false);
+        SalePrice.SetActive(false);
 
         UpgradeButton.gameObject.SetActive(false);
     }
@@ -175,6 +176,7 @@ public class UIManager : MonoBehaviour
         AllyInfoPanel.gameObject.SetActive(false);
         DeleteButton.gameObject.SetActive(false);
         UpgradeButton.gameObject.SetActive(false);
+        SalePrice.SetActive(false);
     }
 
     public void ActiveCheat()
