@@ -32,6 +32,8 @@ public class PlacementManager : MonoBehaviour
 
     public List<int> UnitPrice = new List<int>();
 
+    private bool IsGotcha = false;
+
     private void Awake()
     {
         Instance = this;
@@ -110,7 +112,7 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
-    public bool FindSameUnit(AllyData data)
+    public bool FindSameUnit(AllyData data, float rndValue)
     {
         foreach (var slot in slots)
         {
@@ -118,26 +120,28 @@ public class PlacementManager : MonoBehaviour
 
             if (IsPlace)
             {
-                return TryPlaceOnSlot(slot, data, 50);
+                return TryPlaceOnSlot(slot, data, 50, rndValue);
             }
         }
 
         return false;
     }
 
-    public void PlaceInSocket(AllyData data)
+    public void PlaceInSocket(AllyData data, float rndValue)
     {
         foreach (var slot in slots)
         {
             bool IsPlace = slot.UnitId == 0 || (slot.SocketInCount < 3 && Variables.SlotCount > 0 && data.Unit_ID == slot.UnitId);
 
-            if (IsPlace && TryPlaceOnSlot(slot, data, 50))
+            if (IsPlace && TryPlaceOnSlot(slot, data, 50, rndValue))
             {
                 return ;
             }
         }
     }
 
+    //추후 cost 변경되어 소환해야하는 경우 사용
+    /*
     public bool FindSameUnit(AllyData data, int cost)
     {
         foreach (var slot in slots)
@@ -165,8 +169,9 @@ public class PlacementManager : MonoBehaviour
             }
         }
     }
+    */
 
-    public bool TryPlaceOnSlot(Clickable slot, AllyData data, int cost)
+    public bool TryPlaceOnSlot(Clickable slot, AllyData data, int cost, float rndValue)
     {
         if (!TryPay(cost))
         {
@@ -202,55 +207,71 @@ public class PlacementManager : MonoBehaviour
             unit.Setup(data, grade, type);
             unit.gameObject.SetActive(true);
 
+            if(data.Unit_Grade >= 4)
+            {
+                GameManager.Instance.NoticeRareSpawn(data, rndValue, IsGotcha);
+                Handheld.Vibrate();
+            }
+
             unit.OnSynthesis += () => Destroy(visualModel);
             unit.OnSynthesis += () => unit.gameObject.SetActive(false);
 
             AudioManager.Instance.PlaySpawn(unit.transform.position);
-            Handheld.Vibrate();
+
+            IsGotcha = false;
 
             return true;
         }
 
+        IsGotcha = false;
         return false;
     }
 
     public void PlaceAllyAllRandom()
     {
-        var data = DataTableManager.AllyTable.GetAllRandom();
+        IsGotcha = true;
 
-        if (!FindSameUnit(data))
+        var data = DataTableManager.AllyTable.GetAllRandom();
+        float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
+        if (!FindSameUnit(data, rndValue))
         {
-            PlaceInSocket(data);
+            PlaceInSocket(data, rndValue);
         }
     }
 
     public void PlaceAllyNormalRandom()
     {
-        var data = DataTableManager.AllyTable.GetNormalRandom();
+        IsGotcha = true;
 
-        if (!FindSameUnit(data))
+        var data = DataTableManager.AllyTable.GetNormalRandom();
+        float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
+        if (!FindSameUnit(data, rndValue))
         {
-            PlaceInSocket(data);
+            PlaceInSocket(data, rndValue);
         }
     }
 
     public void PlaceAllyPiercingRandom()
     {
-        var data = DataTableManager.AllyTable.GetPiercingRandom();
+        IsGotcha = true;
 
-        if (!FindSameUnit(data))
+        var data = DataTableManager.AllyTable.GetPiercingRandom();
+        float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
+        if (!FindSameUnit(data, rndValue))
         {
-            PlaceInSocket(data);
+            PlaceInSocket(data, rndValue);
         }
     }
 
     public void PlaceAllyMagicalRandom()
     {
-        var data = DataTableManager.AllyTable.GetMagicalRandom();
+        IsGotcha = true;
 
-        if (!FindSameUnit(data))
+        var data = DataTableManager.AllyTable.GetMagicalRandom();
+        float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
+        if (!FindSameUnit(data, rndValue))
         {
-            PlaceInSocket(data);
+            PlaceInSocket(data, rndValue);
         }
     }
 

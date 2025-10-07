@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     private float enemyCountTimer = 30f;
     private float bossTimer = 60f;
     public TextMeshProUGUI WarningText;
+    public TextMeshProUGUI NoticeText;
 
     private void Awake()
     {
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour
 
         WarningTimer.gameObject.SetActive(false);
         WarningText.gameObject.SetActive(false);
+        NoticeText.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -210,5 +213,60 @@ public class GameManager : MonoBehaviour
     private bool CheckBossStageTimeout()
     {
         return (currentWarning == WarningType.BossTimer) && bossTimer <= 0f;
+    }
+
+    public void NoticeRareSpawn(AllyData data, float rndValue, bool IsGotcha)
+    {
+        string unitGrade = null;
+        switch (data.Unit_Grade)
+        {
+            case 4:
+                unitGrade = "·¹Àüµå";
+                break;
+            case 5:
+                unitGrade = "¿¡ÇÈ";
+                break;
+        }
+        if (IsGotcha)
+        {
+            NoticeText.text = $"{rndValue.ToString()}% È®·ü·Î [{data.Unit_Name} ({unitGrade})]¸¦ È¹µæÇÏ¼Ì½À´Ï´Ù.";
+        }
+        else
+        {
+            switch (data.Unit_Grade)
+            {
+                case 4:
+                    NoticeText.text = $"À¯´ÏÅ© 3¸¶¸® Á¶ÇÕÀ¸·Î [{data.Unit_Name} ({unitGrade})]¸¦ È¹µæÇÏ¼Ì½À´Ï´Ù.";
+                    break;
+                case 5:
+                    NoticeText.text = $"·¹Àüµå 3¸¶¸® Á¶ÇÕÀ¸·Î [{data.Unit_Name} ({unitGrade})]¸¦ È¹µæÇÏ¼Ì½À´Ï´Ù.";
+                    break;
+            }
+        }
+
+        NoticeText.gameObject.SetActive(true);
+        StartCoroutine(HideNotice(3f));
+    }
+
+    private IEnumerator HideNotice(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        Color c = NoticeText.color;
+        float fadeDuration = 1f;
+        float t = 0f;
+
+        while(t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            c.a = Mathf.Lerp(1f, 0f, t / fadeDuration);
+            NoticeText.color = c;
+            yield return null;
+        }
+
+        NoticeText.gameObject.SetActive(false);
+
+        c.a = 1f;
+        NoticeText.color = c;
     }
 }
