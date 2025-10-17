@@ -112,6 +112,7 @@ public class PlacementManager : MonoBehaviour
         }
     }
 
+    /*
     public bool FindSameUnit(AllyData data, float rndValue)
     {
         foreach (var slot in slots)
@@ -137,6 +138,36 @@ public class PlacementManager : MonoBehaviour
             {
                 return ;
             }
+        }
+    }
+    */
+
+    public void PlaceUnitCheck(AllyData data, float rndValue)
+    {
+        if(Variables.SlotCount <= 0)
+        {
+            return;
+        }
+
+        Clickable empty = null;
+        foreach (var slot in slots) 
+        {
+            if(slot.UnitId == data.Unit_ID)
+            {
+                if(slot.SocketInCount < 3 && TryPlaceOnSlot(slot, data, 50, rndValue))
+                {
+                    return;
+                }
+            }
+            else if(slot.UnitId == 0 && empty == null)
+            {
+                empty = slot;
+            }
+        }
+
+        if(empty != null)
+        {
+            TryPlaceOnSlot(empty, data, 50, rndValue);
         }
     }
 
@@ -233,10 +264,8 @@ public class PlacementManager : MonoBehaviour
 
         var data = DataTableManager.AllyTable.GetAllRandom();
         float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
-        if (!FindSameUnit(data, rndValue))
-        {
-            PlaceInSocket(data, rndValue);
-        }
+
+        PlaceUnitCheck(data, rndValue);
     }
 
     public void PlaceAllyNormalRandom()
@@ -245,10 +274,8 @@ public class PlacementManager : MonoBehaviour
 
         var data = DataTableManager.AllyTable.GetNormalRandom();
         float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
-        if (!FindSameUnit(data, rndValue))
-        {
-            PlaceInSocket(data, rndValue);
-        }
+
+        PlaceUnitCheck(data, rndValue);
     }
 
     public void PlaceAllyPiercingRandom()
@@ -257,10 +284,8 @@ public class PlacementManager : MonoBehaviour
 
         var data = DataTableManager.AllyTable.GetPiercingRandom();
         float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
-        if (!FindSameUnit(data, rndValue))
-        {
-            PlaceInSocket(data, rndValue);
-        }
+
+        PlaceUnitCheck(data, rndValue);
     }
 
     public void PlaceAllyMagicalRandom()
@@ -269,10 +294,8 @@ public class PlacementManager : MonoBehaviour
 
         var data = DataTableManager.AllyTable.GetMagicalRandom();
         float rndValue = DataTableManager.AllRandomTable.Get(data.Unit_ID).Random_P;
-        if (!FindSameUnit(data, rndValue))
-        {
-            PlaceInSocket(data, rndValue);
-        }
+
+        PlaceUnitCheck(data, rndValue);
     }
 
     private AllyUnit CreateUnit()
@@ -320,10 +343,8 @@ public class PlacementManager : MonoBehaviour
         //상위등급, 같은 타입 데이터 가져오기 및 배치
         var data = DataTableManager.AllyTable.GetUpgradeRandomId(Variables.SelectedSlot.CurrentData.Unit_Grade, Variables.SelectedSlot.CurrentData.Unit_Type);
         Variables.SelectedSlot.SlotReset(data); //소켓 딕셔너리, 슬롯 카운트, 슬롯 할당 유닛 id -> 바뀐 id로 변경
-        if (!FindSameUnit(data, 0))
-        {
-            PlaceInSocket(data, 0);
-        }
+
+        PlaceUnitCheck(data, 0);
 
         AllSetUp();
 

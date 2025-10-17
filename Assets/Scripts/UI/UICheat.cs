@@ -33,29 +33,20 @@ public class UICheat : MonoBehaviour
         var data = DataTableManager.AllyTable.Get(1101011001);
         for (int i = 0; i < 3; i++)
         {
-            if (!placementManager.FindSameUnit(data, 0))
-            {
-                placementManager.PlaceInSocket(data, 0);
-            }
+            placementManager.PlaceUnitCheck(data, 0);
         }
     }
 
     public void OneEnemySpawn()
     {
         var data = DataTableManager.AllyTable.Get(1430011001);
-        if (!placementManager.FindSameUnit(data, 0))
-        {
-            placementManager.PlaceInSocket(data, 0);
-        }
+        placementManager.PlaceUnitCheck(data, 0);
     }
 
     public void OneTestEnemySpawn()
     {
         var data = DataTableManager.AllyTable.Get(1540022001);
-        if (!placementManager.FindSameUnit(data, 0))
-        {
-            placementManager.PlaceInSocket(data, 0);
-        }
+        placementManager.PlaceUnitCheck(data, 0);
     }
 
     public void TimeScaleOne()

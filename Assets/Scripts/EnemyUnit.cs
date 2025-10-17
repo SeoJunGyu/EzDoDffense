@@ -13,13 +13,14 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     [SerializeField] private float arriveTolerance = 0.1f;
 
     [SerializeField] private float maxHealth = 100f;
-    private NavMeshAgent agent;
+    
     private float deffense = 1f;
     private EnemyTypes defType;
     public EnemyData Data { get; private set; }
 
     private float beforeDeffense = 0;
     private float beforeSpeed = 0;
+    private float moveSpeed = 0f;
 
     private Vector3 target;
     private Vector3[] wayPoints;
@@ -88,18 +89,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         target = transform.position;
-    }
-
-    private void Start()
-    {
-        agent.updatePosition = false;
-        agent.updateRotation = false;
-
-        agent.radius = 0.01f;
-        agent.avoidancePriority = 50;
     }
 
     private void Update()
@@ -123,7 +114,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
             return;
         }
 
-        float remaining = agent.speed * Time.deltaTime;
+        float remaining = moveSpeed * Time.deltaTime;
         Vector3 pos = transform.position;
 
         int safety = 0;
@@ -190,23 +181,21 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         if(Data.Advangage == AttackTypes.None) //¿µ¿õ Àå°©
         {
             Health -= baseDamage * disAdventageDamageRate;
-            UpdateHealthBar();
         }
         else if(attackType == Data.Advangage)
         {
             Health -= baseDamage * adventageDamageRate;
-            UpdateHealthBar();
         }
         else if(attackType == Data.Disadvangage)
         {
             Health -= baseDamage * disAdventageDamageRate;
-            UpdateHealthBar();
         }
         else
         {
             Health -= baseDamage;
-            UpdateHealthBar();
         }
+
+        UpdateHealthBar();
 
         if (Health <= 0 && !IsDead)
         {
@@ -273,7 +262,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         maxHealth = data.Unit_HP;
         deffense = data.Unit_DEF;
         defType = (EnemyTypes)data.Unit_DEF_TYPE;
-        agent.speed = data.Move_Speed;
+        moveSpeed = data.Move_Speed;
         CurrentWayIndex = 0;
         Data = data;
 
@@ -314,9 +303,9 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                     break;
                 }
                 particles.Add(data.Skill_ID);
-                beforeSpeed = agent.speed;
+                beforeSpeed = moveSpeed;
                 var atkSpeedDebuffValue = 1 - data.Skill_Effect_Value / 100f;
-                agent.speed = agent.speed * atkSpeedDebuffValue;
+                moveSpeed *= atkSpeedDebuffValue;
 
                 if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
                 {
@@ -369,8 +358,8 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 break;
             case 4:
                 particles.Add(data.Skill_ID);
-                beforeSpeed = agent.speed;
-                agent.speed = agent.speed * (1 - data.Skill_Effect_Value_2 / 100f);
+                beforeSpeed = moveSpeed;
+                moveSpeed *= (1 - data.Skill_Effect_Value_2 / 100f);
                 SkillManager.Instance.StartCoroutine(SkillManager.Instance.ReturnWhenDead(data.Skill_ID, particle));
 
                 SkillManager.Instance.StartCoroutine(SpeedCoroutine(data.Skill_ID, data.Skill_Duration_2));
@@ -423,7 +412,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
             yield break;
         }
 
-        agent.speed = beforeSpeed;
+        moveSpeed = beforeSpeed;
         particles.Remove(id);
     }
 
@@ -462,7 +451,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 deffense = deffense / mult;
                 break;
             case 4:
-                agent.speed = agent.speed / mult;
+                moveSpeed /= mult;
                 break;
         }
 
