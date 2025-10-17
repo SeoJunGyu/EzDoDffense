@@ -204,7 +204,7 @@ public class PlacementManager : MonoBehaviour
 
     public bool TryPlaceOnSlot(Clickable slot, AllyData data, int cost, float rndValue)
     {
-        if (!TryPay(cost))
+        if (IsGotcha && !TryPay(cost))
         {
             return false;
         }

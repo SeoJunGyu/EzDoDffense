@@ -52,7 +52,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     public List<long> ActiveParticle => particles;
 
     public Dictionary<long, float> ActiveBuffValue = new Dictionary<long, float>();
-    public Dictionary<long, ParticleSystem> ActiveBuffParticle = new Dictionary<long, ParticleSystem>();
+    //public Dictionary<long, ParticleSystem> ActiveBuffParticle = new Dictionary<long, ParticleSystem>();
 
     public string UnitName { get; private set; }
 
@@ -71,7 +71,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         initialRotation = healthSlider.transform.rotation;
 
         ActiveBuffValue.Clear();
-        ActiveBuffParticle.Clear();
+        //ActiveBuffParticle.Clear();
         particles.Clear();
 
         paused = false;
@@ -80,7 +80,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
     private void OnDisable()
     {
         ActiveBuffValue.Clear();
-        ActiveBuffParticle.Clear();
+        //ActiveBuffParticle.Clear();
         particles.Clear();
 
         OnDeath = null;
@@ -286,12 +286,12 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
                 {
                     ActiveBuffValue.Add(data.Skill_ID, deffenseDebuffValue);
-                    ActiveBuffParticle.Add(data.Skill_ID, particle);
+                    //ActiveBuffParticle.Add(data.Skill_ID, particle);
                 }
                 else
                 {
                     ActiveBuffValue[data.Skill_ID] = deffenseDebuffValue;
-                    ActiveBuffParticle[data.Skill_ID] = particle;
+                    //ActiveBuffParticle[data.Skill_ID] = particle;
                 }
 
                 OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
@@ -310,12 +310,12 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
                 if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
                 {
                     ActiveBuffValue.Add(data.Skill_ID, atkSpeedDebuffValue);
-                    ActiveBuffParticle.Add(data.Skill_ID, particle);
+                    //ActiveBuffParticle.Add(data.Skill_ID, particle);
                 }
                 else
                 {
                     ActiveBuffValue[data.Skill_ID] = atkSpeedDebuffValue;
-                    ActiveBuffParticle[data.Skill_ID] = particle;
+                    //ActiveBuffParticle[data.Skill_ID] = particle;
                 }
 
                 OnDisableUnit += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
@@ -344,7 +344,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
         {
             return;
         }
-        Debug.Log($"{data.Skill_Name}");
+        //Debug.Log($"{data.Skill_Name}");
         switch (data.Skill_Effect_2)
         {
             case 3:
@@ -440,10 +440,7 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
             return;
         }
 
-        ActiveBuffParticle.TryGetValue(skillId, out var par);
-
         ActiveBuffValue.Remove(skillId);
-        ActiveBuffParticle.Remove(skillId);
 
         switch (Skill_Effect)
         {
@@ -453,11 +450,6 @@ public class EnemyUnit : MonoBehaviour, IDamagable, ISkillTarget
             case 4:
                 moveSpeed /= mult;
                 break;
-        }
-
-        if (par != null)
-        {
-            SkillManager.Instance.ReturnParticle(skillId, par);
         }
 
         particles.Remove(skillId);

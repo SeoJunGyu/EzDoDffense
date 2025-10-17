@@ -11,12 +11,6 @@ public enum AttackTypes
     Magic,
 }
 
-public struct StatMods
-{
-    public float AtkMul;
-    public float AtkSpdMul;
-}
-
 public static class UpgradeDB
 {
     private static Dictionary<int, float> GradeDamageMultiplier = new Dictionary<int, float>()

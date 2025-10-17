@@ -70,7 +70,6 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     public event Action OnSynthesis;
     public event Action OnDespawned;
     public Dictionary<long, float> ActiveBuffValue = new Dictionary<long, float>();
-    public Dictionary<long, ParticleSystem> ActiveBuffParticle = new Dictionary<long, ParticleSystem>();
 
     private Animator animator;
 
@@ -90,14 +89,12 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
     private void OnEnable()
     {
         ActiveBuffValue.Clear();
-        ActiveBuffParticle.Clear();
         particles.Clear();
     }
 
     private void OnDisable()
     {
         ActiveBuffValue.Clear();
-        ActiveBuffParticle.Clear();
         particles.Clear();
 
         OnSynthesis = null;
@@ -260,11 +257,6 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
         animator = GetComponentInChildren<Animator>();
 
         ActiveBuffValue.Clear();
-        foreach(var pair in ActiveBuffParticle)
-        {
-            SkillManager.Instance.ReturnParticle(pair.Key, pair.Value);
-        }
-        ActiveBuffParticle.Clear();
         particles.Clear();
     }
 
@@ -324,12 +316,10 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
                 if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
                 {
                     ActiveBuffValue.Add(data.Skill_ID, damageBuffValue);
-                    ActiveBuffParticle.Add(data.Skill_ID, particle);
                 }
                 else
                 {
                     ActiveBuffValue[data.Skill_ID] = damageBuffValue;
-                    ActiveBuffParticle[data.Skill_ID] = particle;
                 }
 
                 OnDespawned += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
@@ -345,12 +335,10 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
                 if (!ActiveBuffValue.ContainsKey(data.Skill_ID))
                 {
                     ActiveBuffValue.Add(data.Skill_ID, speedBuffValue);
-                    ActiveBuffParticle.Add(data.Skill_ID, particle);
                 }
                 else
                 {
                     ActiveBuffValue[data.Skill_ID] = speedBuffValue;
-                    ActiveBuffParticle[data.Skill_ID] = particle;
                 }
 
                 OnDespawned += () => SkillManager.Instance.ReturnParticle(data.Skill_ID, particle);
@@ -375,10 +363,7 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
             return;
         }
 
-        ActiveBuffParticle.TryGetValue(skillId, out var par);
-
         ActiveBuffValue.Remove(skillId);
-        ActiveBuffParticle.Remove(skillId);
 
         switch (Skill_Effect)
         {
@@ -389,11 +374,6 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
                 attackSpeed = attackSpeed / mult;
                 attackInterval = 1f / attackSpeed;
                 break;
-        }
-
-        if(par != null)
-        {
-            SkillManager.Instance.ReturnParticle(skillId, par);
         }
         
         particles.Remove(skillId);

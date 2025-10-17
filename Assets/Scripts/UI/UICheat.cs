@@ -39,13 +39,13 @@ public class UICheat : MonoBehaviour
 
     public void OneEnemySpawn()
     {
-        var data = DataTableManager.AllyTable.Get(1430011001);
+        var data = DataTableManager.AllyTable.Get(1310012001);
         placementManager.PlaceUnitCheck(data, 0);
     }
 
     public void OneTestEnemySpawn()
     {
-        var data = DataTableManager.AllyTable.Get(1540022001);
+        var data = DataTableManager.AllyTable.Get(1202511001);
         placementManager.PlaceUnitCheck(data, 0);
     }
 

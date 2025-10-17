@@ -34,7 +34,7 @@ public class ClickableComponent : MonoBehaviour
         {
             var ray = cam.ScreenPointToRay(pos);
 
-            hitAny = TryRaycastUI(pos, out var uiHit); //뭔가는 충돌되었다.
+            hitAny = TryRaycastUI(pos, out var uiHit);
 
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, raycastMask, QueryTriggerInteraction.Ignore))
             {

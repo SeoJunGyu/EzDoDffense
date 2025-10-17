@@ -249,7 +249,6 @@ public class Clickable : MonoBehaviour, IClickable
 
         //적은 수를 먼저 교환
         int pairCount = Mathf.Min(fromOcc.Count, toOcc.Count);
-        /*
         for(int i = 0; i < pairCount; i++)
         {
             var fSock = fromOcc[i].Key;
@@ -258,21 +257,16 @@ public class Clickable : MonoBehaviour, IClickable
             var tSock = toOcc[i].Key;
             var tUnit = toOcc[i].Value;
 
-            if(tUnit != null)
-            {
-                tUnit.Center = from.transform.position;
-                SendUnitTo(tUnit, fSock.position);
-            }
-            if(fUnit != null)
-            {
-                fUnit.Center = to.transform.position;
-                SendUnitTo(fUnit, tSock.position);
-            }
+            tUnit.Center = from.transform.position;
+            SendUnitTo(tUnit, fSock.position);
+
+            fUnit.Center = to.transform.position;
+            SendUnitTo(fUnit, tSock.position);
 
             from.sockets[fSock] = tUnit;
             to.sockets[tSock] = fUnit;
         }
-        */
+
         //from 남은 인원 교환
         if(fromOcc.Count > pairCount)
         {
