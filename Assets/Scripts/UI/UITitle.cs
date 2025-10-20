@@ -22,6 +22,12 @@ public class UITitle : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+        Debug.unityLogger.logEnabled = false;
+#endif
+
         Screen.orientation = ScreenOrientation.Portrait;
 
         Option.SetActive(false);
