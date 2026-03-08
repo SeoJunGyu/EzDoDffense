@@ -1,8 +1,9 @@
-# EzDoDffense
+<img width="512" height="512" alt="icon (1)" src="https://github.com/user-attachments/assets/ca2f8b1f-5030-41ba-9893-4e68a8e1ec04" />
+
 
 ---
 
-# MyPlanet
+# EzDoDffense
 
 유닛을 배치하고 조합하며 강화해 밀려오는 적을 막는 캐주얼 3D 디펜스 게임
 
