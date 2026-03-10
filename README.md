@@ -1,4 +1,5 @@
-<img width="512" height="512" alt="icon (1)" src="https://github.com/user-attachments/assets/ca2f8b1f-5030-41ba-9893-4e68a8e1ec04" />
+
+<img width="1536" height="1024" alt="ChatGPT Image 2026년 3월 10일 오후 11_26_38" src="https://github.com/user-attachments/assets/ff08703b-30f4-4fcf-bd79-17349c553e6b" />
 
 
 ---
@@ -52,10 +53,18 @@
 
 ## 게임 스크린샷 및 GIF
 
-<img width="280" height="369" alt="승리캡처" src="https://github.com/user-attachments/assets/e99ab8e2-2627-4d08-ae27-3d88ff6d0c83" />
-<img width="305" height="376" alt="패배캡처" src="https://github.com/user-attachments/assets/81a48e37-ed22-44a4-bd37-50d8620a4f9d" />
-<img width="843" height="475" alt="스킬캡처" src="https://github.com/user-attachments/assets/0e52bfb1-e59c-42f7-af6f-ae149d9e1428" />
-<img width="845" height="472" alt="보스캡처" src="https://github.com/user-attachments/assets/4c7e4190-6b97-4315-985d-d111e4ae70ed" />
+
+<table align="center">
+<tr>
+  
+<td align="center"><img width="311" height="671" alt="타이틀" src="https://github.com/user-attachments/assets/1da54126-d4f4-44b4-a31f-1f850da56139" /><br><sub>타이틀</sub></td>
+<td align="center"><img width="732" height="331" alt="튜토리얼" src="https://github.com/user-attachments/assets/68ef6404-ae05-4673-9294-8a8ef431efdc" /><br><sub>튜토리얼</sub></td>
+</tr>
+<tr>
+<td align="center"><img width="843" height="475" alt="스킬캡처 (1)" src="https://github.com/user-attachments/assets/503cdf84-854b-446e-9fc4-5527c48c1b49" /><br><sub>인게임 스킬</sub></td>
+<td align="center"><img width="845" height="472" alt="보스캡처 (1)" src="https://github.com/user-attachments/assets/0ca8a424-0309-4041-aaad-37797add32ce" /><br><sub>인게임 보스</sub></td>
+</tr>
+</table>
 
 
 ---
