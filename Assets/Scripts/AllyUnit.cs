@@ -236,6 +236,9 @@ public class AllyUnit : MonoBehaviour, ISkillTarget
 
     public void Setup(AllyData data, int gradeUpgrade, int typeUpgrade)
     {
+        OnDespawned?.Invoke();
+        OnDespawned = null;
+
         grade = data.Unit_Grade;
         unitType = (AttackTypes)data.Unit_Type;
         UnitName = data.Unit_Name;
