@@ -149,25 +149,22 @@ public class AudioManager : MonoBehaviour
 
     private void SetVolume(string param, float vol)
     {
-        // 0~1 ½½¶óÀÌ´õ
+        // 0~1 ìŠ¬ë¼ì´ë”
         float t = Mathf.Clamp01(vol);
 
-        // ¾ÆÁÖ ³·Àº ±¸°£Àº '¹¬À½ ½º³À' (¿øÇÏ¸é 0.02~0.05 »çÀÌ·Î Á¶Á¤)
         if (t < 0.02f)
         {
             mixer.SetFloat(param, -80f);
             return;
         }
 
-        // Àú¿ª ¹Î°¨µµ ´­·¯ÁÖ±â (k > 1 ÀÌ¸é Ã³À½ ±¸°£ÀÌ ¿Ï¸¸ÇØÁü)
-        const float k = 2.2f;    // 1.8~3.0 »çÀÌ¿¡¼­ ÃëÇâ´ë·Î Á¶Àı
+        const float k = 2.2f;
         t = Mathf.Pow(t, k);
 
-        // ·Î±× ½ºÄÉÀÏ À¯Áö + ¹Ù´Ú°ªÀ¸·Î ±Ş»ó½Â ¹æÁö
-        const float vMin = 0.0001f; // ½ÇÁ¦ ¹«À½¿¡ °¡±î¿î ¹Ù´Ú
+        const float vMin = 0.0001f;
         float v = Mathf.Lerp(vMin, 1f, t);
 
-        float dB = 20f * Mathf.Log10(v); // 0dB ~ -80dB »çÀÌ ÀÚ¿¬½º·¯¿î Ã¼°¨
+        float dB = 20f * Mathf.Log10(v);
         mixer.SetFloat(param, dB);
     }
 
@@ -213,7 +210,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        playing.Remove(s); //ÇöÀç Àç»ıÁß ¸ñ·Ï¿¡¼­ Á¦°Å
+        playing.Remove(s); //í˜„ì¬ ì¬ìƒì¤‘ ëª©ë¡ì—ì„œ ì œê±°
 
         if(!sourceKinds.TryGetValue(s, out var kind))
         {
@@ -221,7 +218,7 @@ public class AudioManager : MonoBehaviour
         }
 
         s.gameObject.SetActive(false);
-        (kind == SfxChoice.World ? audios : buttonAudios).Enqueue(s); //ºñÈ°¼º ¸ñ·Ï¿¡ Ãß°¡
+        (kind == SfxChoice.World ? audios : buttonAudios).Enqueue(s); //ë¹„í™œì„± ëª©ë¡ì— ì¶”ê°€
     }
 
     public void PlaySfx(AudioClip clip, Vector3 pos, SfxChoice kind = SfxChoice.World)
@@ -241,7 +238,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        //19°³ Àç»ıÁß -> °°Àº Å¬¸³ Àç»ıÇÒ°Å¸é ¹«½Ã, ´Ù¸¥ Å¬¸³ Çã¿ë
+        //19ê°œ ì¬ìƒì¤‘ -> ê°™ì€ í´ë¦½ ì¬ìƒí• ê±°ë©´ ë¬´ì‹œ, ë‹¤ë¥¸ í´ë¦½ í—ˆìš©
         if(activeCount == poolSize - 1)
         {
             foreach(var kv in playing)
@@ -269,7 +266,7 @@ public class AudioManager : MonoBehaviour
     {
         float est = clip.length / Mathf.Max(0.01f, Mathf.Abs(s.pitch));
 
-        est += 0.02f; //º¸Á¤¿ë ¹öÆÛ
+        est += 0.02f;
 
         yield return new WaitForSeconds(est);
 
