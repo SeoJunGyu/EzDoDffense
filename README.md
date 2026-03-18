@@ -91,19 +91,23 @@ Assets/
 🛸 **아군 유닛**
 - 클릭 기반 이동 시스템
 - N 대 N 슬롯 스왑 구현
+- [`AllyUnit.cs`](Assets/Scripts/AllyUnit.cs) / [`Clickable.cs`](Assets/Scripts/Clickable.cs) / [`ClickableComponent.cs`](Assets/Scripts/ClickableComponent.cs)
 
 💀 **적 유닛**
 - 웨이브 기반 적 등장 시스템
 - 비주얼 모델 교체
+- [`EnemyUnit.cs`](Assets/Scripts/EnemyUnit.cs) / [`EnemySpawner.cs`](Assets/Scripts/EnemySpawner.cs)
 
 🌿 **전투 시스템**
 - 버프/디버프, 단일 및 광역 공격 스킬 구현
 - 파티클/효과음 게임 연출
+- [`SkillManager.cs`](Assets/Scripts/SkillManager.cs) / [`AudioManager.cs`](Assets/Scripts/AudioManager.cs)
 
 ⚡ **UI / UX**
 - 타입별 유닛 랜덤 뽑기
 - 유닛 등급 및 타입 강화
 - 옵션창 구현
+- [`PlacementManager.cs`](Assets/Scripts/PlacementManager.cs) / [`UIOption.cs`](Assets/Scripts/UI/UIOption.cs)
 
 ---
 
