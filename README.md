@@ -14,8 +14,10 @@
 
 * 개발 인원 : 개발자 1인, 기획자 1인 (협업 프로젝트)
 * 개발 기간 : 2025.09.12 ~ 2026.10.01 (4주)
-* 빌드 : Android (Google PlayStore 등록)
-* 개발 환경 : Unity 6.x
+* 플랫폼 : Android (Google PlayStore)
+* 최소 지원 버전 : Android 6.0 Mashmallow (API Level 23)
+* 개발 환경 : Unity 6.0
+* 주요 라이브러리 : CSVHelper, Newtonsoft.Json
 
 ---
 
@@ -39,15 +41,69 @@
 
 ---
 
+## 🚀 설치 및 실행
+
+Google PlayStore에서 다운로드할 수 있습니다.
+
+[▶ PlayStore에서 다운로드](https://play.google.com/store/apps/details?id=com.Kyungil.EzDoDefense&pli=1)
+
+---
+
+## 📁 폴더 구조
+
+```
+Assets/
+├── 📂 Scripts/
+│   ├── 📂 Data/  # 데이터 테이블 등
+│   ├── 📂 Interfaces/
+│   ├── 📂 UI/
+│   ├──   ├── GameManager
+│   ├──   ├── GameTimer
+│   ├──   ├── UIGradeEnforcePanel
+│   ├──   ├── UIManager
+│   ├──   ├── UIOption
+│   ├──   ├── UIPanel
+│   ├──   ├── UISkillButton
+│   ├──   ├── UISkillInfo
+│   ├──   ├── UITitle
+│   ├──   ├── UIUnitInfo
+│   ├──   ├── UIUpgradePanel
+│   ├── AllyUnit
+│   ├── AudioManager
+│   ├── Character
+│   ├── Clickable
+│   ├── ClickableComponent
+│   ├── EnemySpawner
+│   ├── EnemyUnit
+│   ├── PlacementManager
+│   ├── SkillManager
+├── 📂 Prefabs/
+│   ├── Allys/
+│   ├── Enemies/
+│   └── SkillEffects/
+
+```
+
+---
+
 ## 주요 기능 및 시스템
 
-🛸 아군 유닛 : 클릭 기반 이동 시스템, N 대 N 자리 이동 구현
+🛸 **아군 유닛**
+- 클릭 기반 이동 시스템
+- N 대 N 슬롯 스왑 구현
 
-💀 적 유닛 : 웨이브 기반 적 등장 시스템, 비주얼 모델 교체
+💀 **적 유닛**
+- 웨이브 기반 적 등장 시스템
+- 비주얼 모델 교체
 
-🌿 전투 : 버프 ' 디버프 ' 단일 및 광역 공격 스킬 구현, 파티클/효과음 등 게임 연출
+🌿 **전투 시스템**
+- 버프/디버프, 단일 및 광역 공격 스킬 구현
+- 파티클/효과음 게임 연출
 
-⚡ UI / UX : 타입별 유닛 랜덤 뽑기 구현, 유닛 등급 및 타입 강화, 옵션창 구현
+⚡ **UI / UX**
+- 타입별 유닛 랜덤 뽑기
+- 유닛 등급 및 타입 강화
+- 옵션창 구현
 
 ---
 
